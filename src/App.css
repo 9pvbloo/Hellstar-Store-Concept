@@ -537,3 +537,35 @@
     max-width: 120px;
   }
 }
+
+/* =========================================
+   ENTRY — 3D CHROME MEDALLION
+========================================= */
+
+.entry__emblem--3d {
+  width: clamp(180px, 13vw, 220px);
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255, 255, 255, 0.045),
+      rgba(255, 255, 255, 0.012) 52%,
+      transparent 72%
+    );
+}
+
+.entry__emblem--3d canvas {
+  position: relative;
+  z-index: 2;
+
+  display: block;
+
+  width: 100% !important;
+  height: 100% !important;
+}
+
+@media (max-width: 700px) {
+  .entry__emblem--3d {
+    width: 155px;
+  }
+}

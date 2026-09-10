@@ -1,4 +1,5 @@
 import './App.css'
+import EntryLogo3D from './components/entry/EntryLogo3D'
 
 function App() {
   return (
@@ -18,10 +19,11 @@ function App() {
       </header>
 
       <section className="entry__content">
-        <div className="entry__emblem" aria-hidden="true">
-          <div className="entry__emblem-inner">
-            ✦
-          </div>
+        <div
+          className="entry__emblem entry__emblem--3d"
+          aria-hidden="true"
+        >
+          <EntryLogo3D />
         </div>
 
         <button className="entry__enter" type="button">
