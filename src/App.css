@@ -569,3 +569,34 @@
     width: 155px;
   }
 }
+
+/* =========================================
+   MEDALLION V2 — OPENWORK
+========================================= */
+
+.entry__emblem--3d {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+
+  filter:
+    drop-shadow(
+      0 0 18px
+      rgba(255, 255, 255, 0.08)
+    )
+    drop-shadow(
+      -5px 8px 24px
+      rgba(181, 31, 36, 0.10)
+    );
+}
+
+/*
+ * Dejamos las líneas técnicas del HUD,
+ * pero ya no forman parte física
+ * del medallón.
+ */
+
+.entry__emblem--3d::before,
+.entry__emblem--3d::after {
+  opacity: 0.65;
+}
