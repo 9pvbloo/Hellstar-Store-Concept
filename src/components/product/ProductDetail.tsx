@@ -17,11 +17,17 @@ import type {
 type ProductDetailProps = {
   product: StoreProduct
   onClose: () => void
+
+  onAddToCart: (
+    product: StoreProduct,
+    size: string,
+  ) => void
 }
 
 function ProductDetail({
   product,
   onClose,
+  onAddToCart,
 }: ProductDetailProps) {
   const rootRef =
     useRef<HTMLElement>(null)
@@ -38,6 +44,11 @@ function ProductDetail({
       : '',
   )
 
+  const [
+    addedToCart,
+    setAddedToCart,
+  ] = useState(false)
+
   const isOnSale =
     product.compareAtPen !==
     undefined
@@ -52,6 +63,8 @@ function ProductDetail({
         ? product.sizes[0]
         : '',
     )
+
+    setAddedToCart(false)
   }, [product])
 
   /* =========================================
@@ -381,6 +394,30 @@ function ProductDetail({
     }
   }, [product.id])
 
+  /* =========================================
+     ADD TO CART
+  ========================================= */
+
+  const handleAddToCart = () => {
+    if (!selectedSize) {
+      return
+    }
+
+    onAddToCart(
+      product,
+      selectedSize,
+    )
+
+    setAddedToCart(true)
+
+    window.setTimeout(
+      () => {
+        setAddedToCart(false)
+      },
+      1200,
+    )
+  }
+
   return (
     <section
       ref={rootRef}
@@ -567,7 +604,9 @@ function ProductDetail({
           </div>
         </div>
 
-        {/* PRICE */}
+        {/* =====================================
+            PRICE
+        ===================================== */}
 
         <div className="product-detail__price">
           <span className="product-detail__label">
@@ -617,7 +656,9 @@ function ProductDetail({
           </div>
         </div>
 
-        {/* SIZE */}
+        {/* =====================================
+            SIZE
+        ===================================== */}
 
         <div className="product-detail__sizes">
           <div className="product-detail__size-header">
@@ -659,24 +700,35 @@ function ProductDetail({
           </div>
         </div>
 
-        {/* BAG */}
+        {/* =====================================
+            ADD TO BAG
+        ===================================== */}
 
         <button
-          className="product-detail__bag"
+          className={`product-detail__bag ${
+            addedToCart
+              ? 'is-added'
+              : ''
+          }`}
           type="button"
           disabled={!selectedSize}
+          onClick={handleAddToCart}
         >
           <span>
-            {selectedSize
-              ? 'ADD TO BAG'
-              : 'SELECT A SIZE'}
+            {!selectedSize
+              ? 'SELECT A SIZE'
+              : addedToCart
+                ? 'ADDED TO BAG'
+                : 'ADD TO BAG'}
           </span>
 
           <span
             className="product-detail__bag-arrow"
             aria-hidden="true"
           >
-            ↗
+            {addedToCart
+              ? '✓'
+              : '↗'}
           </span>
         </button>
       </aside>

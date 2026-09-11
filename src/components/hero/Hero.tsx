@@ -54,7 +54,13 @@ const products: HeroProduct[] = [
   },
 ]
 
-function Hero() {
+type HeroProps = {
+  cartCount: number
+}
+
+function Hero({
+  cartCount,
+}: HeroProps) {
   const heroRef =
     useRef<HTMLElement>(null)
 
@@ -930,7 +936,13 @@ function Hero() {
           </button>
 
           <button type="button">
-            CART / 00
+            CART /{' '}
+            {String(
+              cartCount,
+            ).padStart(
+              2,
+              '0',
+            )}
           </button>
         </nav>
       </header>

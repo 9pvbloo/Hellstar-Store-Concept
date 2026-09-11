@@ -18,6 +18,10 @@ import type {
   StoreProduct,
 } from './data/products'
 
+import type {
+  CartItem,
+} from './data/cart'
+
 function App() {
   const entryRef =
     useRef<HTMLElement>(null)
@@ -25,10 +29,16 @@ function App() {
   const transitioningRef =
     useRef(false)
 
-  const [transitioning, setTransitioning] =
+  const [
+    transitioning,
+    setTransitioning,
+  ] =
     useState(false)
 
-  const [heroVisible, setHeroVisible] =
+  const [
+    heroVisible,
+    setHeroVisible,
+  ] =
     useState(false)
 
   const [
@@ -38,6 +48,12 @@ function App() {
     useState<StoreProduct | null>(
       null,
     )
+
+  const [
+    cartItems,
+    setCartItems,
+  ] =
+    useState<CartItem[]>([])
 
   /* =========================================
      INTRO CINEMATIC
@@ -58,236 +74,247 @@ function App() {
       return
     }
 
-    const context = gsap.context(
-      () => {
-        /* -------------------------------------
-           INITIAL STATE
-        ------------------------------------- */
+    const context =
+      gsap.context(
+        () => {
+          /* -------------------------------------
+             INITIAL STATE
+          ------------------------------------- */
 
-        gsap.set(
-          [
-            '.entry__brand',
-            '.entry__meta',
-            '.entry__footer',
-            '.entry__hud',
-          ],
-          {
-            opacity: 0,
-            y: 8,
-          },
-        )
-
-        gsap.set(
-          '.entry__dot-field',
-          {
-            opacity: 0,
-            scale: 1.04,
-          },
-        )
-
-        gsap.set(
-          '.entry__pattern',
-          {
-            opacity: 0,
-          },
-        )
-
-        gsap.set(
-          '.entry__emblem',
-          {
-            opacity: 0,
-            scale: 0.72,
-            y: 30,
-            filter: 'blur(10px)',
-          },
-        )
-
-        gsap.set(
-          '.entry__enter',
-          {
-            opacity: 0,
-            y: 20,
-            letterSpacing: '-0.08em',
-          },
-        )
-
-        gsap.set(
-          '.entry__subtitle',
-          {
-            opacity: 0,
-            y: 10,
-          },
-        )
-
-        gsap.set(
-          '.entry__transition-cover',
-          {
-            opacity: 0,
-          },
-        )
-
-        /* -------------------------------------
-           INTRO TIMELINE
-        ------------------------------------- */
-
-        const timeline =
-          gsap.timeline({
-            defaults: {
-              ease: 'power3.out',
+          gsap.set(
+            [
+              '.entry__brand',
+              '.entry__meta',
+              '.entry__footer',
+              '.entry__hud',
+            ],
+            {
+              opacity: 0,
+              y: 8,
             },
-          })
+          )
 
-        /* Header */
+          gsap.set(
+            '.entry__dot-field',
+            {
+              opacity: 0,
+              scale: 1.04,
+            },
+          )
 
-        timeline.to(
-          '.entry__brand',
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.7,
-          },
-          0.18,
-        )
+          gsap.set(
+            '.entry__pattern',
+            {
+              opacity: 0,
+            },
+          )
 
-        timeline.to(
-          '.entry__meta',
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.7,
-          },
-          0.28,
-        )
+          gsap.set(
+            '.entry__emblem',
+            {
+              opacity: 0,
+              scale: 0.72,
+              y: 30,
+              filter:
+                'blur(10px)',
+            },
+          )
 
-        /* Dot Field */
+          gsap.set(
+            '.entry__enter',
+            {
+              opacity: 0,
+              y: 20,
+              letterSpacing:
+                '-0.08em',
+            },
+          )
 
-        timeline.to(
-          '.entry__dot-field',
-          {
-            opacity: 0.95,
-            scale: 1,
+          gsap.set(
+            '.entry__subtitle',
+            {
+              opacity: 0,
+              y: 10,
+            },
+          )
 
-            duration: 1.25,
+          gsap.set(
+            '.entry__transition-cover',
+            {
+              opacity: 0,
+            },
+          )
 
-            ease: 'power2.out',
-          },
-          0.32,
-        )
+          /* -------------------------------------
+             INTRO TIMELINE
+          ------------------------------------- */
 
-        /* Technical Crosshair */
+          const timeline =
+            gsap.timeline({
+              defaults: {
+                ease:
+                  'power3.out',
+              },
+            })
 
-        timeline.to(
-          '.entry__pattern',
-          {
-            opacity: 1,
+          /* Header */
 
-            duration: 0.9,
+          timeline.to(
+            '.entry__brand',
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.7,
+            },
+            0.18,
+          )
 
-            ease: 'power1.out',
-          },
-          0.6,
-        )
+          timeline.to(
+            '.entry__meta',
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.7,
+            },
+            0.28,
+          )
 
-        /* Medallion */
+          /* Dot Field */
 
-        timeline.to(
-          '.entry__emblem',
-          {
-            opacity: 1,
+          timeline.to(
+            '.entry__dot-field',
+            {
+              opacity: 0.95,
+              scale: 1,
 
-            scale: 1,
+              duration: 1.25,
 
-            y: 0,
+              ease:
+                'power2.out',
+            },
+            0.32,
+          )
 
-            filter: 'blur(0px)',
+          /* Technical Crosshair */
 
-            duration: 1.15,
+          timeline.to(
+            '.entry__pattern',
+            {
+              opacity: 1,
 
-            ease: 'power4.out',
-          },
-          0.72,
-        )
+              duration: 0.9,
 
-        /* Micro HUD */
+              ease:
+                'power1.out',
+            },
+            0.6,
+          )
 
-        timeline.to(
-          '.entry__hud',
-          {
-            opacity: 1,
+          /* Medallion */
 
-            y: 0,
+          timeline.to(
+            '.entry__emblem',
+            {
+              opacity: 1,
 
-            duration: 0.65,
+              scale: 1,
 
-            stagger: 0.08,
+              y: 0,
 
-            ease: 'power2.out',
-          },
-          1.18,
-        )
+              filter:
+                'blur(0px)',
 
-        /* ENTER */
+              duration: 1.15,
 
-        timeline.to(
-          '.entry__enter',
-          {
-            opacity: 1,
+              ease:
+                'power4.out',
+            },
+            0.72,
+          )
 
-            y: 0,
+          /* Micro HUD */
 
-            letterSpacing: '-0.045em',
+          timeline.to(
+            '.entry__hud',
+            {
+              opacity: 1,
 
-            duration: 0.75,
+              y: 0,
 
-            ease: 'power3.out',
-          },
-          1.48,
-        )
+              duration: 0.65,
 
-        /* Subtitle */
+              stagger: 0.08,
 
-        timeline.to(
-          '.entry__subtitle',
-          {
-            opacity: 1,
+              ease:
+                'power2.out',
+            },
+            1.18,
+          )
 
-            y: 0,
+          /* ENTER */
 
-            duration: 0.65,
-          },
-          1.72,
-        )
+          timeline.to(
+            '.entry__enter',
+            {
+              opacity: 1,
 
-        /* Footer */
+              y: 0,
 
-        timeline.to(
-          '.entry__footer',
-          {
-            opacity: 1,
+              letterSpacing:
+                '-0.045em',
 
-            y: 0,
+              duration: 0.75,
 
-            duration: 0.65,
-          },
-          1.92,
-        )
+              ease:
+                'power3.out',
+            },
+            1.48,
+          )
 
-        /*
-         * Return ENTER control to CSS
-         * so hover / active work normally.
-         */
+          /* Subtitle */
 
-        timeline.set(
-          '.entry__enter',
-          {
-            clearProps:
-              'transform,letterSpacing',
-          },
-          2.58,
-        )
-      },
-      root,
-    )
+          timeline.to(
+            '.entry__subtitle',
+            {
+              opacity: 1,
+
+              y: 0,
+
+              duration: 0.65,
+            },
+            1.72,
+          )
+
+          /* Footer */
+
+          timeline.to(
+            '.entry__footer',
+            {
+              opacity: 1,
+
+              y: 0,
+
+              duration: 0.65,
+            },
+            1.92,
+          )
+
+          /*
+           * Return ENTER control to CSS
+           * so hover / active work normally.
+           */
+
+          timeline.set(
+            '.entry__enter',
+            {
+              clearProps:
+                'transform,letterSpacing',
+            },
+            2.58,
+          )
+        },
+        root,
+      )
 
     return () => {
       context.revert()
@@ -323,204 +350,213 @@ function App() {
       return
     }
 
-    const context = gsap.context(
-      () => {
-        /*
-         * Prevent ENTER hover animation
-         * from fighting the exit timeline.
-         */
+    const context =
+      gsap.context(
+        () => {
+          /*
+           * Prevent ENTER hover animation
+           * from fighting the exit timeline.
+           */
 
-        gsap.killTweensOf(
-          '.entry__enter',
-        )
+          gsap.killTweensOf(
+            '.entry__enter',
+          )
 
-        const timeline =
-          gsap.timeline({
-            defaults: {
-              ease: 'power3.inOut',
+          const timeline =
+            gsap.timeline({
+              defaults: {
+                ease:
+                  'power3.inOut',
+              },
+            })
+
+          /* ----------------------------------
+             HUD RETRACTS
+          ---------------------------------- */
+
+          timeline.to(
+            '.entry__hud',
+            {
+              opacity: 0,
+
+              duration: 0.28,
+
+              stagger: 0.035,
             },
-          })
+            0,
+          )
 
-        /* ----------------------------------
-           HUD RETRACTS
-        ---------------------------------- */
+          /* ----------------------------------
+             HEADER + FOOTER
+          ---------------------------------- */
 
-        timeline.to(
-          '.entry__hud',
-          {
-            opacity: 0,
+          timeline.to(
+            [
+              '.entry__brand',
+              '.entry__meta',
+              '.entry__footer',
+            ],
+            {
+              opacity: 0,
 
-            duration: 0.28,
+              y: -6,
 
-            stagger: 0.035,
-          },
-          0,
-        )
+              duration: 0.38,
+            },
+            0.06,
+          )
 
-        /* ----------------------------------
-           HEADER + FOOTER
-        ---------------------------------- */
+          /* ----------------------------------
+             ENTER
+          ---------------------------------- */
 
-        timeline.to(
-          [
-            '.entry__brand',
-            '.entry__meta',
-            '.entry__footer',
-          ],
-          {
-            opacity: 0,
+          timeline.to(
+            '.entry__enter',
+            {
+              opacity: 0,
 
-            y: -6,
+              y: 18,
 
-            duration: 0.38,
-          },
-          0.06,
-        )
+              scale: 0.96,
 
-        /* ----------------------------------
-           ENTER
-        ---------------------------------- */
+              letterSpacing:
+                '0.05em',
 
-        timeline.to(
-          '.entry__enter',
-          {
-            opacity: 0,
+              duration: 0.38,
+            },
+            0.08,
+          )
 
-            y: 18,
+          /* ----------------------------------
+             SUBTITLE
+          ---------------------------------- */
 
-            scale: 0.96,
+          timeline.to(
+            '.entry__subtitle',
+            {
+              opacity: 0,
 
-            letterSpacing: '0.05em',
+              y: 10,
 
-            duration: 0.38,
-          },
-          0.08,
-        )
+              duration: 0.3,
+            },
+            0.12,
+          )
 
-        /* ----------------------------------
-           SUBTITLE
-        ---------------------------------- */
+          /* ----------------------------------
+             TECHNICAL SYSTEM
+          ---------------------------------- */
 
-        timeline.to(
-          '.entry__subtitle',
-          {
-            opacity: 0,
+          timeline.to(
+            '.entry__pattern',
+            {
+              opacity: 0,
 
-            y: 10,
+              duration: 0.48,
+            },
+            0.18,
+          )
 
-            duration: 0.3,
-          },
-          0.12,
-        )
+          timeline.to(
+            '.entry__dot-field',
+            {
+              opacity: 0.12,
 
-        /* ----------------------------------
-           TECHNICAL SYSTEM
-        ---------------------------------- */
+              scale: 1.08,
 
-        timeline.to(
-          '.entry__pattern',
-          {
-            opacity: 0,
+              duration: 0.72,
 
-            duration: 0.48,
-          },
-          0.18,
-        )
+              ease:
+                'power2.inOut',
+            },
+            0.16,
+          )
 
-        timeline.to(
-          '.entry__dot-field',
-          {
-            opacity: 0.12,
+          /* ----------------------------------
+             MEDALLION FOCUS
+          ---------------------------------- */
 
-            scale: 1.08,
+          timeline.to(
+            '.entry__emblem',
+            {
+              scale: 1.07,
 
-            duration: 0.72,
+              y: -4,
 
-            ease: 'power2.inOut',
-          },
-          0.16,
-        )
+              duration: 0.42,
 
-        /* ----------------------------------
-           MEDALLION FOCUS
-        ---------------------------------- */
+              ease:
+                'power2.out',
+            },
+            0.12,
+          )
 
-        timeline.to(
-          '.entry__emblem',
-          {
-            scale: 1.07,
+          timeline.to(
+            '.entry__emblem',
+            {
+              scale: 1.2,
 
-            y: -4,
+              opacity: 0.7,
 
-            duration: 0.42,
+              filter:
+                'blur(1.5px)',
 
-            ease: 'power2.out',
-          },
-          0.12,
-        )
+              duration: 0.58,
 
-        timeline.to(
-          '.entry__emblem',
-          {
-            scale: 1.2,
+              ease:
+                'power3.in',
+            },
+            0.48,
+          )
 
-            opacity: 0.7,
+          /* ----------------------------------
+             BLACKOUT
+          ---------------------------------- */
 
-            filter: 'blur(1.5px)',
+          timeline.to(
+            '.entry__transition-cover',
+            {
+              opacity: 1,
 
-            duration: 0.58,
+              duration: 0.42,
 
-            ease: 'power3.in',
-          },
-          0.48,
-        )
+              ease:
+                'power2.inOut',
+            },
+            0.7,
+          )
 
-        /* ----------------------------------
-           BLACKOUT
-        ---------------------------------- */
+          /* ----------------------------------
+             HERO MOUNTS
+          ---------------------------------- */
 
-        timeline.to(
-          '.entry__transition-cover',
-          {
-            opacity: 1,
+          timeline.call(
+            () => {
+              setHeroVisible(true)
+            },
+            [],
+            0.96,
+          )
 
-            duration: 0.42,
+          /* ----------------------------------
+             BLACK COVER LEAVES
+          ---------------------------------- */
 
-            ease: 'power2.inOut',
-          },
-          0.7,
-        )
+          timeline.to(
+            '.entry__transition-cover',
+            {
+              opacity: 0,
 
-        /* ----------------------------------
-           HERO MOUNTS
-        ---------------------------------- */
+              duration: 0.58,
 
-        timeline.call(
-          () => {
-            setHeroVisible(true)
-          },
-          [],
-          0.96,
-        )
-
-        /* ----------------------------------
-           BLACK COVER LEAVES
-        ---------------------------------- */
-
-        timeline.to(
-          '.entry__transition-cover',
-          {
-            opacity: 0,
-
-            duration: 0.58,
-
-            ease: 'power2.inOut',
-          },
-          1.02,
-        )
-      },
-      root,
-    )
+              ease:
+                'power2.inOut',
+            },
+            1.02,
+          )
+        },
+        root,
+      )
 
     return () => {
       context.revert()
@@ -538,233 +574,301 @@ function App() {
       return
     }
 
-    transitioningRef.current = true
+    transitioningRef.current =
+      true
 
     setTransitioning(true)
   }
 
+  /* =========================================
+     CART
+  ========================================= */
+
+  const handleAddToCart = (
+    product: StoreProduct,
+    size: string,
+  ) => {
+    setCartItems(
+      (currentItems) => {
+        const existingIndex =
+          currentItems.findIndex(
+            (item) =>
+              item.product.id ===
+                product.id &&
+              item.size === size,
+          )
+
+        if (
+          existingIndex === -1
+        ) {
+          return [
+            ...currentItems,
+            {
+              product,
+              size,
+              quantity: 1,
+            },
+          ]
+        }
+
+        return currentItems.map(
+          (item, index) =>
+            index ===
+            existingIndex
+              ? {
+                  ...item,
+
+                  quantity:
+                    item.quantity +
+                    1,
+                }
+              : item,
+        )
+      },
+    )
+  }
+
+  const cartCount =
+    cartItems.reduce(
+      (total, item) =>
+        total +
+        item.quantity,
+      0,
+    )
+
   return (
-  <>
-    <main
-      ref={entryRef}
-      className="entry"
-    >
-      {/* =====================================
-          GRAIN
-      ===================================== */}
-
-      <div
-        className="entry__grain"
-        aria-hidden="true"
-      />
-
-      {/* =====================================
-          DOT FIELD
-      ===================================== */}
-
-      <div
-        className="entry__dot-field"
-        aria-hidden="true"
+    <>
+      <main
+        ref={entryRef}
+        className="entry"
       >
-        <DotField
-          dotRadius={0.85}
-          dotSpacing={14}
-          cursorRadius={500}
-          bulgeStrength={67}
-          glowRadius={260}
-          baseColor="rgba(255, 255, 255, 0.22)"
-          accentColor="rgba(255, 255, 255, 0.92)"
-          glowColor="rgba(255, 255, 255, 0)"
-        />
-      </div>
-
-      {/* =====================================
-          CIRCULAR VIGNETTE
-      ===================================== */}
-
-      <div
-        className="entry__corner-fade"
-        aria-hidden="true"
-      />
-
-      {/* =====================================
-          TECHNICAL CROSSHAIR
-      ===================================== */}
-
-      <div
-        className="entry__pattern"
-        aria-hidden="true"
-      />
-
-      {/* =====================================
-          HEADER
-      ===================================== */}
-
-      <header className="entry__header">
-        <div className="entry__brand">
-          HELLSTAR
-        </div>
-
-        <div className="entry__meta entry__meta--right">
-          <span>
-            2026
-          </span>
-
-          <span>
-            UNOFFICIAL CONCEPT
-          </span>
-        </div>
-      </header>
-
-      {/* =====================================
-          MAIN CONTENT
-      ===================================== */}
-
-      <section className="entry__content">
-        {/* LEFT MICRO HUD */}
+        {/* =====================================
+            GRAIN
+        ===================================== */}
 
         <div
-          className="entry__hud entry__hud--left"
+          className="entry__grain"
+          aria-hidden="true"
+        />
+
+        {/* =====================================
+            DOT FIELD
+        ===================================== */}
+
+        <div
+          className="entry__dot-field"
           aria-hidden="true"
         >
-          <div className="entry__hud-status">
+          <DotField
+            dotRadius={0.85}
+            dotSpacing={14}
+            cursorRadius={500}
+            bulgeStrength={67}
+            glowRadius={260}
+            baseColor="rgba(255, 255, 255, 0.22)"
+            accentColor="rgba(255, 255, 255, 0.92)"
+            glowColor="rgba(255, 255, 255, 0)"
+          />
+        </div>
+
+        {/* =====================================
+            CIRCULAR VIGNETTE
+        ===================================== */}
+
+        <div
+          className="entry__corner-fade"
+          aria-hidden="true"
+        />
+
+        {/* =====================================
+            TECHNICAL CROSSHAIR
+        ===================================== */}
+
+        <div
+          className="entry__pattern"
+          aria-hidden="true"
+        />
+
+        {/* =====================================
+            HEADER
+        ===================================== */}
+
+        <header className="entry__header">
+          <div className="entry__brand">
+            HELLSTAR
+          </div>
+
+          <div className="entry__meta entry__meta--right">
+            <span>
+              2026
+            </span>
+
+            <span>
+              UNOFFICIAL CONCEPT
+            </span>
+          </div>
+        </header>
+
+        {/* =====================================
+            MAIN CONTENT
+        ===================================== */}
+
+        <section className="entry__content">
+          {/* LEFT MICRO HUD */}
+
+          <div
+            className="entry__hud entry__hud--left"
+            aria-hidden="true"
+          >
+            <div className="entry__hud-status">
+              <span
+                className="entry__hud-dot"
+              />
+
+              <span>
+                SYS / ONLINE
+              </span>
+            </div>
+
+            <span>
+              X / 042.16
+            </span>
+
+            <span>
+              Y / 118.07
+            </span>
+          </div>
+
+          {/* RIGHT MICRO HUD */}
+
+          <div
+            className="entry__hud entry__hud--right"
+            aria-hidden="true"
+          >
+            <span>
+              DROP / 001
+            </span>
+
+            <span>
+              MODE / ENTRY
+            </span>
+
+            <span>
+              SIGNAL / 98%
+            </span>
+          </div>
+
+          {/* =====================================
+              3D MEDALLION
+          ===================================== */}
+
+          <div
+            className="entry__emblem entry__emblem--3d"
+            aria-hidden="true"
+          >
+            <EntryLogo3D />
+          </div>
+
+          {/* =====================================
+              ENTER
+          ===================================== */}
+
+          <button
+            className="entry__enter"
+            type="button"
+            onClick={handleEnter}
+          >
+            ENTER
+          </button>
+
+          {/* =====================================
+              SUBTITLE
+          ===================================== */}
+
+          <p className="entry__subtitle">
+            ANOTHER REALITY AWAITS
+          </p>
+        </section>
+
+        {/* =====================================
+            FOOTER
+        ===================================== */}
+
+        <footer className="entry__footer">
+          <span>
+            PEOPLE / PLACES / IDEAS / BEYOND
+          </span>
+
+          <div className="entry__footer-center">
             <span
-              className="entry__hud-dot"
+              className="entry__status-dot"
             />
 
             <span>
-              SYS / ONLINE
+              HS / 001
             </span>
           </div>
 
           <span>
-            X / 042.16
+            NOT FROM HERE
           </span>
-
-          <span>
-            Y / 118.07
-          </span>
-        </div>
-
-        {/* RIGHT MICRO HUD */}
-
-        <div
-          className="entry__hud entry__hud--right"
-          aria-hidden="true"
-        >
-          <span>
-            DROP / 001
-          </span>
-
-          <span>
-            MODE / ENTRY
-          </span>
-
-          <span>
-            SIGNAL / 98%
-          </span>
-        </div>
+        </footer>
 
         {/* =====================================
-            3D MEDALLION
+            HERO
         ===================================== */}
 
-        <div
-          className="entry__emblem entry__emblem--3d"
-          aria-hidden="true"
-        >
-          <EntryLogo3D />
-        </div>
-
-        {/* =====================================
-            ENTER
-        ===================================== */}
-
-        <button
-          className="entry__enter"
-          type="button"
-          onClick={handleEnter}
-        >
-          ENTER
-        </button>
-
-        {/* =====================================
-            SUBTITLE
-        ===================================== */}
-
-        <p className="entry__subtitle">
-          ANOTHER REALITY AWAITS
-        </p>
-      </section>
-
-      {/* =====================================
-          FOOTER
-      ===================================== */}
-
-      <footer className="entry__footer">
-        <span>
-          PEOPLE / PLACES / IDEAS / BEYOND
-        </span>
-
-        <div className="entry__footer-center">
-          <span
-            className="entry__status-dot"
+        {heroVisible && (
+          <Hero
+            cartCount={
+              cartCount
+            }
           />
+        )}
 
-          <span>
-            HS / 001
-          </span>
-        </div>
+        {/* =====================================
+            BLACK TRANSITION COVER
+        ===================================== */}
 
-        <span>
-          NOT FROM HERE
-        </span>
-      </footer>
+        <div
+          className="entry__transition-cover"
+          aria-hidden="true"
+        />
+      </main>
 
       {/* =====================================
-          HERO
+          DROP GRID
       ===================================== */}
 
       {heroVisible && (
-        <Hero />
+        <DropGrid
+          onSelectProduct={
+            setSelectedProduct
+          }
+        />
       )}
 
       {/* =====================================
-          BLACK TRANSITION COVER
+          PRODUCT DETAIL
       ===================================== */}
 
-      <div
-        className="entry__transition-cover"
-        aria-hidden="true"
-      />
-    </main>
-
-    {/* =====================================
-        DROP GRID
-    ===================================== */}
-
-    {heroVisible && (
-      <DropGrid
-        onSelectProduct={
-          setSelectedProduct
-        }
-      />
-    )}
-
-    {/* =====================================
-        PRODUCT DETAIL
-    ===================================== */}
-
-    {selectedProduct && (
-      <ProductDetail
-        product={selectedProduct}
-        onClose={() =>
-          setSelectedProduct(null)
-        }
-      />
-    )}
-  </>
-)
+      {selectedProduct && (
+        <ProductDetail
+          product={
+            selectedProduct
+          }
+          onAddToCart={
+            handleAddToCart
+          }
+          onClose={() =>
+            setSelectedProduct(
+              null,
+            )
+          }
+        />
+      )}
+    </>
+  )
 }
 
 export default App

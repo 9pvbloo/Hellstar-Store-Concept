@@ -3003,3 +3003,21 @@ button:only-child {
     max-height: 27svh;
   }
 }
+
+.product-detail__bag.is-added {
+  border-color:
+    rgba(
+      242,
+      240,
+      234,
+      0.82
+    );
+
+  opacity: 1;
+}
+
+
+.product-detail__bag.is-added
+.product-detail__bag-arrow {
+  transform: none;
+}
