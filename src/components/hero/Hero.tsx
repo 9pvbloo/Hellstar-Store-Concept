@@ -1,6 +1,8 @@
 import {
+  useEffect,
   useLayoutEffect,
   useRef,
+  useState,
 } from 'react'
 
 import gsap from 'gsap'
@@ -9,6 +11,48 @@ import './Hero.css'
 import HeroStickers from './HeroStickers'
 
 import hoodiePathToParadise from '../../assets/products/hoodie-01-black-path-to-paradise.png'
+import hoodieGreyPinkFlame from '../../assets/products/hoodie-02-grey-pink-flame.png'
+import hoodieRedRecords from '../../assets/products/hoodie-03-red-records.png'
+
+type HeroProduct = {
+  id: string
+  title: string
+  type: string
+  metaTitle: string
+  category: string
+  image: string
+  alt: string
+}
+
+const products: HeroProduct[] = [
+  {
+    id: '01',
+    title: 'PATH TO PARADISE',
+    type: 'BLACK GRAPHIC HOODIE',
+    metaTitle: 'PATH TO PARADISE',
+    category: 'HOODIE',
+    image: hoodiePathToParadise,
+    alt: 'Black Path to Paradise graphic hoodie',
+  },
+  {
+    id: '02',
+    title: 'GREY PINK FLAME',
+    type: 'GREY / PINK GRAPHIC HOODIE',
+    metaTitle: 'GREY PINK FLAME',
+    category: 'HOODIE',
+    image: hoodieGreyPinkFlame,
+    alt: 'Grey and pink flame graphic hoodie',
+  },
+  {
+    id: '03',
+    title: 'RED RECORDS',
+    type: 'RED GRAPHIC HOODIE',
+    metaTitle: 'RED RECORDS',
+    category: 'HOODIE',
+    image: hoodieRedRecords,
+    alt: 'Red Records graphic hoodie',
+  },
+]
 
 function Hero() {
   const heroRef =
@@ -20,11 +64,64 @@ function Hero() {
   const productFloatRef =
     useRef<HTMLDivElement>(null)
 
+  const productRef =
+    useRef<HTMLElement>(null)
+
+  const productCopyRef =
+    useRef<HTMLDivElement>(null)
+
+  const leftMetaRef =
+    useRef<HTMLDivElement>(null)
+
+  const rightMetaRef =
+    useRef<HTMLDivElement>(null)
+
   const wordmarkRef =
     useRef<HTMLDivElement>(null)
 
   const haloRef =
     useRef<HTMLDivElement>(null)
+
+  const switchingRef =
+    useRef(false)
+
+  const introReadyRef =
+    useRef(false)
+
+  const firstProductRenderRef =
+    useRef(true)
+
+  const switchDirectionRef =
+    useRef(1)
+
+  const [
+    activeProductIndex,
+    setActiveProductIndex,
+  ] =
+    useState(0)
+
+  const activeProduct =
+    products[activeProductIndex]
+
+  /* =========================================
+     PRELOAD PRODUCTS
+  ========================================= */
+
+  useEffect(() => {
+    products.forEach(
+      (product) => {
+        const image =
+          new Image()
+
+        image.src =
+          product.image
+      },
+    )
+  }, [])
+
+  /* =========================================
+     INITIAL HERO + IDLE MOTION
+  ========================================= */
 
   useLayoutEffect(() => {
     const root =
@@ -58,6 +155,7 @@ function Hero() {
       ).matches
 
     if (reducedMotion) {
+      introReadyRef.current = true
       return
     }
 
@@ -66,200 +164,232 @@ function Hero() {
         '(pointer: fine)',
       ).matches
 
-    const context = gsap.context(
-      () => {
-        /* =====================================
-           INITIAL HERO STATE
-        ===================================== */
+    const context =
+      gsap.context(
+        () => {
+          /* =============================
+             INITIAL STATE
+          ============================= */
 
-        gsap.set(
-          '.hero__wordmark',
-          {
-            opacity: 0,
-            scale: 0.94,
-            y: 30,
-          },
-        )
-
-        gsap.set(
-          '.hero__product',
-          {
-            opacity: 0,
-            scale: 0.82,
-            y: 70,
-            rotate: -2,
-            filter: 'blur(10px)',
-          },
-        )
-
-        gsap.set(
-          [
-            '.hero__meta',
-            '.hero__nav',
-            '.hero__footer',
-          ],
-          {
-            opacity: 0,
-            y: 10,
-          },
-        )
-
-        gsap.set(
-          '.hero__product-info',
-          {
-            opacity: 0,
-            y: 20,
-          },
-        )
-
-        /* =====================================
-           HERO REVEAL
-        ===================================== */
-
-        const timeline =
-          gsap.timeline({
-            defaults: {
-              ease: 'power3.out',
+          gsap.set(
+            '.hero__wordmark',
+            {
+              opacity: 0,
+              scale: 0.94,
+              y: 30,
             },
-          })
+          )
 
-        timeline.to(
-          '.hero__wordmark',
-          {
-            opacity: 0.18,
-            scale: 1,
-            y: 0,
+          gsap.set(
+            '.hero__product',
+            {
+              opacity: 0,
+              scale: 0.82,
+              y: 70,
+              rotate: -2,
+              filter:
+                'blur(10px)',
+            },
+          )
 
-            duration: 1.2,
+          gsap.set(
+            [
+              '.hero__meta',
+              '.hero__nav',
+              '.hero__footer',
+            ],
+            {
+              opacity: 0,
+              y: 10,
+            },
+          )
 
-            ease: 'power4.out',
-          },
-          0,
-        )
+          gsap.set(
+            '.hero__product-info',
+            {
+              opacity: 0,
+              y: 20,
+            },
+          )
 
-        timeline.to(
-          '.hero__product',
-          {
-            opacity: 1,
-            scale: 1,
-            y: 0,
-            rotate: 0,
-            filter: 'blur(0px)',
+          /* =============================
+             HERO REVEAL
+          ============================= */
 
-            duration: 1.35,
+          const timeline =
+            gsap.timeline({
+              defaults: {
+                ease:
+                  'power3.out',
+              },
+            })
 
-            ease: 'power4.out',
-          },
-          0.12,
-        )
+          timeline.to(
+            '.hero__wordmark',
+            {
+              opacity: 0.18,
+              scale: 1,
+              y: 0,
 
-        timeline.to(
-          '.hero__nav',
-          {
-            opacity: 1,
-            y: 0,
+              duration: 1.2,
 
-            duration: 0.7,
-          },
-          0.32,
-        )
+              ease:
+                'power4.out',
+            },
+            0,
+          )
 
-        timeline.to(
-          '.hero__meta',
-          {
-            opacity: 1,
-            y: 0,
+          timeline.to(
+            '.hero__product',
+            {
+              opacity: 1,
+              scale: 1,
+              y: 0,
+              rotate: 0,
 
-            duration: 0.75,
+              filter:
+                'blur(0px)',
 
-            stagger: 0.08,
-          },
-          0.45,
-        )
+              duration: 1.35,
 
-        timeline.to(
-          '.hero__product-info',
-          {
-            opacity: 1,
-            y: 0,
+              ease:
+                'power4.out',
+            },
+            0.12,
+          )
 
-            duration: 0.8,
-          },
-          0.68,
-        )
+          timeline.to(
+            '.hero__nav',
+            {
+              opacity: 1,
+              y: 0,
 
-        timeline.to(
-          '.hero__footer',
-          {
-            opacity: 1,
-            y: 0,
+              duration: 0.7,
+            },
+            0.32,
+          )
 
-            duration: 0.7,
-          },
-          0.88,
-        )
+          timeline.to(
+            '.hero__meta',
+            {
+              opacity: 1,
+              y: 0,
 
-        /* =====================================
-           IDLE FLOAT
-        ===================================== */
+              duration: 0.75,
 
-        gsap.to(
-          productFloat,
-          {
-            y: -9,
-            rotation: 0.35,
+              stagger: 0.08,
+            },
+            0.45,
+          )
 
-            duration: 3.4,
+          timeline.to(
+            '.hero__product-info',
+            {
+              opacity: 1,
+              y: 0,
 
-            repeat: -1,
-            yoyo: true,
+              duration: 0.8,
+            },
+            0.68,
+          )
 
-            ease: 'sine.inOut',
+          timeline.to(
+            '.hero__footer',
+            {
+              opacity: 1,
+              y: 0,
 
-            delay: 1.25,
-          },
-        )
+              duration: 0.7,
+            },
+            0.88,
+          )
 
-        /* =====================================
-           HALO BREATHING
-        ===================================== */
+          /*
+           * Libera el transform del producto
+           * para que su hover CSS siga
+           * funcionando después del intro.
+           */
 
-        gsap.to(
-          halo,
-          {
-            scale: 1.08,
-            opacity: 0.72,
+          timeline.set(
+            '.hero__product',
+            {
+              clearProps:
+                'transform,filter,opacity',
+            },
+            1.5,
+          )
 
-            duration: 4.2,
+          timeline.call(
+            () => {
+              introReadyRef.current =
+                true
+            },
+            [],
+            1.55,
+          )
 
-            repeat: -1,
-            yoyo: true,
+          /* =============================
+             IDLE FLOAT
+          ============================= */
 
-            ease: 'sine.inOut',
+          gsap.to(
+            productFloat,
+            {
+              y: -9,
 
-            delay: 1.1,
-          },
-        )
-      },
-      root,
-    )
+              rotation: 0.35,
 
-    /* =========================================
+              duration: 3.4,
+
+              repeat: -1,
+              yoyo: true,
+
+              ease:
+                'sine.inOut',
+
+              delay: 1.25,
+            },
+          )
+
+          /* =============================
+             HALO BREATHING
+          ============================= */
+
+          gsap.to(
+            halo,
+            {
+              scale: 1.08,
+
+              opacity: 0.72,
+
+              duration: 4.2,
+
+              repeat: -1,
+              yoyo: true,
+
+              ease:
+                'sine.inOut',
+
+              delay: 1.1,
+            },
+          )
+        },
+        root,
+      )
+
+    /* =====================================
        POINTER PARALLAX
-    ========================================= */
+    ===================================== */
 
     if (finePointer) {
-      /*
-       * Product moves slightly toward pointer.
-       */
-
       const productX =
         gsap.quickTo(
           productStage,
           'x',
           {
             duration: 0.75,
-            ease: 'power3.out',
+            ease:
+              'power3.out',
           },
         )
 
@@ -269,13 +399,10 @@ function Hero() {
           'y',
           {
             duration: 0.75,
-            ease: 'power3.out',
+            ease:
+              'power3.out',
           },
         )
-
-      /*
-       * Wordmark moves in opposite direction.
-       */
 
       const wordmarkX =
         gsap.quickTo(
@@ -283,7 +410,8 @@ function Hero() {
           'x',
           {
             duration: 1,
-            ease: 'power3.out',
+            ease:
+              'power3.out',
           },
         )
 
@@ -293,13 +421,10 @@ function Hero() {
           'y',
           {
             duration: 1,
-            ease: 'power3.out',
+            ease:
+              'power3.out',
           },
         )
-
-      /*
-       * Halo moves subtly with product.
-       */
 
       const haloX =
         gsap.quickTo(
@@ -307,7 +432,8 @@ function Hero() {
           'x',
           {
             duration: 1.1,
-            ease: 'power3.out',
+            ease:
+              'power3.out',
           },
         )
 
@@ -317,7 +443,8 @@ function Hero() {
           'y',
           {
             duration: 1.1,
-            ease: 'power3.out',
+            ease:
+              'power3.out',
           },
         )
 
@@ -333,7 +460,7 @@ function Hero() {
               event.clientX -
               bounds.left
             ) /
-            bounds.width -
+              bounds.width -
             0.5
           ) * 2
 
@@ -343,14 +470,11 @@ function Hero() {
               event.clientY -
               bounds.top
             ) /
-            bounds.height -
+              bounds.height -
             0.5
           ) * 2
 
-        /*
-         * Product:
-         * strongest depth layer.
-         */
+        /* Product layer */
 
         productX(
           normalizedX * 16,
@@ -360,10 +484,7 @@ function Hero() {
           normalizedY * 10,
         )
 
-        /*
-         * Wordmark:
-         * counter-parallax.
-         */
+        /* Counter-parallax */
 
         wordmarkX(
           normalizedX * -10,
@@ -373,10 +494,7 @@ function Hero() {
           normalizedY * -6,
         )
 
-        /*
-         * Halo:
-         * slower secondary movement.
-         */
+        /* Halo */
 
         haloX(
           normalizedX * 8,
@@ -420,14 +538,306 @@ function Hero() {
           handlePointerLeave,
         )
 
+        introReadyRef.current =
+          false
+
         context.revert()
       }
     }
 
     return () => {
+      introReadyRef.current =
+        false
+
       context.revert()
     }
   }, [])
+
+  /* =========================================
+     PRODUCT ENTER ANIMATION
+  ========================================= */
+
+  useLayoutEffect(() => {
+    /*
+     * Ignore initial render because
+     * initial Hero timeline already handles it.
+     */
+
+    if (
+      firstProductRenderRef.current
+    ) {
+      firstProductRenderRef.current =
+        false
+
+      return
+    }
+
+    const product =
+      productRef.current
+
+    const productCopy =
+      productCopyRef.current
+
+    const leftMeta =
+      leftMetaRef.current
+
+    const rightMeta =
+      rightMetaRef.current
+
+    if (
+      !product ||
+      !productCopy ||
+      !leftMeta ||
+      !rightMeta
+    ) {
+      switchingRef.current = false
+      return
+    }
+
+    const reducedMotion =
+      window.matchMedia(
+        '(prefers-reduced-motion: reduce)',
+      ).matches
+
+    if (reducedMotion) {
+      switchingRef.current = false
+      return
+    }
+
+    const direction =
+      switchDirectionRef.current
+
+    gsap.killTweensOf(
+      [
+        product,
+        productCopy,
+        leftMeta,
+        rightMeta,
+      ],
+    )
+
+    gsap.set(
+      product,
+      {
+        opacity: 0,
+
+        x:
+          direction * -36,
+
+        y: 14,
+
+        scale: 0.94,
+
+        filter:
+          'blur(10px)',
+      },
+    )
+
+    gsap.set(
+      [
+        productCopy,
+        leftMeta,
+        rightMeta,
+      ],
+      {
+        opacity: 0,
+        y: 12,
+      },
+    )
+
+    const timeline =
+      gsap.timeline({
+        onComplete: () => {
+          gsap.set(
+            product,
+            {
+              clearProps:
+                'transform,filter,opacity',
+            },
+          )
+
+          switchingRef.current =
+            false
+        },
+      })
+
+    timeline.to(
+      product,
+      {
+        opacity: 1,
+
+        x: 0,
+        y: 0,
+
+        scale: 1,
+
+        filter:
+          'blur(0px)',
+
+        duration: 0.62,
+
+        ease:
+          'power4.out',
+      },
+      0,
+    )
+
+    timeline.to(
+      [
+        leftMeta,
+        rightMeta,
+      ],
+      {
+        opacity: 1,
+
+        y: 0,
+
+        duration: 0.42,
+
+        stagger: 0.04,
+
+        ease:
+          'power3.out',
+      },
+      0.12,
+    )
+
+    timeline.to(
+      productCopy,
+      {
+        opacity: 1,
+
+        y: 0,
+
+        duration: 0.48,
+
+        ease:
+          'power3.out',
+      },
+      0.18,
+    )
+
+    return () => {
+      timeline.kill()
+    }
+  }, [activeProductIndex])
+
+  /* =========================================
+     CHANGE PRODUCT
+  ========================================= */
+
+  const handleSelectProduct = (
+    nextIndex: number,
+  ) => {
+    if (
+      nextIndex ===
+        activeProductIndex ||
+      switchingRef.current ||
+      !introReadyRef.current
+    ) {
+      return
+    }
+
+    const product =
+      productRef.current
+
+    const productCopy =
+      productCopyRef.current
+
+    const leftMeta =
+      leftMetaRef.current
+
+    const rightMeta =
+      rightMetaRef.current
+
+    if (
+      !product ||
+      !productCopy ||
+      !leftMeta ||
+      !rightMeta
+    ) {
+      return
+    }
+
+    const reducedMotion =
+      window.matchMedia(
+        '(prefers-reduced-motion: reduce)',
+      ).matches
+
+    switchDirectionRef.current =
+      nextIndex >
+      activeProductIndex
+        ? 1
+        : -1
+
+    if (reducedMotion) {
+      setActiveProductIndex(
+        nextIndex,
+      )
+
+      return
+    }
+
+    switchingRef.current = true
+
+    const direction =
+      switchDirectionRef.current
+
+    gsap.killTweensOf(
+      [
+        product,
+        productCopy,
+        leftMeta,
+        rightMeta,
+      ],
+    )
+
+    gsap.to(
+      [
+        leftMeta,
+        rightMeta,
+        productCopy,
+      ],
+      {
+        opacity: 0,
+
+        y: -8,
+
+        duration: 0.22,
+
+        ease:
+          'power2.in',
+      },
+    )
+
+    gsap.to(
+      product,
+      {
+        opacity: 0,
+
+        x:
+          direction * 34,
+
+        y: -10,
+
+        scale: 0.95,
+
+        filter:
+          'blur(8px)',
+
+        duration: 0.34,
+
+        ease:
+          'power3.in',
+
+        onComplete: () => {
+          setActiveProductIndex(
+            nextIndex,
+          )
+        },
+      },
+    )
+  }
 
   return (
     <section
@@ -505,6 +915,7 @@ function Hero() {
       ===================================== */}
 
       <div
+        ref={leftMetaRef}
         className="hero__meta hero__meta--left"
         aria-hidden="true"
       >
@@ -513,7 +924,7 @@ function Hero() {
         </span>
 
         <span>
-          PATH TO PARADISE
+          {activeProduct.metaTitle}
         </span>
 
         <span>
@@ -522,15 +933,16 @@ function Hero() {
       </div>
 
       <div
+        ref={rightMetaRef}
         className="hero__meta hero__meta--right"
         aria-hidden="true"
       >
         <span>
-          ITEM / 01
+          ITEM / {activeProduct.id}
         </span>
 
         <span>
-          CATEGORY / HOODIE
+          CATEGORY / {activeProduct.category}
         </span>
 
         <span>
@@ -539,10 +951,10 @@ function Hero() {
       </div>
 
       {/* =====================================
-            STICKER SYSTEM
-        ===================================== */}
+          STICKER SYSTEM
+      ===================================== */}
 
-        <HeroStickers />
+      <HeroStickers />
 
       {/* =====================================
           PRODUCT
@@ -562,10 +974,13 @@ function Hero() {
           ref={productFloatRef}
           className="hero__product-float"
         >
-          <figure className="hero__product">
+          <figure
+            ref={productRef}
+            className="hero__product"
+          >
             <img
-              src={hoodiePathToParadise}
-              alt="Black Path to Paradise graphic hoodie"
+              src={activeProduct.image}
+              alt={activeProduct.alt}
               draggable="false"
             />
           </figure>
@@ -577,46 +992,80 @@ function Hero() {
       ===================================== */}
 
       <div className="hero__product-info">
-        <div className="hero__product-index">
-          <span>
-            01
-          </span>
+        {/* PRODUCT SELECTOR */}
 
-          <span className="hero__product-divider">
-            /
-          </span>
+        <div
+          className="hero__product-switcher"
+          aria-label="Select featured product"
+        >
+          {products.map(
+            (
+              product,
+              index,
+            ) => {
+              const active =
+                index ===
+                activeProductIndex
 
-          <span>
-            03
-          </span>
+              return (
+                <button
+                  key={product.id}
+                  className={`hero__product-switch ${
+                    active
+                      ? 'hero__product-switch--active'
+                      : ''
+                  }`}
+                  type="button"
+                  aria-label={`Show ${product.title}`}
+                  aria-pressed={
+                    active
+                  }
+                  onClick={() =>
+                    handleSelectProduct(
+                      index,
+                    )
+                  }
+                >
+                  {product.id}
+                </button>
+              )
+            },
+          )}
         </div>
 
-        <h1
-          id="hero-product-title"
-          className="hero__product-title"
+        {/* DYNAMIC PRODUCT COPY */}
+
+        <div
+          ref={productCopyRef}
+          className="hero__product-copy"
         >
-          PATH TO PARADISE
-        </h1>
-
-        <p className="hero__product-type">
-          BLACK GRAPHIC HOODIE
-        </p>
-
-        <button
-          className="hero__cta"
-          type="button"
-        >
-          <span>
-            EXPLORE DROP
-          </span>
-
-          <span
-            className="hero__cta-arrow"
-            aria-hidden="true"
+          <h1
+            id="hero-product-title"
+            className="hero__product-title"
           >
-            ↗
-          </span>
-        </button>
+            {activeProduct.title}
+          </h1>
+
+          <p className="hero__product-type">
+            {activeProduct.type}
+          </p>
+
+          <button
+            className="hero__cta"
+            type="button"
+          >
+            <span>
+              EXPLORE DROP
+            </span>
+
+            <span
+              className="hero__cta-arrow"
+              aria-hidden="true"
+            >
+              ↗
+            </span>
+          </button>
+        </div>
       </div>
 
       {/* =====================================
