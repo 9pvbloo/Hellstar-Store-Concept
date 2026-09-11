@@ -293,6 +293,14 @@ function Hero() {
             0.68,
           )
 
+          timeline.set(
+            '.hero__product-info',
+            {
+                clearProps: 'transform,opacity',
+            },
+            1.5,
+          )
+
           timeline.to(
             '.hero__footer',
             {
