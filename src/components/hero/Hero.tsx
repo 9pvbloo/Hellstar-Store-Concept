@@ -847,6 +847,32 @@ function Hero() {
     )
   }
 
+  /* =========================================
+     EXPLORE DROP
+  ========================================= */
+
+  const handleExploreDrop = () => {
+    const drop =
+      document.getElementById(
+        'drop-001',
+      )
+
+    if (!drop) return
+
+    const reducedMotion =
+      window.matchMedia(
+        '(prefers-reduced-motion: reduce)',
+      ).matches
+
+    drop.scrollIntoView({
+      behavior:
+        reducedMotion
+          ? 'auto'
+          : 'smooth',
+      block: 'start',
+    })
+  }
+
   return (
     <section
       ref={heroRef}
@@ -892,7 +918,10 @@ function Hero() {
           className="hero__nav-links"
           aria-label="Hero navigation"
         >
-          <button type="button">
+          <button
+            type="button"
+            onClick={handleExploreDrop}
+          >
             SHOP
           </button>
 
@@ -1061,6 +1090,7 @@ function Hero() {
           <button
             className="hero__cta"
             type="button"
+            onClick={handleExploreDrop}
           >
             <span>
               EXPLORE DROP

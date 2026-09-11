@@ -11,6 +11,7 @@ import './App.css'
 import EntryLogo3D from './components/entry/EntryLogo3D'
 import DotField from './components/backgrounds/DotField/DotField'
 import Hero from './components/hero/Hero'
+import DropGrid from './components/drop/DropGrid'
 
 function App() {
   const entryRef =
@@ -530,6 +531,7 @@ function App() {
   }
 
   return (
+  <>
     <main
       ref={entryRef}
       className="entry"
@@ -723,7 +725,11 @@ function App() {
         aria-hidden="true"
       />
     </main>
-  )
-}
 
+    {heroVisible && (
+      <DropGrid />
+    )}
+  </>
+)
+}
 export default App
