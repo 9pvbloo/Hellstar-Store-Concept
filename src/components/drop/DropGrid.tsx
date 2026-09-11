@@ -7,110 +7,20 @@ import gsap from 'gsap'
 
 import './DropGrid.css'
 
-import hoodie01 from '../../assets/products/hoodie-01-black-path-to-paradise.png'
-import hoodie02 from '../../assets/products/hoodie-02-grey-pink-flame.png'
-import hoodie03 from '../../assets/products/hoodie-03-red-records.png'
+import {
+  products,
+  type StoreProduct,
+} from '../../data/products'
 
-import tee01 from '../../assets/products/tee-01-black-boxing.png'
-import tee02 from '../../assets/products/tee-02-cream-enlightenment.png'
-import tee03 from '../../assets/products/tee-03-black-skull-football.png'
-
-import shorts01 from '../../assets/products/shorts-01-black-burning-face.png'
-import shorts02 from '../../assets/products/shorts-02-black-path-to-paradise.png'
-import shorts03 from '../../assets/products/shorts-03-black-records.png'
-
-import cap01 from '../../assets/products/cap-01-red-flame.png'
-import cap02 from '../../assets/products/cap-02-black-grey-flame.png'
-
-type DropProduct = {
-  id: string
-  name: string
-  category: string
-  image: string
-  layout: string
+type DropGridProps = {
+  onSelectProduct: (
+    product: StoreProduct,
+  ) => void
 }
 
-const products: DropProduct[] = [
-  {
-    id: '01',
-    name: 'PATH TO PARADISE',
-    category: 'HOODIE',
-    image: hoodie01,
-    layout: 'drop-card--hero',
-  },
-  {
-    id: '02',
-    name: 'BLACK BOXING',
-    category: 'T-SHIRT',
-    image: tee01,
-    layout: 'drop-card--left',
-  },
-  {
-    id: '03',
-    name: 'GREY PINK FLAME',
-    category: 'HOODIE',
-    image: hoodie02,
-    layout: 'drop-card--right',
-  },
-  {
-    id: '04',
-    name: 'BURNING FACE',
-    category: 'SHORTS',
-    image: shorts01,
-    layout: 'drop-card--center-small',
-  },
-  {
-    id: '05',
-    name: 'RED FLAME',
-    category: 'CAP',
-    image: cap01,
-    layout: 'drop-card--left-small',
-  },
-  {
-    id: '06',
-    name: 'ENLIGHTENMENT',
-    category: 'T-SHIRT',
-    image: tee02,
-    layout: 'drop-card--right-large',
-  },
-  {
-    id: '07',
-    name: 'RED RECORDS',
-    category: 'HOODIE',
-    image: hoodie03,
-    layout: 'drop-card--left-large',
-  },
-  {
-    id: '08',
-    name: 'PATH TO PARADISE',
-    category: 'SHORTS',
-    image: shorts02,
-    layout: 'drop-card--right-small',
-  },
-  {
-    id: '09',
-    name: 'SKULL FOOTBALL',
-    category: 'T-SHIRT',
-    image: tee03,
-    layout: 'drop-card--center',
-  },
-  {
-    id: '10',
-    name: 'BLACK GREY FLAME',
-    category: 'CAP',
-    image: cap02,
-    layout: 'drop-card--left-small',
-  },
-  {
-    id: '11',
-    name: 'RECORDS',
-    category: 'SHORTS',
-    image: shorts03,
-    layout: 'drop-card--right',
-  },
-]
-
-function DropGrid() {
+function DropGrid({
+  onSelectProduct,
+}: DropGridProps) {
   const sectionRef =
     useRef<HTMLElement>(null)
 
@@ -258,6 +168,11 @@ function DropGrid() {
                 className="drop-card__visual"
                 type="button"
                 aria-label={`View ${product.name}`}
+                onClick={() =>
+                  onSelectProduct(
+                    product,
+                  )
+                }
               >
                 <span
                   className="drop-card__number"

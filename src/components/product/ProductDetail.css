@@ -1,0 +1,1617 @@
+.product-detail {
+  --pd-black: #050505;
+  --pd-deep: #090909;
+  --pd-white: #f2f0ea;
+  --pd-silver: #b8b8b8;
+  --pd-ash: #747474;
+  --pd-red: #b51f24;
+  --pd-hot-red: #e23832;
+
+  position: fixed;
+  inset: 0;
+
+  z-index: 200;
+
+  width: 100%;
+  min-height: 100svh;
+
+  overflow: hidden;
+
+  isolation: isolate;
+
+  background:
+    var(--pd-black);
+
+  color:
+    var(--pd-white);
+}
+
+
+/* =========================================
+   BACKGROUND
+========================================= */
+
+.product-detail__backdrop {
+  position: absolute;
+  inset: 0;
+
+  z-index: 0;
+
+  background:
+    radial-gradient(
+      circle at 52% 43%,
+      rgba(255, 255, 255, 0.07),
+      rgba(255, 255, 255, 0.015) 28%,
+      transparent 57%
+    ),
+    linear-gradient(
+      110deg,
+      rgba(255, 255, 255, 0.012),
+      transparent 36%
+    ),
+    #050505;
+}
+
+
+.product-detail__backdrop::after {
+  content: '';
+
+  position: absolute;
+  inset: 0;
+
+  opacity: 0.17;
+
+  background-image:
+    linear-gradient(
+      rgba(255, 255, 255, 0.022) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.022) 1px,
+      transparent 1px
+    );
+
+  background-size:
+    84px
+    84px;
+
+  mask-image:
+    radial-gradient(
+      circle at center,
+      black,
+      transparent 84%
+    );
+
+  pointer-events: none;
+}
+
+
+/* =========================================
+   TECHNICAL RAILS
+========================================= */
+
+.product-detail__rail {
+  position: absolute;
+
+  top: 94px;
+  bottom: 74px;
+
+  z-index: 2;
+
+  width: 1px;
+
+  background:
+    linear-gradient(
+      transparent,
+      rgba(255, 255, 255, 0.075) 12%,
+      rgba(255, 255, 255, 0.075) 88%,
+      transparent
+    );
+
+  pointer-events: none;
+}
+
+
+.product-detail__rail--left {
+  left: 27.5%;
+}
+
+
+.product-detail__rail--right {
+  right: 26%;
+}
+
+
+/* =========================================
+   NAV
+========================================= */
+
+.product-detail__nav {
+  position: absolute;
+
+  top: 28px;
+  right: 34px;
+  left: 34px;
+
+  z-index: 20;
+
+  display: grid;
+
+  grid-template-columns:
+    1fr
+    auto
+    1fr;
+
+  align-items: center;
+
+  font-family:
+    'IBM Plex Mono',
+    monospace;
+
+  font-size: 8px;
+
+  letter-spacing: 0.16em;
+
+  color:
+    rgba(
+      184,
+      184,
+      184,
+      0.52
+    );
+}
+
+
+.product-detail__brand {
+  font-family:
+    'Archivo Black',
+    sans-serif;
+
+  font-size: 16px;
+
+  letter-spacing: -0.045em;
+
+  color:
+    var(--pd-white);
+}
+
+
+.product-detail__nav-center {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+}
+
+
+.product-detail__nav-center
+> span {
+  color:
+    var(--pd-red);
+}
+
+
+.product-detail__close {
+  justify-self: end;
+
+  padding: 8px 0;
+
+  border: 0;
+
+  background:
+    transparent;
+
+  font-family:
+    inherit;
+
+  font-size:
+    inherit;
+
+  letter-spacing:
+    inherit;
+
+  color:
+    rgba(
+      242,
+      240,
+      234,
+      0.55
+    );
+
+  cursor: pointer;
+
+  transition:
+    color 220ms ease,
+    letter-spacing 300ms ease;
+}
+
+
+.product-detail__close:hover {
+  color:
+    var(--pd-white);
+
+  letter-spacing:
+    0.2em;
+}
+
+
+/* =========================================
+   BACKGROUND WORDMARK
+========================================= */
+
+.product-detail__wordmark {
+  position: absolute;
+
+  top: 48%;
+  left: 51%;
+
+  z-index: 1;
+
+  transform:
+    translate(
+      -50%,
+      -50%
+    );
+
+  font-family:
+    'Archivo Black',
+    sans-serif;
+
+  font-size:
+    clamp(
+      170px,
+      22vw,
+      390px
+    );
+
+  line-height: 0.72;
+
+  letter-spacing:
+    -0.08em;
+
+  white-space: nowrap;
+
+  color:
+    transparent;
+
+  -webkit-text-stroke:
+    1px
+    rgba(
+      242,
+      240,
+      234,
+      0.055
+    );
+
+  pointer-events:
+    none;
+}
+
+
+/* =========================================
+   LEFT EDITORIAL
+========================================= */
+
+.product-detail__left {
+  position: absolute;
+
+  top: 50%;
+  left: 34px;
+
+  z-index: 10;
+
+  width:
+    min(
+      23vw,
+      370px
+    );
+
+  transform:
+    translateY(-50%);
+}
+
+
+.product-detail__eyebrow,
+.product-detail__availability,
+.product-detail__label,
+.product-detail__selected-size,
+.product-detail__coordinate,
+.product-detail__technical,
+.product-detail__bottom {
+  font-family:
+    'IBM Plex Mono',
+    monospace;
+
+  font-size: 8px;
+
+  letter-spacing:
+    0.16em;
+}
+
+
+.product-detail__eyebrow {
+  color:
+    rgba(
+      184,
+      184,
+      184,
+      0.48
+    );
+}
+
+
+.product-detail__title {
+  max-width:
+    360px;
+
+  margin:
+    17px
+    0
+    25px;
+
+  font-family:
+    'Archivo Black',
+    sans-serif;
+
+  font-size:
+    clamp(
+      46px,
+      4.6vw,
+      78px
+    );
+
+  line-height:
+    0.87;
+
+  letter-spacing:
+    -0.06em;
+
+  text-wrap:
+    balance;
+
+  color:
+    var(--pd-white);
+}
+
+
+.product-detail__availability {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  color:
+    rgba(
+      184,
+      184,
+      184,
+      0.48
+    );
+}
+
+
+.product-detail__status-dot {
+  display: block;
+
+  width: 5px;
+  height: 5px;
+
+  flex: 0 0 auto;
+
+  border-radius:
+    50%;
+
+  background:
+    var(--pd-hot-red);
+
+  box-shadow:
+    0
+    0
+    10px
+    rgba(
+      226,
+      56,
+      50,
+      0.58
+    );
+}
+
+
+/* =========================================
+   PRODUCT STAGE
+========================================= */
+
+.product-detail__stage {
+  position: absolute;
+
+  top: 48%;
+  left: 51%;
+
+  z-index: 5;
+
+  display: grid;
+
+  place-items: center;
+
+  width:
+    min(
+      52vw,
+      780px
+    );
+
+  height:
+    min(
+      82vh,
+      790px
+    );
+
+  transform:
+    translate(
+      -50%,
+      -50%
+    );
+}
+
+
+.product-detail__stage::before,
+.product-detail__stage::after {
+  content: '';
+
+  position: absolute;
+
+  z-index: 0;
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.06
+    );
+
+  pointer-events:
+    none;
+}
+
+
+.product-detail__stage::before {
+  width: 1px;
+  height: 72px;
+}
+
+
+.product-detail__stage::after {
+  width: 72px;
+  height: 1px;
+}
+
+
+.product-detail__halo {
+  position: absolute;
+
+  width: 67%;
+  aspect-ratio: 1;
+
+  border-radius:
+    50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(
+        255,
+        255,
+        255,
+        0.11
+      )
+      0%,
+      rgba(
+        255,
+        255,
+        255,
+        0.038
+      )
+      34%,
+      transparent
+      70%
+    );
+
+  filter:
+    blur(17px);
+
+  opacity:
+    0.82;
+
+  pointer-events:
+    none;
+}
+
+
+.product-detail__image {
+  position: relative;
+
+  z-index: 4;
+
+  display: block;
+
+  width:
+    min(
+      43vw,
+      640px
+    );
+
+  max-height:
+    76vh;
+
+  object-fit:
+    contain;
+
+  user-select:
+    none;
+
+  -webkit-user-drag:
+    none;
+
+  filter:
+    drop-shadow(
+      0
+      42px
+      55px
+      rgba(
+        0,
+        0,
+        0,
+        0.68
+      )
+    );
+
+  will-change:
+    transform,
+    opacity,
+    filter;
+
+  transition:
+    transform
+    900ms
+    cubic-bezier(
+      0.16,
+      1,
+      0.3,
+      1
+    );
+}
+
+
+.product-detail__stage:hover
+.product-detail__image {
+  transform:
+    translateY(-6px)
+    scale(1.015);
+}
+
+
+.product-detail__coordinate {
+  position: absolute;
+
+  z-index: 6;
+
+  color:
+    rgba(
+      184,
+      184,
+      184,
+      0.25
+    );
+
+  pointer-events:
+    none;
+}
+
+
+.product-detail__coordinate--top {
+  top: 8%;
+  left: 50%;
+
+  transform:
+    translateX(-50%);
+}
+
+
+.product-detail__coordinate--bottom {
+  right: 8%;
+  bottom: 8%;
+}
+
+
+/* =========================================
+   RIGHT COMMERCE PANEL
+========================================= */
+
+.product-detail__right {
+  position: absolute;
+
+  top: 50%;
+  right: 34px;
+
+  z-index: 12;
+
+  width:
+    min(
+      21vw,
+      320px
+    );
+
+  transform:
+    translateY(-50%);
+}
+
+
+/* =========================================
+   META
+========================================= */
+
+.product-detail__meta {
+  display: grid;
+
+  grid-template-columns:
+    1fr
+    1fr;
+
+  gap:
+    20px
+    18px;
+
+  padding-bottom:
+    25px;
+
+  border-bottom:
+    1px
+    solid
+    rgba(
+      255,
+      255,
+      255,
+      0.1
+    );
+}
+
+
+.product-detail__meta
+> div {
+  display: flex;
+
+  flex-direction:
+    column;
+
+  gap: 7px;
+}
+
+
+.product-detail__meta span {
+  font-family:
+    'IBM Plex Mono',
+    monospace;
+
+  font-size: 7px;
+
+  letter-spacing:
+    0.17em;
+
+  color:
+    rgba(
+      184,
+      184,
+      184,
+      0.38
+    );
+}
+
+
+.product-detail__meta strong {
+  font-family:
+    'IBM Plex Mono',
+    monospace;
+
+  font-size: 8px;
+
+  font-weight: 400;
+
+  letter-spacing:
+    0.11em;
+
+  color:
+    rgba(
+      242,
+      240,
+      234,
+      0.78
+    );
+}
+
+
+/* =========================================
+   PRICE
+========================================= */
+
+.product-detail__price {
+  padding:
+    26px
+    0
+    27px;
+
+  border-bottom:
+    1px
+    solid
+    rgba(
+      255,
+      255,
+      255,
+      0.1
+    );
+}
+
+
+.product-detail__label {
+  display: block;
+
+  color:
+    rgba(
+      184,
+      184,
+      184,
+      0.45
+    );
+}
+
+
+.product-detail__price-old {
+  display: flex;
+
+  align-items: center;
+
+  gap: 11px;
+
+  margin-top:
+    16px;
+}
+
+
+.product-detail__price-old
+> span:first-child {
+  font-family:
+    'Space Grotesk',
+    sans-serif;
+
+  font-size: 14px;
+
+  letter-spacing:
+    0.03em;
+
+  color:
+    rgba(
+      184,
+      184,
+      184,
+      0.42
+    );
+
+  text-decoration:
+    line-through;
+
+  text-decoration-thickness:
+    1px;
+}
+
+
+.product-detail__sale {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  min-height: 22px;
+
+  padding:
+    0
+    10px;
+
+  border-radius:
+    999px;
+
+  background:
+    var(--pd-hot-red);
+
+  font-family:
+    'IBM Plex Mono',
+    monospace;
+
+  font-size:
+    7px;
+
+  letter-spacing:
+    0.12em;
+
+  color:
+    #fff;
+
+  box-shadow:
+    0
+    0
+    18px
+    rgba(
+      226,
+      56,
+      50,
+      0.14
+    );
+}
+
+
+.product-detail__price-current {
+  margin-top:
+    7px;
+
+  font-family:
+    'Space Grotesk',
+    sans-serif;
+
+  font-size:
+    clamp(
+      30px,
+      2.45vw,
+      42px
+    );
+
+  font-weight: 400;
+
+  line-height: 1;
+
+  letter-spacing:
+    0.025em;
+
+  color:
+    var(--pd-white);
+}
+
+
+.product-detail__price-usd {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  margin-top:
+    11px;
+
+  font-family:
+    'IBM Plex Mono',
+    monospace;
+
+  font-size: 8px;
+
+  letter-spacing:
+    0.13em;
+
+  color:
+    rgba(
+      184,
+      184,
+      184,
+      0.58
+    );
+}
+
+
+.product-detail__usd-old {
+  color:
+    rgba(
+      184,
+      184,
+      184,
+      0.28
+    );
+
+  text-decoration:
+    line-through;
+}
+
+
+/* =========================================
+   SIZE
+========================================= */
+
+.product-detail__sizes {
+  padding-top:
+    26px;
+}
+
+
+.product-detail__size-header {
+  display: flex;
+
+  align-items: center;
+
+  justify-content:
+    space-between;
+
+  gap: 14px;
+
+  margin-bottom:
+    14px;
+}
+
+
+.product-detail__selected-size {
+  color:
+    rgba(
+      242,
+      240,
+      234,
+      0.66
+    );
+}
+
+
+.product-detail__size-list {
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      4,
+      1fr
+    );
+
+  gap: 8px;
+}
+
+
+.product-detail__size-list button {
+  min-width: 0;
+  height: 45px;
+
+  padding:
+    0
+    10px;
+
+  border:
+    1px
+    solid
+    rgba(
+      255,
+      255,
+      255,
+      0.14
+    );
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.008
+    );
+
+  font-family:
+    'IBM Plex Mono',
+    monospace;
+
+  font-size: 8px;
+
+  letter-spacing:
+    0.12em;
+
+  color:
+    rgba(
+      242,
+      240,
+      234,
+      0.47
+    );
+
+  cursor: pointer;
+
+  transition:
+    color 220ms ease,
+    border-color 220ms ease,
+    background 220ms ease,
+    transform 300ms ease;
+}
+
+
+.product-detail__size-list button:hover {
+  color:
+    var(--pd-white);
+
+  border-color:
+    rgba(
+      255,
+      255,
+      255,
+      0.55
+    );
+
+  transform:
+    translateY(-2px);
+}
+
+
+.product-detail__size-list button.is-active {
+  border-color:
+    var(--pd-white);
+
+  background:
+    var(--pd-white);
+
+  color:
+    var(--pd-black);
+
+  transform:
+    none;
+}
+
+
+.product-detail__size-list
+button:only-child {
+  grid-column:
+    1 / -1;
+}
+
+
+/* =========================================
+   ADD TO BAG
+========================================= */
+
+.product-detail__bag {
+  display: flex;
+
+  align-items: center;
+
+  justify-content:
+    space-between;
+
+  width: 100%;
+
+  margin-top:
+    22px;
+
+  padding:
+    18px
+    1px;
+
+  border: 0;
+
+  border-top:
+    1px
+    solid
+    rgba(
+      255,
+      255,
+      255,
+      0.3
+    );
+
+  border-bottom:
+    1px
+    solid
+    rgba(
+      255,
+      255,
+      255,
+      0.3
+    );
+
+  background:
+    transparent;
+
+  font-family:
+    'IBM Plex Mono',
+    monospace;
+
+  font-size: 9px;
+
+  letter-spacing:
+    0.16em;
+
+  color:
+    var(--pd-white);
+
+  cursor: pointer;
+
+  transition:
+    padding 350ms
+    cubic-bezier(
+      0.16,
+      1,
+      0.3,
+      1
+    ),
+    border-color 300ms ease,
+    opacity 250ms ease;
+}
+
+
+.product-detail__bag-arrow {
+  font-size: 13px;
+
+  transition:
+    transform 350ms
+    cubic-bezier(
+      0.16,
+      1,
+      0.3,
+      1
+    );
+}
+
+
+.product-detail__bag:hover:not(:disabled) {
+  padding:
+    18px
+    7px;
+
+  border-color:
+    rgba(
+      255,
+      255,
+      255,
+      0.82
+    );
+}
+
+
+.product-detail__bag:hover:not(:disabled)
+.product-detail__bag-arrow {
+  transform:
+    translate(
+      4px,
+      -4px
+    );
+}
+
+
+.product-detail__bag:disabled {
+  opacity:
+    0.24;
+
+  cursor:
+    not-allowed;
+}
+
+
+/* =========================================
+   TECHNICAL MICRO COPY
+========================================= */
+
+.product-detail__technical {
+  position: absolute;
+
+  top: 50%;
+  left: 27px;
+
+  z-index: 8;
+
+  display: flex;
+
+  flex-direction:
+    column;
+
+  gap: 9px;
+
+  color:
+    rgba(
+      116,
+      116,
+      116,
+      0.3
+    );
+
+  transform:
+    translateY(-50%)
+    rotate(-90deg)
+    translateY(-155px);
+
+  transform-origin:
+    center;
+
+  pointer-events:
+    none;
+}
+
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.product-detail__bottom {
+  position: absolute;
+
+  right: 34px;
+  bottom: 24px;
+  left: 34px;
+
+  z-index: 15;
+
+  display: grid;
+
+  grid-template-columns:
+    1fr
+    auto
+    1fr;
+
+  color:
+    rgba(
+      116,
+      116,
+      116,
+      0.7
+    );
+}
+
+
+.product-detail__bottom
+> :nth-child(2) {
+  text-align:
+    center;
+}
+
+
+.product-detail__bottom
+> :last-child {
+  text-align:
+    right;
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (
+  max-width: 1100px
+) {
+
+  .product-detail__rail {
+    display: none;
+  }
+
+
+  .product-detail__stage {
+    top: 39%;
+
+    width: 70vw;
+
+    height: 58vh;
+  }
+
+
+  .product-detail__image {
+    width:
+      min(
+        55vw,
+        530px
+      );
+
+    max-height:
+      55vh;
+  }
+
+
+  .product-detail__left {
+    top: auto;
+
+    bottom: 82px;
+
+    width: 40vw;
+
+    transform: none;
+  }
+
+
+  .product-detail__right {
+    top: auto;
+
+    right: 24px;
+    bottom: 82px;
+
+    width:
+      min(
+        36vw,
+        320px
+      );
+
+    transform: none;
+  }
+
+
+  .product-detail__title {
+    font-size:
+      clamp(
+        38px,
+        5.8vw,
+        64px
+      );
+  }
+
+
+  .product-detail__technical {
+    display: none;
+  }
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (
+  max-width: 700px
+) {
+
+  .product-detail {
+    overflow-x:
+      hidden;
+
+    overflow-y:
+      auto;
+  }
+
+
+  .product-detail__backdrop {
+    position: fixed;
+  }
+
+
+  .product-detail__nav {
+    position: fixed;
+
+    top: 0;
+
+    right: 0;
+    left: 0;
+
+    z-index: 40;
+
+    padding:
+      max(
+        20px,
+        env(
+          safe-area-inset-top
+        )
+      )
+      18px
+      16px;
+
+    grid-template-columns:
+      1fr
+      auto;
+
+    background:
+      linear-gradient(
+        #050505
+        0%,
+        rgba(
+          5,
+          5,
+          5,
+          0.88
+        )
+        70%,
+        transparent
+        100%
+      );
+  }
+
+
+  .product-detail__nav-center {
+    display: none;
+  }
+
+
+  .product-detail__brand {
+    font-size: 13px;
+  }
+
+
+  .product-detail__wordmark {
+    position: fixed;
+
+    top: 31%;
+
+    font-size: 34vw;
+  }
+
+
+  .product-detail__stage {
+    position: relative;
+
+    top: auto;
+    left: auto;
+
+    width: 100%;
+    height: 51svh;
+
+    margin-top: 64px;
+
+    transform: none;
+  }
+
+
+  .product-detail__image {
+    width:
+      min(
+        84vw,
+        390px
+      );
+
+    max-height:
+      46svh;
+  }
+
+
+  .product-detail__coordinate {
+    display: none;
+  }
+
+
+  .product-detail__left,
+  .product-detail__right {
+    position: relative;
+
+    top: auto;
+    right: auto;
+    bottom: auto;
+    left: auto;
+
+    width: auto;
+
+    margin:
+      0
+      18px;
+
+    transform: none;
+  }
+
+
+  .product-detail__left {
+    margin-top:
+      -12px;
+
+    padding-bottom:
+      30px;
+
+    border-bottom:
+      1px
+      solid
+      rgba(
+        255,
+        255,
+        255,
+        0.1
+      );
+  }
+
+
+  .product-detail__title {
+    max-width:
+      92%;
+
+    margin:
+      11px
+      0
+      20px;
+
+    font-size:
+      clamp(
+        42px,
+        13.5vw,
+        64px
+      );
+  }
+
+
+  .product-detail__right {
+    margin-top:
+      28px;
+
+    padding-bottom:
+      calc(
+        90px +
+        env(
+          safe-area-inset-bottom
+        )
+      );
+  }
+
+
+  .product-detail__meta {
+    gap:
+      18px
+      12px;
+  }
+
+
+  .product-detail__price-current {
+    font-size:
+      36px;
+  }
+
+
+  .product-detail__sizes {
+    padding-top:
+      25px;
+  }
+
+
+  .product-detail__size-list {
+    gap: 7px;
+  }
+
+
+  .product-detail__size-list button {
+    height: 48px;
+  }
+
+
+  .product-detail__bag {
+    margin-top:
+      24px;
+
+    padding:
+      19px
+      1px;
+  }
+
+
+  .product-detail__bottom,
+  .product-detail__technical,
+  .product-detail__rail {
+    display: none;
+  }
+}
+
+
+/* =========================================
+   TOUCH
+========================================= */
+
+@media (
+  hover: none
+) {
+
+  .product-detail__stage:hover
+  .product-detail__image {
+    transform: none;
+  }
+
+
+  .product-detail__size-list
+  button:hover {
+    transform: none;
+  }
+}
+
+
+/* =========================================
+   REDUCED MOTION
+========================================= */
+
+@media (
+  prefers-reduced-motion:
+  reduce
+) {
+
+  .product-detail *,
+  .product-detail *::before,
+  .product-detail *::after {
+    scroll-behavior:
+      auto !important;
+
+    transition-duration:
+      0.01ms !important;
+  }
+}

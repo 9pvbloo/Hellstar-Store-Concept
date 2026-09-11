@@ -12,6 +12,11 @@ import EntryLogo3D from './components/entry/EntryLogo3D'
 import DotField from './components/backgrounds/DotField/DotField'
 import Hero from './components/hero/Hero'
 import DropGrid from './components/drop/DropGrid'
+import ProductDetail from './components/product/ProductDetail'
+
+import type {
+  StoreProduct,
+} from './data/products'
 
 function App() {
   const entryRef =
@@ -25,6 +30,14 @@ function App() {
 
   const [heroVisible, setHeroVisible] =
     useState(false)
+
+  const [
+    selectedProduct,
+    setSelectedProduct,
+  ] =
+    useState<StoreProduct | null>(
+      null,
+    )
 
   /* =========================================
      INTRO CINEMATIC
@@ -726,10 +739,32 @@ function App() {
       />
     </main>
 
+    {/* =====================================
+        DROP GRID
+    ===================================== */}
+
     {heroVisible && (
-      <DropGrid />
+      <DropGrid
+        onSelectProduct={
+          setSelectedProduct
+        }
+      />
+    )}
+
+    {/* =====================================
+        PRODUCT DETAIL
+    ===================================== */}
+
+    {selectedProduct && (
+      <ProductDetail
+        product={selectedProduct}
+        onClose={() =>
+          setSelectedProduct(null)
+        }
+      />
     )}
   </>
 )
 }
+
 export default App
