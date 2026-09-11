@@ -1,0 +1,887 @@
+/* =========================================
+   HERO
+========================================= */
+
+.hero {
+  --hero-black: #050505;
+  --hero-white: #f2f0ea;
+  --hero-silver: #b8b8b8;
+  --hero-ash: #747474;
+  --hero-red: #b51f24;
+
+  position: absolute;
+  inset: 0;
+
+  z-index: 40;
+
+  min-height: 100svh;
+
+  overflow: hidden;
+
+  isolation: isolate;
+
+  background:
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(255, 255, 255, 0.035),
+      transparent 34%
+    ),
+    var(--hero-black);
+
+  color: var(--hero-white);
+}
+
+
+/* =========================================
+   ATMOSPHERE
+========================================= */
+
+.hero__ambient {
+  position: absolute;
+  inset: 0;
+
+  z-index: 0;
+
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      circle at 50% 44%,
+      rgba(255, 255, 255, 0.055),
+      transparent 27%
+    ),
+    radial-gradient(
+      circle at 50% 65%,
+      rgba(255, 255, 255, 0.018),
+      transparent 40%
+    );
+}
+
+
+.hero__grid {
+  position: absolute;
+  inset: 0;
+
+  z-index: 0;
+
+  pointer-events: none;
+
+  opacity: 0.16;
+
+  background-image:
+    linear-gradient(
+      rgba(255, 255, 255, 0.025) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.025) 1px,
+      transparent 1px
+    );
+
+  background-size:
+    80px 80px;
+
+  mask-image:
+    radial-gradient(
+      circle at center,
+      black 0%,
+      rgba(0, 0, 0, 0.78) 48%,
+      transparent 88%
+    );
+
+  -webkit-mask-image:
+    radial-gradient(
+      circle at center,
+      black 0%,
+      rgba(0, 0, 0, 0.78) 48%,
+      transparent 88%
+    );
+}
+
+
+/* =========================================
+   NAVIGATION
+========================================= */
+
+.hero__nav {
+  position: absolute;
+
+  top: 28px;
+  right: 34px;
+  left: 34px;
+
+  z-index: 8;
+
+  display: grid;
+
+  grid-template-columns:
+    1fr
+    auto
+    1fr;
+
+  align-items: center;
+
+  font-family:
+    'IBM Plex Mono',
+    monospace;
+
+  font-size: 9px;
+
+  letter-spacing: 0.14em;
+
+  color:
+    rgba(
+      242,
+      240,
+      234,
+      0.56
+    );
+}
+
+
+.hero__brand {
+  justify-self: start;
+
+  font-family:
+    'Archivo Black',
+    sans-serif;
+
+  font-size: 16px;
+
+  line-height: 1;
+
+  letter-spacing: -0.04em;
+
+  color: var(--hero-white);
+}
+
+
+.hero__nav-center {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+}
+
+
+.hero__nav-dot {
+  width: 4px;
+  height: 4px;
+
+  border-radius: 50%;
+
+  background:
+    var(--hero-red);
+
+  box-shadow:
+    0 0 8px
+    rgba(
+      181,
+      31,
+      36,
+      0.55
+    );
+}
+
+
+.hero__nav-links {
+  justify-self: end;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 24px;
+}
+
+
+.hero__nav-links button {
+  padding: 0;
+
+  border: 0;
+
+  outline: none;
+
+  background: transparent;
+
+  font-family:
+    'IBM Plex Mono',
+    monospace;
+
+  font-size: 9px;
+
+  letter-spacing: 0.14em;
+
+  color:
+    rgba(
+      242,
+      240,
+      234,
+      0.58
+    );
+
+  cursor: pointer;
+
+  transition:
+    color 220ms ease;
+}
+
+
+.hero__nav-links button:hover {
+  color:
+    var(--hero-white);
+}
+
+
+/* =========================================
+   MASSIVE WORDMARK
+========================================= */
+
+.hero__wordmark {
+  position: absolute;
+
+  top: 47%;
+  left: 50%;
+
+  z-index: 1;
+
+  transform:
+    translate(
+      -50%,
+      -50%
+    );
+
+  width: max-content;
+
+  font-family:
+    'Archivo Black',
+    sans-serif;
+
+  font-size:
+    clamp(
+      140px,
+      20vw,
+      360px
+    );
+
+  line-height: 0.72;
+
+  letter-spacing: -0.075em;
+
+  white-space: nowrap;
+
+  color:
+    rgba(
+      242,
+      240,
+      234,
+      0.14
+    );
+
+  pointer-events: none;
+
+  user-select: none;
+}
+
+
+/* =========================================
+   SIDE META
+========================================= */
+
+.hero__meta {
+  position: absolute;
+
+  top: 45%;
+
+  z-index: 6;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 8px;
+
+  font-family:
+    'IBM Plex Mono',
+    monospace;
+
+  font-size: 8px;
+
+  line-height: 1;
+
+  letter-spacing: 0.16em;
+
+  color:
+    rgba(
+      184,
+      184,
+      184,
+      0.46
+    );
+}
+
+
+.hero__meta--left {
+  left: 34px;
+
+  align-items: flex-start;
+}
+
+
+.hero__meta--right {
+  right: 34px;
+
+  align-items: flex-end;
+
+  text-align: right;
+}
+
+
+/* =========================================
+   PRODUCT STAGE
+========================================= */
+
+.hero__product-stage {
+  position: absolute;
+
+  top: 48%;
+  left: 50%;
+
+  z-index: 4;
+
+  display: grid;
+
+  place-items: center;
+
+  width:
+    min(
+      48vw,
+      680px
+    );
+
+  aspect-ratio: 1;
+
+  transform:
+    translate(
+      -50%,
+      -50%
+    );
+}
+
+
+.hero__product-halo {
+  position: absolute;
+
+  width: 72%;
+  aspect-ratio: 1;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255, 255, 255, 0.08) 0%,
+      rgba(255, 255, 255, 0.025) 34%,
+      transparent 68%
+    );
+
+  filter:
+    blur(12px);
+
+  pointer-events: none;
+}
+
+
+.hero__product {
+  position: relative;
+
+  z-index: 2;
+
+  width:
+    min(
+      36vw,
+      520px
+    );
+
+  margin: 0;
+
+  pointer-events: auto;
+
+  filter:
+    drop-shadow(
+      0 28px 45px
+      rgba(0, 0, 0, 0.55)
+    );
+
+  transition:
+    transform 650ms
+    cubic-bezier(
+      0.16,
+      1,
+      0.3,
+      1
+    );
+}
+
+
+.hero__product:hover {
+  transform:
+    scale(1.025)
+    translateY(-5px);
+}
+
+
+.hero__product img {
+  display: block;
+
+  width: 100%;
+  height: auto;
+
+  user-select: none;
+
+  -webkit-user-drag: none;
+}
+
+
+/* =========================================
+   PRODUCT INFO
+========================================= */
+
+.hero__product-info {
+  position: absolute;
+
+  bottom: 78px;
+  left: 50%;
+
+  z-index: 8;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+
+  transform:
+    translateX(-50%);
+
+  text-align: center;
+}
+
+
+.hero__product-index {
+  display: flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  margin-bottom: 12px;
+
+  font-family:
+    'IBM Plex Mono',
+    monospace;
+
+  font-size: 8px;
+
+  letter-spacing: 0.18em;
+
+  color:
+    rgba(
+      184,
+      184,
+      184,
+      0.6
+    );
+}
+
+
+.hero__product-divider {
+  color:
+    var(--hero-red);
+}
+
+
+.hero__product-title {
+  margin: 0;
+
+  font-family:
+    'Archivo Black',
+    sans-serif;
+
+  font-size:
+    clamp(
+      30px,
+      3vw,
+      52px
+    );
+
+  line-height: 0.95;
+
+  letter-spacing: -0.045em;
+
+  color:
+    var(--hero-white);
+}
+
+
+.hero__product-type {
+  margin:
+    11px
+    0
+    0;
+
+  font-family:
+    'IBM Plex Mono',
+    monospace;
+
+  font-size: 8px;
+
+  line-height: 1;
+
+  letter-spacing: 0.28em;
+
+  color:
+    rgba(
+      184,
+      184,
+      184,
+      0.5
+    );
+}
+
+
+/* =========================================
+   CTA
+========================================= */
+
+.hero__cta {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 40px;
+
+  margin-top: 22px;
+
+  padding:
+    10px
+    0;
+
+  border: 0;
+  border-bottom:
+    1px solid
+    rgba(
+      242,
+      240,
+      234,
+      0.28
+    );
+
+  background:
+    transparent;
+
+  font-family:
+    'IBM Plex Mono',
+    monospace;
+
+  font-size: 9px;
+
+  letter-spacing: 0.17em;
+
+  color:
+    var(--hero-white);
+
+  cursor: pointer;
+
+  transition:
+    gap 300ms ease,
+    border-color 300ms ease;
+}
+
+
+.hero__cta:hover {
+  gap: 52px;
+
+  border-color:
+    rgba(
+      242,
+      240,
+      234,
+      0.8
+    );
+}
+
+
+.hero__cta-arrow {
+  transition:
+    transform 300ms ease;
+}
+
+
+.hero__cta:hover
+.hero__cta-arrow {
+  transform:
+    translate(
+      4px,
+      -4px
+    );
+}
+
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.hero__footer {
+  position: absolute;
+
+  right: 34px;
+  bottom: 24px;
+  left: 34px;
+
+  z-index: 8;
+
+  display: grid;
+
+  grid-template-columns:
+    1fr
+    auto
+    1fr;
+
+  align-items: end;
+
+  font-family:
+    'IBM Plex Mono',
+    monospace;
+
+  font-size: 8px;
+
+  letter-spacing: 0.13em;
+
+  color:
+    rgba(
+      116,
+      116,
+      116,
+      0.82
+    );
+}
+
+
+.hero__footer
+> :last-child {
+  text-align: right;
+}
+
+
+.hero__scroll {
+  position: relative;
+
+  padding-left: 14px;
+}
+
+
+.hero__scroll::before {
+  content: '';
+
+  position: absolute;
+
+  top: 50%;
+  left: 0;
+
+  width: 4px;
+  height: 4px;
+
+  border-radius: 50%;
+
+  background:
+    var(--hero-red);
+
+  transform:
+    translateY(-50%);
+
+  box-shadow:
+    0 0 7px
+    rgba(
+      181,
+      31,
+      36,
+      0.48
+    );
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 1000px) {
+
+  .hero__nav-center {
+    display: none;
+  }
+
+
+  .hero__nav {
+    grid-template-columns:
+      1fr
+      1fr;
+  }
+
+
+  .hero__meta {
+    display: none;
+  }
+
+
+  .hero__product-stage {
+    width:
+      min(
+        68vw,
+        620px
+      );
+  }
+
+
+  .hero__product {
+    width:
+      min(
+        52vw,
+        480px
+      );
+  }
+
+
+  .hero__wordmark {
+    font-size:
+      clamp(
+        120px,
+        22vw,
+        250px
+      );
+  }
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 700px) {
+
+  .hero__nav {
+    top: 22px;
+    right: 18px;
+    left: 18px;
+  }
+
+
+  .hero__brand {
+    font-size: 13px;
+  }
+
+
+  .hero__nav-links {
+    gap: 14px;
+  }
+
+
+  .hero__nav-links button {
+    font-size: 7px;
+  }
+
+
+  .hero__nav-links
+  button:nth-child(2) {
+    display: none;
+  }
+
+
+  .hero__wordmark {
+    top: 44%;
+
+    font-size:
+      clamp(
+        86px,
+        27vw,
+        170px
+      );
+
+    opacity: 0.8;
+  }
+
+
+  .hero__product-stage {
+    top: 46%;
+
+    width: 100vw;
+  }
+
+
+  .hero__product {
+    width:
+      min(
+        82vw,
+        420px
+      );
+  }
+
+
+  .hero__product-info {
+    right: 18px;
+    bottom: 76px;
+    left: 18px;
+
+    transform: none;
+  }
+
+
+  .hero__product-title {
+    font-size:
+      clamp(
+        30px,
+        9vw,
+        44px
+      );
+  }
+
+
+  .hero__product-type {
+    font-size: 7px;
+
+    letter-spacing: 0.22em;
+  }
+
+
+  .hero__cta {
+    margin-top: 18px;
+
+    font-size: 8px;
+  }
+
+
+  .hero__footer {
+    right: 18px;
+    bottom: 20px;
+    left: 18px;
+
+    grid-template-columns:
+      1fr
+      1fr;
+
+    font-size: 7px;
+  }
+
+
+  .hero__scroll {
+    display: none;
+  }
+
+
+  .hero__footer
+  > :last-child {
+    text-align: right;
+  }
+}

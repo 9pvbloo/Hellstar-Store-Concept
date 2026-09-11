@@ -11,6 +11,7 @@ import './App.css'
 import EntryLogo3D from './components/entry/EntryLogo3D'
 import DotField from './components/backgrounds/DotField/DotField'
 import LiquidEther from './components/backgrounds/LiquidEther/LiquidEther'
+import Hero from './components/hero/Hero'
 
 function App() {
   const entryRef =
@@ -741,23 +742,11 @@ function App() {
       </footer>
 
       {/* =====================================
-          TEMPORARY HERO
+          HERO
       ===================================== */}
 
       {heroVisible && (
-        <section className="hero-preview">
-          <div className="hero-preview__eyebrow">
-            DROP / 001
-          </div>
-
-          <h1 className="hero-preview__title">
-            HELLSTAR
-          </h1>
-
-          <p className="hero-preview__copy">
-            NOT FROM HERE
-          </p>
-        </section>
+        <Hero />
       )}
 
       {/* =====================================
