@@ -13,11 +13,43 @@ function Hero() {
   const heroRef =
     useRef<HTMLElement>(null)
 
+  const productStageRef =
+    useRef<HTMLDivElement>(null)
+
+  const productFloatRef =
+    useRef<HTMLDivElement>(null)
+
+  const wordmarkRef =
+    useRef<HTMLDivElement>(null)
+
+  const haloRef =
+    useRef<HTMLDivElement>(null)
+
   useLayoutEffect(() => {
     const root =
       heroRef.current
 
-    if (!root) return
+    const productStage =
+      productStageRef.current
+
+    const productFloat =
+      productFloatRef.current
+
+    const wordmark =
+      wordmarkRef.current
+
+    const halo =
+      haloRef.current
+
+    if (
+      !root ||
+      !productStage ||
+      !productFloat ||
+      !wordmark ||
+      !halo
+    ) {
+      return
+    }
 
     const reducedMotion =
       window.matchMedia(
@@ -27,6 +59,11 @@ function Hero() {
     if (reducedMotion) {
       return
     }
+
+    const finePointer =
+      window.matchMedia(
+        '(pointer: fine)',
+      ).matches
 
     const context = gsap.context(
       () => {
@@ -160,9 +197,231 @@ function Hero() {
           },
           0.88,
         )
+
+        /* =====================================
+           IDLE FLOAT
+        ===================================== */
+
+        gsap.to(
+          productFloat,
+          {
+            y: -9,
+            rotation: 0.35,
+
+            duration: 3.4,
+
+            repeat: -1,
+            yoyo: true,
+
+            ease: 'sine.inOut',
+
+            delay: 1.25,
+          },
+        )
+
+        /* =====================================
+           HALO BREATHING
+        ===================================== */
+
+        gsap.to(
+          halo,
+          {
+            scale: 1.08,
+            opacity: 0.72,
+
+            duration: 4.2,
+
+            repeat: -1,
+            yoyo: true,
+
+            ease: 'sine.inOut',
+
+            delay: 1.1,
+          },
+        )
       },
       root,
     )
+
+    /* =========================================
+       POINTER PARALLAX
+    ========================================= */
+
+    if (finePointer) {
+      /*
+       * Product moves slightly toward pointer.
+       */
+
+      const productX =
+        gsap.quickTo(
+          productStage,
+          'x',
+          {
+            duration: 0.75,
+            ease: 'power3.out',
+          },
+        )
+
+      const productY =
+        gsap.quickTo(
+          productStage,
+          'y',
+          {
+            duration: 0.75,
+            ease: 'power3.out',
+          },
+        )
+
+      /*
+       * Wordmark moves in opposite direction.
+       */
+
+      const wordmarkX =
+        gsap.quickTo(
+          wordmark,
+          'x',
+          {
+            duration: 1,
+            ease: 'power3.out',
+          },
+        )
+
+      const wordmarkY =
+        gsap.quickTo(
+          wordmark,
+          'y',
+          {
+            duration: 1,
+            ease: 'power3.out',
+          },
+        )
+
+      /*
+       * Halo moves subtly with product.
+       */
+
+      const haloX =
+        gsap.quickTo(
+          halo,
+          'x',
+          {
+            duration: 1.1,
+            ease: 'power3.out',
+          },
+        )
+
+      const haloY =
+        gsap.quickTo(
+          halo,
+          'y',
+          {
+            duration: 1.1,
+            ease: 'power3.out',
+          },
+        )
+
+      const handlePointerMove = (
+        event: PointerEvent,
+      ) => {
+        const bounds =
+          root.getBoundingClientRect()
+
+        const normalizedX =
+          (
+            (
+              event.clientX -
+              bounds.left
+            ) /
+            bounds.width -
+            0.5
+          ) * 2
+
+        const normalizedY =
+          (
+            (
+              event.clientY -
+              bounds.top
+            ) /
+            bounds.height -
+            0.5
+          ) * 2
+
+        /*
+         * Product:
+         * strongest depth layer.
+         */
+
+        productX(
+          normalizedX * 16,
+        )
+
+        productY(
+          normalizedY * 10,
+        )
+
+        /*
+         * Wordmark:
+         * counter-parallax.
+         */
+
+        wordmarkX(
+          normalizedX * -10,
+        )
+
+        wordmarkY(
+          normalizedY * -6,
+        )
+
+        /*
+         * Halo:
+         * slower secondary movement.
+         */
+
+        haloX(
+          normalizedX * 8,
+        )
+
+        haloY(
+          normalizedY * 5,
+        )
+      }
+
+      const handlePointerLeave =
+        () => {
+          productX(0)
+          productY(0)
+
+          wordmarkX(0)
+          wordmarkY(0)
+
+          haloX(0)
+          haloY(0)
+        }
+
+      root.addEventListener(
+        'pointermove',
+        handlePointerMove,
+      )
+
+      root.addEventListener(
+        'pointerleave',
+        handlePointerLeave,
+      )
+
+      return () => {
+        root.removeEventListener(
+          'pointermove',
+          handlePointerMove,
+        )
+
+        root.removeEventListener(
+          'pointerleave',
+          handlePointerLeave,
+        )
+
+        context.revert()
+      }
+    }
 
     return () => {
       context.revert()
@@ -233,6 +492,7 @@ function Hero() {
       ===================================== */}
 
       <div
+        ref={wordmarkRef}
         className="hero__wordmark"
         aria-hidden="true"
       >
@@ -281,19 +541,28 @@ function Hero() {
           PRODUCT
       ===================================== */}
 
-      <div className="hero__product-stage">
+      <div
+        ref={productStageRef}
+        className="hero__product-stage"
+      >
         <div
+          ref={haloRef}
           className="hero__product-halo"
           aria-hidden="true"
         />
 
-        <figure className="hero__product">
-          <img
-            src={hoodiePathToParadise}
-            alt="Black Path to Paradise graphic hoodie"
-            draggable="false"
-          />
-        </figure>
+        <div
+          ref={productFloatRef}
+          className="hero__product-float"
+        >
+          <figure className="hero__product">
+            <img
+              src={hoodiePathToParadise}
+              alt="Black Path to Paradise graphic hoodie"
+              draggable="false"
+            />
+          </figure>
+        </div>
       </div>
 
       {/* =====================================

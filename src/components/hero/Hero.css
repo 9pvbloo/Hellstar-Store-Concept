@@ -283,6 +283,8 @@
   pointer-events: none;
 
   user-select: none;
+
+  will-change: transform;
 }
 
 
@@ -367,8 +369,29 @@
       -50%,
       -50%
     );
+
+  will-change: transform;
 }
 
+/* =========================================
+   PRODUCT FLOAT LAYER
+========================================= */
+
+.hero__product-float {
+  position: relative;
+
+  z-index: 2;
+
+  display: grid;
+
+  place-items: center;
+
+  width: 100%;
+
+  pointer-events: none;
+
+  will-change: transform;
+}
 
 .hero__product-halo {
   position: absolute;
@@ -390,8 +413,12 @@
     blur(12px);
 
   pointer-events: none;
-}
 
+  will-change:
+    transform,
+    opacity;
+
+}
 
 .hero__product {
   position: relative;
