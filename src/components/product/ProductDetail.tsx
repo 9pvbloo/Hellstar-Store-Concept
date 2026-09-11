@@ -130,18 +130,30 @@ function ProductDetail({
       )
 
       timeline.to(
-        [
-          '.product-detail__halo',
-          '.product-detail__wordmark',
-        ],
+        '.product-detail__wordmark',
         {
           opacity: 0,
 
-          duration: 0.36,
+          scale: 0.97,
+
+          duration: 0.28,
 
           ease: 'power2.in',
         },
-        0.12,
+        0.08,
+      )
+
+      timeline.to(
+        '.product-detail__band',
+        {
+          clipPath:
+            'inset(0 50% 0 50%)',
+
+          duration: 0.48,
+
+          ease: 'power3.inOut',
+        },
+        0.16,
       )
 
       timeline.to(
@@ -149,11 +161,11 @@ function ProductDetail({
         {
           opacity: 0,
 
-          duration: 0.34,
+          duration: 0.3,
 
           ease: 'power2.inOut',
         },
-        0.28,
+        0.34,
       )
     }, [onClose])
 
@@ -220,10 +232,18 @@ function ProductDetail({
           )
 
           gsap.set(
+            '.product-detail__band',
+            {
+              clipPath:
+                'inset(0 50% 0 50%)',
+            },
+          )
+
+          gsap.set(
             '.product-detail__wordmark',
             {
               opacity: 0,
-              scale: 1.04,
+              scale: 1.055,
             },
           )
 
@@ -265,11 +285,24 @@ function ProductDetail({
             {
               opacity: 1,
 
-              duration: 0.48,
+              duration: 0.42,
 
               ease: 'power2.out',
             },
             0,
+          )
+
+          timeline.to(
+            '.product-detail__band',
+            {
+              clipPath:
+                'inset(0 0% 0 0%)',
+
+              duration: 0.9,
+
+              ease: 'power4.inOut',
+            },
+            0.06,
           )
 
           timeline.to(
@@ -279,11 +312,11 @@ function ProductDetail({
 
               scale: 1,
 
-              duration: 1,
+              duration: 0.9,
 
-              ease: 'power3.out',
+              ease: 'power4.out',
             },
-            0.06,
+            0.28,
           )
 
           timeline.to(
@@ -300,11 +333,11 @@ function ProductDetail({
               filter:
                 'blur(0px)',
 
-              duration: 1.1,
+              duration: 1.08,
 
               ease: 'power4.out',
             },
-            0.08,
+            0.24,
           )
 
           timeline.to(
@@ -313,11 +346,11 @@ function ProductDetail({
               opacity: 1,
               y: 0,
 
-              duration: 0.55,
+              duration: 0.5,
 
               ease: 'power3.out',
             },
-            0.3,
+            0.4,
           )
 
           timeline.to(
@@ -329,16 +362,15 @@ function ProductDetail({
             ],
             {
               opacity: 1,
-
               y: 0,
 
-              duration: 0.66,
+              duration: 0.64,
 
-              stagger: 0.07,
+              stagger: 0.065,
 
               ease: 'power3.out',
             },
-            0.38,
+            0.48,
           )
         },
         root,
@@ -355,14 +387,39 @@ function ProductDetail({
       className="product-detail"
       aria-labelledby="product-detail-title"
     >
-      {/* BACKGROUND */}
+      {/* =====================================
+          BLACK WORLD
+      ===================================== */}
 
       <div
         className="product-detail__backdrop"
         aria-hidden="true"
       />
 
-      {/* TECHNICAL LINES */}
+      {/* =====================================
+          EDITORIAL BONE BAND
+      ===================================== */}
+
+      <div
+        className="product-detail__band"
+        aria-hidden="true"
+      >
+        <div className="product-detail__wordmark">
+          HELLSTAR
+        </div>
+
+        <span className="product-detail__band-code product-detail__band-code--left">
+          REALITY / 001
+        </span>
+
+        <span className="product-detail__band-code product-detail__band-code--right">
+          FW / 2026
+        </span>
+      </div>
+
+      {/* =====================================
+          TECHNICAL RAILS
+      ===================================== */}
 
       <div
         className="product-detail__rail product-detail__rail--left"
@@ -374,7 +431,9 @@ function ProductDetail({
         aria-hidden="true"
       />
 
-      {/* NAVIGATION */}
+      {/* =====================================
+          NAV
+      ===================================== */}
 
       <header className="product-detail__nav">
         <span className="product-detail__brand">
@@ -383,9 +442,11 @@ function ProductDetail({
 
         <span className="product-detail__nav-center">
           DROP / 001
+
           <span>
             /
           </span>
+
           OBJECT / {product.id}
         </span>
 
@@ -398,16 +459,9 @@ function ProductDetail({
         </button>
       </header>
 
-      {/* MASSIVE BACKGROUND WORDMARK */}
-
-      <div
-        className="product-detail__wordmark"
-        aria-hidden="true"
-      >
-        HELLSTAR
-      </div>
-
-      {/* LEFT EDITORIAL COPY */}
+      {/* =====================================
+          LEFT EDITORIAL COPY
+      ===================================== */}
 
       <div className="product-detail__left">
         <span className="product-detail__eyebrow">
@@ -433,7 +487,9 @@ function ProductDetail({
         </div>
       </div>
 
-      {/* CENTRAL PRODUCT */}
+      {/* =====================================
+          CENTRAL GARMENT
+      ===================================== */}
 
       <div className="product-detail__stage">
         <div
@@ -463,7 +519,9 @@ function ProductDetail({
         />
       </div>
 
-      {/* RIGHT COMMERCE PANEL */}
+      {/* =====================================
+          COMMERCE PANEL
+      ===================================== */}
 
       <aside className="product-detail__right">
         <div className="product-detail__meta">
@@ -622,7 +680,9 @@ function ProductDetail({
         </button>
       </aside>
 
-      {/* MICRO TECH */}
+      {/* =====================================
+          MICRO TECH
+      ===================================== */}
 
       <div
         className="product-detail__technical"
@@ -641,7 +701,9 @@ function ProductDetail({
         </span>
       </div>
 
-      {/* FOOTER */}
+      {/* =====================================
+          FOOTER
+      ===================================== */}
 
       <footer className="product-detail__bottom">
         <span>
