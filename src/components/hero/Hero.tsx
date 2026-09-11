@@ -6,6 +6,7 @@ import {
 import gsap from 'gsap'
 
 import './Hero.css'
+import HeroStickers from './HeroStickers'
 
 import hoodiePathToParadise from '../../assets/products/hoodie-01-black-path-to-paradise.png'
 
@@ -536,6 +537,12 @@ function Hero() {
           STATUS / AVAILABLE
         </span>
       </div>
+
+      {/* =====================================
+            STICKER SYSTEM
+        ===================================== */}
+
+        <HeroStickers />
 
       {/* =====================================
           PRODUCT

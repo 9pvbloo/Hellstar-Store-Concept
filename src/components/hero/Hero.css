@@ -287,6 +287,259 @@
   will-change: transform;
 }
 
+/* =========================================
+   HERO STICKERS
+========================================= */
+
+.hero__stickers {
+  position: absolute;
+  inset: 0;
+
+  z-index: 3;
+
+  overflow: hidden;
+
+  pointer-events: none;
+
+  user-select: none;
+}
+
+
+.hero__sticker {
+  position: absolute;
+
+  transform:
+    rotate(
+      var(--sticker-rotation)
+    );
+
+  transform-origin: center;
+
+  pointer-events: none;
+}
+
+
+.hero__sticker-float {
+  position: relative;
+
+  will-change: transform;
+}
+
+
+.hero__sticker-visual {
+  position: relative;
+
+  width: 100%;
+
+  will-change:
+    transform,
+    opacity,
+    filter;
+}
+
+
+.hero__sticker-visual img {
+  display: block;
+
+  width: 100%;
+  height: auto;
+
+  user-select: none;
+
+  -webkit-user-drag: none;
+}
+
+
+/* Black artwork → white artwork */
+
+.hero__sticker-visual--mono img {
+  filter:
+    invert(1)
+    brightness(1.15)
+    drop-shadow(
+      0 8px 16px
+      rgba(0, 0, 0, 0.42)
+    );
+}
+
+
+/* =========================================
+   RED FLAME
+========================================= */
+
+.hero__sticker--flame {
+  --sticker-rotation: -10deg;
+
+  top: 21%;
+  left: 15%;
+
+  width:
+    clamp(
+      145px,
+      13vw,
+      230px
+    );
+}
+
+
+.hero__sticker--flame img {
+  filter:
+    drop-shadow(
+      0 10px 20px
+      rgba(0, 0, 0, 0.48)
+    );
+}
+
+
+/* =========================================
+   RACING LOGO
+========================================= */
+
+.hero__sticker--racing {
+  --sticker-rotation: 8deg;
+
+  top: 23%;
+  right: 15%;
+
+  width:
+    clamp(
+      125px,
+      11vw,
+      205px
+    );
+}
+
+
+/* =========================================
+   CIRCLE EMBLEM
+========================================= */
+
+.hero__sticker--emblem {
+  --sticker-rotation: -7deg;
+
+  top: 57%;
+  left: 20%;
+
+  width:
+    clamp(
+      80px,
+      7vw,
+      125px
+    );
+}
+
+
+/* =========================================
+   WIDE HELLSTAR
+========================================= */
+
+.hero__sticker--wide {
+  --sticker-rotation: -6deg;
+
+  top: 57%;
+  right: 18%;
+
+  width:
+    clamp(
+      130px,
+      11vw,
+      205px
+    );
+}
+
+
+/* =========================================
+   STICKERS — TABLET
+========================================= */
+
+@media (max-width: 1000px) {
+
+  .hero__sticker--flame {
+    top: 21%;
+    left: 6%;
+
+    width:
+      clamp(
+        120px,
+        19vw,
+        180px
+      );
+  }
+
+
+  .hero__sticker--racing {
+    top: 24%;
+    right: 6%;
+
+    width:
+      clamp(
+        110px,
+        17vw,
+        165px
+      );
+  }
+
+
+  .hero__sticker--emblem {
+    top: 57%;
+    left: 8%;
+
+    width:
+      clamp(
+        70px,
+        11vw,
+        105px
+      );
+  }
+
+
+  .hero__sticker--wide {
+    top: 58%;
+    right: 7%;
+
+    width:
+      clamp(
+        110px,
+        18vw,
+        175px
+      );
+  }
+}
+
+
+/* =========================================
+   STICKERS — MOBILE
+========================================= */
+
+@media (max-width: 700px) {
+
+  .hero__sticker--flame {
+    top: 18%;
+    left: 3%;
+
+    width: 29vw;
+  }
+
+
+  .hero__sticker--racing {
+    top: 22%;
+    right: 2%;
+
+    width: 25vw;
+  }
+
+
+  /*
+   * En móvil dejamos respirar al producto.
+   * Estos dos vuelven cuando hagamos
+   * el mobile polish definitivo.
+   */
+
+  .hero__sticker--emblem,
+  .hero__sticker--wide {
+    display: none;
+  }
+}
 
 /* =========================================
    SIDE META

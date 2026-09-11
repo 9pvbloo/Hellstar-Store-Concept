@@ -10,7 +10,6 @@ import './App.css'
 
 import EntryLogo3D from './components/entry/EntryLogo3D'
 import DotField from './components/backgrounds/DotField/DotField'
-import LiquidEther from './components/backgrounds/LiquidEther/LiquidEther'
 import Hero from './components/hero/Hero'
 
 function App() {
@@ -153,7 +152,9 @@ function App() {
           {
             opacity: 0.95,
             scale: 1,
+
             duration: 1.25,
+
             ease: 'power2.out',
           },
           0.32,
@@ -165,7 +166,9 @@ function App() {
           '.entry__pattern',
           {
             opacity: 1,
+
             duration: 0.9,
+
             ease: 'power1.out',
           },
           0.6,
@@ -177,8 +180,11 @@ function App() {
           '.entry__emblem',
           {
             opacity: 1,
+
             scale: 1,
+
             y: 0,
+
             filter: 'blur(0px)',
 
             duration: 1.15,
@@ -194,6 +200,7 @@ function App() {
           '.entry__hud',
           {
             opacity: 1,
+
             y: 0,
 
             duration: 0.65,
@@ -211,6 +218,7 @@ function App() {
           '.entry__enter',
           {
             opacity: 1,
+
             y: 0,
 
             letterSpacing: '-0.045em',
@@ -228,6 +236,7 @@ function App() {
           '.entry__subtitle',
           {
             opacity: 1,
+
             y: 0,
 
             duration: 0.65,
@@ -241,6 +250,7 @@ function App() {
           '.entry__footer',
           {
             opacity: 1,
+
             y: 0,
 
             duration: 0.65,
@@ -248,7 +258,10 @@ function App() {
           1.92,
         )
 
-        /* Return ENTER control to CSS */
+        /*
+         * Return ENTER control to CSS
+         * so hover / active work normally.
+         */
 
         timeline.set(
           '.entry__enter',
@@ -268,7 +281,7 @@ function App() {
   }, [])
 
   /* =========================================
-     ENTER → LIQUID ETHER → HERO
+     ENTER → BLACKOUT → HERO
   ========================================= */
 
   useLayoutEffect(() => {
@@ -287,9 +300,10 @@ function App() {
       ).matches
 
     /*
-     * Con reduced motion mostramos
-     * directamente el Hero.
+     * Reduced motion:
+     * skip cinematic transition.
      */
+
     if (reducedMotion) {
       setHeroVisible(true)
       return
@@ -298,19 +312,10 @@ function App() {
     const context = gsap.context(
       () => {
         /*
-         * Liquid Ether empieza invisible.
+         * Prevent ENTER hover animation
+         * from fighting the exit timeline.
          */
-        gsap.set(
-          '.entry__liquid-transition',
-          {
-            opacity: 0,
-          },
-        )
 
-        /*
-         * Evita conflictos con el hover
-         * de ENTER durante la transición.
-         */
         gsap.killTweensOf(
           '.entry__enter',
         )
@@ -323,21 +328,23 @@ function App() {
           })
 
         /* ----------------------------------
-           HUD retracts
+           HUD RETRACTS
         ---------------------------------- */
 
         timeline.to(
           '.entry__hud',
           {
             opacity: 0,
+
             duration: 0.28,
+
             stagger: 0.035,
           },
           0,
         )
 
         /* ----------------------------------
-           Header + Footer
+           HEADER + FOOTER
         ---------------------------------- */
 
         timeline.to(
@@ -348,6 +355,7 @@ function App() {
           ],
           {
             opacity: 0,
+
             y: -6,
 
             duration: 0.38,
@@ -376,7 +384,7 @@ function App() {
         )
 
         /* ----------------------------------
-           Subtitle
+           SUBTITLE
         ---------------------------------- */
 
         timeline.to(
@@ -392,7 +400,7 @@ function App() {
         )
 
         /* ----------------------------------
-           Technical system
+           TECHNICAL SYSTEM
         ---------------------------------- */
 
         timeline.to(
@@ -420,7 +428,7 @@ function App() {
         )
 
         /* ----------------------------------
-           Medallion focus
+           MEDALLION FOCUS
         ---------------------------------- */
 
         timeline.to(
@@ -469,24 +477,8 @@ function App() {
           0.7,
         )
 
-        /* ==================================
-           LIQUID ETHER APPEARS
-        ================================== */
-
-        timeline.to(
-          '.entry__liquid-transition',
-          {
-            opacity: 1,
-
-            duration: 0.5,
-
-            ease: 'power2.out',
-          },
-          0.9,
-        )
-
         /* ----------------------------------
-           HERO MOUNTS UNDERNEATH
+           HERO MOUNTS
         ---------------------------------- */
 
         timeline.call(
@@ -494,7 +486,7 @@ function App() {
             setHeroVisible(true)
           },
           [],
-          1.2,
+          0.96,
         )
 
         /* ----------------------------------
@@ -506,45 +498,12 @@ function App() {
           {
             opacity: 0,
 
-            duration: 0.48,
+            duration: 0.58,
 
             ease: 'power2.inOut',
           },
-          1.28,
+          1.02,
         )
-
-        /* ==================================
-           ETHER STAYS ALIVE
-        ================================== */
-
-        /*
-         * Antes lo llevábamos a opacity: 0.
-         *
-         * Ahora baja a 22% y permanece
-         * vivo permanentemente sobre el Hero.
-         */
-
-        timeline.to(
-          '.entry__liquid-transition',
-          {
-            opacity: 0.22,
-
-            duration: 0.9,
-
-            ease: 'power2.inOut',
-          },
-          1.65,
-        )
-
-        /*
-         * IMPORTANTE:
-         *
-         * Ya NO hacemos:
-         *
-         * setTransitioning(false)
-         *
-         * porque eso desmontaría LiquidEther.
-         */
       },
       root,
     )
@@ -691,7 +650,9 @@ function App() {
           </span>
         </div>
 
-        {/* 3D MEDALLION */}
+        {/* =====================================
+            3D MEDALLION
+        ===================================== */}
 
         <div
           className="entry__emblem entry__emblem--3d"
@@ -700,7 +661,9 @@ function App() {
           <EntryLogo3D />
         </div>
 
-        {/* ENTER */}
+        {/* =====================================
+            ENTER
+        ===================================== */}
 
         <button
           className="entry__enter"
@@ -710,7 +673,9 @@ function App() {
           ENTER
         </button>
 
-        {/* SUBTITLE */}
+        {/* =====================================
+            SUBTITLE
+        ===================================== */}
 
         <p className="entry__subtitle">
           ANOTHER REALITY AWAITS
@@ -757,37 +722,6 @@ function App() {
         className="entry__transition-cover"
         aria-hidden="true"
       />
-
-      {/* =====================================
-          LIQUID ETHER
-      ===================================== */}
-
-      {transitioning && (
-        <div
-          className="entry__liquid-transition"
-          aria-hidden="true"
-        >
-          <LiquidEther
-            colors={[
-              '#ffffff',
-              '#bfc3c8',
-              '#ffffff',
-            ]}
-            mouseForce={24}
-            cursorSize={120}
-            resolution={0.45}
-            BFECC
-            isViscous={false}
-            autoDemo
-            autoSpeed={0.8}
-            autoIntensity={3.4}
-            autoResumeDelay={0}
-            autoRampDuration={0.35}
-            takeoverDuration={0.2}
-            lightMode={false}
-          />
-        </div>
-      )}
     </main>
   )
 }

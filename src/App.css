@@ -860,25 +860,6 @@
   opacity: 0;
 }
 
-
-/* =========================================
-   LIQUID ETHER TRANSITION
-========================================= */
-
-.entry__liquid-transition {
-  position: absolute;
-  inset: 0;
-
-  z-index: 60;
-
-  overflow: hidden;
-
-  pointer-events: none;
-
-  opacity: 0;
-}
-
-
 .entry__liquid-transition
 .liquid-ether-container {
   width: 100%;
