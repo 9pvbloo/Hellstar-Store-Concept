@@ -385,6 +385,7 @@ function ProductDetail({
     <section
       ref={rootRef}
       className="product-detail"
+      data-category={product.category}
       aria-labelledby="product-detail-title"
     >
       {/* =====================================

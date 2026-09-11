@@ -2859,3 +2859,147 @@ button:only-child {
       );
   }
 }
+
+/* =========================================
+   PRODUCT DETAIL — MOBILE FINAL POLISH
+========================================= */
+
+@media (max-width: 700px) {
+
+  /* -----------------------------------------
+     SMALLER EDITORIAL BAND
+  ----------------------------------------- */
+
+  .product-detail__band {
+    top: 96px;
+
+    right: 0;
+    left: 0;
+
+    width: 100%;
+    height: 40svh;
+
+    transform: none;
+  }
+
+
+  .product-detail__wordmark {
+    top: 50%;
+
+    font-size:
+      clamp(
+        110px,
+        39vw,
+        170px
+      );
+  }
+
+
+  /* -----------------------------------------
+     PRODUCT STAGE
+  ----------------------------------------- */
+
+  .product-detail__stage {
+    margin-top: 76px;
+
+    height: 50svh;
+  }
+
+
+  /* -----------------------------------------
+     TITLE GETS MORE AIR
+  ----------------------------------------- */
+
+  .product-detail__left {
+    margin-top: 12px;
+  }
+
+
+  .product-detail__title {
+    margin-top: 14px;
+  }
+
+
+  /* =========================================
+     CATEGORY SCALE
+  ========================================= */
+
+  /* HOODIES */
+
+  .product-detail[data-category='HOODIE']
+  .product-detail__stage {
+    height: 52svh;
+  }
+
+
+  .product-detail[data-category='HOODIE']
+  .product-detail__image {
+    width:
+      min(
+        82vw,
+        390px
+      );
+
+    max-height: 47svh;
+  }
+
+
+  /* T-SHIRTS */
+
+  .product-detail[data-category='T-SHIRT']
+  .product-detail__stage {
+    height: 49svh;
+  }
+
+
+  .product-detail[data-category='T-SHIRT']
+  .product-detail__image {
+    width:
+      min(
+        78vw,
+        365px
+      );
+
+    max-height: 43svh;
+  }
+
+
+  /* SHORTS */
+
+  .product-detail[data-category='SHORTS']
+  .product-detail__stage {
+    height: 43svh;
+  }
+
+
+  .product-detail[data-category='SHORTS']
+  .product-detail__image {
+    width:
+      min(
+        64vw,
+        300px
+      );
+
+    max-height: 32svh;
+  }
+
+
+  /* CAPS */
+
+  .product-detail[data-category='CAP']
+  .product-detail__stage {
+    height: 39svh;
+  }
+
+
+  .product-detail[data-category='CAP']
+  .product-detail__image {
+    width:
+      min(
+        56vw,
+        255px
+      );
+
+    max-height: 27svh;
+  }
+}
