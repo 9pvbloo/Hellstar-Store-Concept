@@ -959,9 +959,45 @@
 .hero__scroll {
   position: relative;
 
-  padding-left: 14px;
+  padding:
+    0
+    0
+    0
+    14px;
+
+  border: 0;
+
+  background:
+    transparent;
+
+  font-family:
+    inherit;
+
+  font-size:
+    inherit;
+
+  letter-spacing:
+    inherit;
+
+  color:
+    inherit;
+
+  cursor: pointer;
+
+  transition:
+    color 220ms ease;
 }
 
+
+.hero__scroll:hover {
+  color:
+    rgba(
+      242,
+      240,
+      234,
+      0.9
+    );
+}
 
 .hero__scroll::before {
   content: '';

@@ -1115,9 +1115,13 @@ function Hero() {
           UNOFFICIAL CONCEPT / 2026
         </span>
 
-        <span className="hero__scroll">
+        <button
+          className="hero__scroll"
+          type="button"
+          onClick={handleExploreDrop}
+        >
           SCROLL TO EXPLORE
-        </span>
+        </button>
 
         <span>
           NOT FROM HERE
