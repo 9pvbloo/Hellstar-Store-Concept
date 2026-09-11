@@ -12,11 +12,6 @@ import {
   useThree,
 } from '@react-three/fiber'
 
-import {
-  Environment,
-  Lightformer,
-} from '@react-three/drei'
-
 import { SVGLoader } from 'three/examples/jsm/loaders/SVGLoader.js'
 import * as THREE from 'three'
 
@@ -57,61 +52,42 @@ const logoExtrude: THREE.ExtrudeGeometryOptions = {
 }
 
 /* =========================================
-   BLACK CHROME MATERIAL
+   FULL BLACK CHROME MATERIAL
 ========================================= */
 
-function ChromeMaterial({
-  accent = false,
-}: {
-  accent?: boolean
-}) {
+function ChromeMaterial() {
   return (
     <meshPhysicalMaterial
       /*
-       * Black chrome.
+       * Full black chrome.
        *
-       * El rostro + estrella son ligeramente
-       * más claros que el aro para mantener
-       * buena lectura sin dejar de ser negros.
+       * Ya no diferenciamos rostro,
+       * estrella y aro por color.
+       * Todo pertenece al mismo metal negro.
        */
-      color={
-        accent
-          ? '#1b1f24'
-          : '#101216'
-      }
+      color="#08090b"
 
       metalness={1}
 
       /*
-       * Suficientemente pulido para reflejar
-       * las franjas rojas y blancas.
+       * Mantiene el aspecto pulido,
+       * pero evita un espejo excesivamente
+       * duro que genere highlights feos.
        */
-      roughness={
-        accent
-          ? 0.10
-          : 0.13
-      }
+      roughness={0.16}
 
       clearcoat={1}
-      clearcoatRoughness={0.018}
+      clearcoatRoughness={0.045}
 
       reflectivity={1}
 
       /*
-       * Reflejos fuertes sin convertir
-       * el objeto en plata blanca.
+       * Sin Environment/Lightformers,
+       * así que no necesitamos exagerar
+       * reflejos artificiales.
        */
-      envMapIntensity={
-        accent
-          ? 4.8
-          : 4.4
-      }
+      envMapIntensity={1}
 
-      /*
-       * Sin autoiluminación.
-       * El aspecto chrome viene realmente
-       * de las luces y el Environment.
-       */
       emissive="#000000"
       emissiveIntensity={0}
     />
@@ -126,10 +102,7 @@ function ChromeMedallion() {
   const group = useRef<THREE.Group>(null)
 
   /*
-   * Pose inicial.
-   *
-   * Evita que al hacer F5 el medallón
-   * aparezca completamente plano.
+   * Pose inicial ligeramente inclinada.
    */
   const initialY = 0.42
   const initialX = -0.16
@@ -160,8 +133,8 @@ function ChromeMedallion() {
   )
 
   /*
-   * Convertimos las rutas del SVG
-   * en Shapes que luego extruimos.
+   * Convertimos las rutas SVG
+   * en shapes independientes.
    */
   const parts = useMemo<EmblemPart[]>(() => {
     return svg.paths.flatMap(
@@ -231,10 +204,7 @@ function ChromeMedallion() {
         lastPointer.current.y
 
       /*
-       * Fuerza horizontal.
-       *
-       * No tiene límite:
-       * puede girar 360, 720, 1080...
+       * Giro horizontal ilimitado.
        */
       const horizontalForce =
         deltaX * 0.012
@@ -246,8 +216,7 @@ function ChromeMedallion() {
         horizontalForce
 
       /*
-       * Movimiento vertical mucho
-       * más controlado.
+       * Movimiento vertical limitado.
        */
       targetRotationX.current =
         THREE.MathUtils.clamp(
@@ -269,7 +238,8 @@ function ChromeMedallion() {
     ) => {
       dragging.current = false
 
-      canvas.style.cursor = 'grab'
+      canvas.style.cursor =
+        'grab'
 
       if (
         canvas.hasPointerCapture?.(
@@ -344,7 +314,7 @@ function ChromeMedallion() {
 
     if (!dragging.current) {
       /*
-       * Inercia después de soltar.
+       * Inercia al soltar.
        */
       targetRotationY.current +=
         velocityY.current
@@ -358,8 +328,7 @@ function ChromeMedallion() {
         )
 
       /*
-       * Micro movimiento automático
-       * cuando el usuario no interactúa.
+       * Movimiento idle.
        */
       const idleX =
         initialX +
@@ -382,9 +351,9 @@ function ChromeMedallion() {
         )
 
       /*
-       * Solo intenta regresar al idle
-       * cuando la inercia prácticamente
-       * terminó.
+       * Regresa lentamente a la
+       * posición idle cuando termina
+       * la inercia.
        */
       if (
         Math.abs(
@@ -426,7 +395,7 @@ function ChromeMedallion() {
       rotationX.current
 
     /*
-     * Floating extremadamente sutil.
+     * Floating muy sutil.
      */
     group.current.position.y =
       Math.sin(
@@ -449,10 +418,6 @@ function ChromeMedallion() {
         ({ id, shape, key }) => {
           const isRing =
             id === 'ring'
-
-          const isAccent =
-            id === 'star' ||
-            id === 'face-flames'
 
           return (
             <group
@@ -486,9 +451,7 @@ function ChromeMedallion() {
                   ]}
                 />
 
-                <ChromeMaterial
-                  accent={isAccent}
-                />
+                <ChromeMaterial />
               </mesh>
             </group>
           )
@@ -521,176 +484,91 @@ function EntryLogo3D() {
     >
       <Suspense fallback={null}>
         {/* =================================
-            BASE LIGHTING
+            SOFT BLACK CHROME LIGHTING
         ================================= */}
 
+        {/*
+         * Muy poca luz ambiente:
+         * queremos conservar el negro.
+         */}
+
         <ambientLight
-          intensity={0.72}
+          intensity={0.18}
           color="#ffffff"
         />
+
+        {/*
+         * Fill general muy tenue.
+         */}
 
         <hemisphereLight
-          intensity={1.25}
-          color="#f3f5f7"
-          groundColor="#08090b"
+          intensity={0.35}
+          color="#d8dce2"
+          groundColor="#000000"
         />
 
-        {/* Micro highlight frontal */}
-
-        <directionalLight
-          position={[0, 1.6, 6]}
-          intensity={3.8}
-          color="#ffffff"
-        />
-
-        {/* White upper reflection */}
+        {/*
+         * Highlight blanco amplio.
+         *
+         * Es luz real, NO Lightformer,
+         * así que no genera rectángulos
+         * ni líneas artificiales.
+         */}
 
         <spotLight
-          position={[4, 5, 5]}
-          intensity={18}
-          angle={0.55}
+          position={[4.5, 5, 6]}
+          intensity={7}
+          angle={0.9}
           penumbra={1}
           color="#ffffff"
         />
 
-        {/* Cold silver fill */}
+        {/*
+         * Segundo fill extremadamente
+         * suave desde el lado contrario.
+         */}
 
         <spotLight
-          position={[-5, 1, 4]}
-          intensity={10}
-          angle={0.65}
+          position={[-5, 2, 5]}
+          intensity={3.5}
+          angle={1}
           penumbra={1}
-          color="#bcc2c8"
+          color="#aeb4bc"
         />
 
         {/* =================================
-            BLOOD RED LIGHTING
+            BLOOD RED GLOW
         ================================= */}
 
+        {/*
+         * Este es el glow rojo fino
+         * que sí queremos conservar.
+         */}
+
         <spotLight
-          position={[-3, -2, 4]}
-          intensity={30}
-          angle={0.56}
-          penumbra={1}
-          color="#8b0f19"
+        position={[-3, -2, 4]}
+        intensity={8}
+        angle={0.62}
+        penumbra={1}
+        color="#eef2f5"
         />
 
         <pointLight
-          position={[2.2, -1.2, -2]}
-          intensity={14}
-          color="#c1121f"
+        position={[2.2, -1.2, -2]}
+        intensity={5.5}
+        color="#ffffff"
         />
 
-        {/* =================================
-            REFLECTION STUDIO
-        ================================= */}
-
-        <Environment resolution={256}>
-          {/*
-           * Blanco frontal controlado.
-           *
-           * Sirve para que el ojo entienda
-           * inmediatamente que es chrome,
-           * pero sin convertirlo en plata.
-           */}
-
-          <Lightformer
-            form="rect"
-            intensity={5.2}
-            color="#ffffff"
-            position={[0, 3, 5]}
-            scale={[8, 1.2, 1]}
-          />
-
-          {/* Silver left reflection */}
-
-          <Lightformer
-            form="rect"
-            intensity={3.4}
-            color="#c9ced4"
-            position={[-4, 0, 3]}
-            rotation={[
-              0,
-              Math.PI / 2,
-              0,
-            ]}
-            scale={[7.2, 1.1, 1]}
-          />
-
-          {/* Thin chrome streak */}
-
-          <Lightformer
-            form="rect"
-            intensity={4.8}
-            color="#ffffff"
-            position={[4, 1, 3]}
-            rotation={[
-              0,
-              -Math.PI / 2,
-              0,
-            ]}
-            scale={[5, 0.45, 1]}
-          />
-
-          {/* =================================
-              BLOOD RED REFLECTIONS
-          ================================= */}
-
-          {/* Lower blood reflection */}
-
-          <Lightformer
-            form="rect"
-            intensity={6.5}
-            color="#7a0c16"
-            position={[0, -3.2, 4]}
-            rotation={[
-              0.35,
-              0,
-              0,
-            ]}
-            scale={[7, 0.95, 1]}
-          />
-
-          {/* Diagonal blood streak */}
-
-          <Lightformer
-            form="rect"
-            intensity={5.6}
-            color="#b31224"
-            position={[2.6, 2.1, 4]}
-            rotation={[
-              0,
-              -0.35,
-              -0.45,
-            ]}
-            scale={[4.4, 0.42, 1]}
-          />
-
-          {/* Deep red opposite reflection */}
-
-          <Lightformer
-            form="rect"
-            intensity={3.2}
-            color="#b51f24"
-            position={[-2, -3, 3]}
-            rotation={[
-              -0.4,
-              0,
-              0,
-            ]}
-            scale={[4, 0.45, 1]}
-          />
-
-          {/* Small white ring highlight */}
-
-          <Lightformer
-            form="ring"
-            intensity={2.8}
-            color="#ffffff"
-            position={[0, 0, 4]}
-            scale={4}
-          />
-        </Environment>
+        {/*
+         * IMPORTANTE:
+         *
+         * No hay Environment.
+         * No hay Lightformer rect.
+         * No hay Lightformer ring.
+         *
+         * Por tanto desaparecen esas
+         * líneas blancas/reflejos duros.
+         */}
 
         <ChromeMedallion />
       </Suspense>
