@@ -372,11 +372,9 @@
   width: auto;
 
   margin: 0;
-
   padding: 4px 8px 8px;
 
   border: 0;
-
   outline: none;
 
   background: transparent;
@@ -384,11 +382,6 @@
   font-family:
     'Archivo Black',
     sans-serif;
-
-  /*
-   * Más grande para acompañar
-   * mejor al medallón.
-   */
 
   font-size:
     clamp(
@@ -408,14 +401,22 @@
   transition:
     letter-spacing 350ms ease,
     opacity 250ms ease,
-    transform 350ms ease;
+    transform 350ms cubic-bezier(
+      0.16,
+      1,
+      0.3,
+      1
+    );
 }
-
 
 .entry__enter:hover {
   letter-spacing: 0.015em;
+  transform: scale(1.045);
+}
 
-  transform: scale(1.025);
+.entry__enter:active {
+  transform: scale(0.965);
+  transition-duration: 100ms;
 }
 
 
