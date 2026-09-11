@@ -1,6 +1,7 @@
 import {
   useLayoutEffect,
   useRef,
+  useState,
 } from 'react'
 
 import gsap from 'gsap'
@@ -9,6 +10,7 @@ import './App.css'
 
 import EntryLogo3D from './components/entry/EntryLogo3D'
 import DotField from './components/backgrounds/DotField/DotField'
+import LiquidEther from './components/backgrounds/LiquidEther/LiquidEther'
 
 function App() {
   const entryRef =
@@ -16,6 +18,12 @@ function App() {
 
   const transitioningRef =
     useRef(false)
+
+  const [transitioning, setTransitioning] =
+    useState(false)
+
+  const [heroVisible, setHeroVisible] =
+    useState(false)
 
   /* =========================================
      INTRO CINEMATIC
@@ -38,9 +46,9 @@ function App() {
 
     const context = gsap.context(
       () => {
-        /* -----------------------------
+        /* -------------------------------------
            INITIAL STATE
-        ----------------------------- */
+        ------------------------------------- */
 
         gsap.set(
           [
@@ -104,9 +112,9 @@ function App() {
           },
         )
 
-        /* -----------------------------
-           TIMELINE
-        ----------------------------- */
+        /* -------------------------------------
+           INTRO TIMELINE
+        ------------------------------------- */
 
         const timeline =
           gsap.timeline({
@@ -150,7 +158,7 @@ function App() {
           0.32,
         )
 
-        /* Crosshair */
+        /* Technical Crosshair */
 
         timeline.to(
           '.entry__pattern',
@@ -171,21 +179,26 @@ function App() {
             scale: 1,
             y: 0,
             filter: 'blur(0px)',
+
             duration: 1.15,
+
             ease: 'power4.out',
           },
           0.72,
         )
 
-        /* HUD */
+        /* Micro HUD */
 
         timeline.to(
           '.entry__hud',
           {
             opacity: 1,
             y: 0,
+
             duration: 0.65,
+
             stagger: 0.08,
+
             ease: 'power2.out',
           },
           1.18,
@@ -198,8 +211,11 @@ function App() {
           {
             opacity: 1,
             y: 0,
+
             letterSpacing: '-0.045em',
+
             duration: 0.75,
+
             ease: 'power3.out',
           },
           1.48,
@@ -212,6 +228,7 @@ function App() {
           {
             opacity: 1,
             y: 0,
+
             duration: 0.65,
           },
           1.72,
@@ -224,15 +241,13 @@ function App() {
           {
             opacity: 1,
             y: 0,
+
             duration: 0.65,
           },
           1.92,
         )
 
-        /*
-         * Devuelve ENTER al control del CSS
-         * para recuperar hover / active.
-         */
+        /* Return ENTER control to CSS */
 
         timeline.set(
           '.entry__enter',
@@ -252,50 +267,54 @@ function App() {
   }, [])
 
   /* =========================================
-     ENTER CLICK TRANSITION
+     ENTER → LIQUID ETHER → HERO
   ========================================= */
 
-  const handleEnter = () => {
-    const root =
-      entryRef.current
-
-    if (
-      !root ||
-      transitioningRef.current
-    ) {
+  useLayoutEffect(() => {
+    if (!transitioning) {
       return
     }
 
-    transitioningRef.current = true
+    const root =
+      entryRef.current
+
+    if (!root) return
 
     const reducedMotion =
       window.matchMedia(
         '(prefers-reduced-motion: reduce)',
       ).matches
 
+    /*
+     * Con reduced motion mostramos
+     * directamente el Hero.
+     */
     if (reducedMotion) {
-      gsap.set(
-        '.entry__transition-cover',
-        {
-          opacity: 1,
-        },
-      )
-
+      setHeroVisible(true)
       return
     }
 
     const context = gsap.context(
       () => {
         /*
-         * Evitamos que hover / click CSS
-         * interfieran durante la salida.
+         * Liquid Ether empieza invisible.
          */
+        gsap.set(
+          '.entry__liquid-transition',
+          {
+            opacity: 0,
+          },
+        )
 
+        /*
+         * Evita conflictos con el hover
+         * de ENTER durante la transición.
+         */
         gsap.killTweensOf(
           '.entry__enter',
         )
 
-        const exitTimeline =
+        const timeline =
           gsap.timeline({
             defaults: {
               ease: 'power3.inOut',
@@ -303,10 +322,10 @@ function App() {
           })
 
         /* ----------------------------------
-           HUD retracts first
+           HUD retracts
         ---------------------------------- */
 
-        exitTimeline.to(
+        timeline.to(
           '.entry__hud',
           {
             opacity: 0,
@@ -317,10 +336,10 @@ function App() {
         )
 
         /* ----------------------------------
-           Header + Footer disappear
+           Header + Footer
         ---------------------------------- */
 
-        exitTimeline.to(
+        timeline.to(
           [
             '.entry__brand',
             '.entry__meta',
@@ -329,118 +348,225 @@ function App() {
           {
             opacity: 0,
             y: -6,
+
             duration: 0.38,
           },
           0.06,
         )
 
         /* ----------------------------------
-           ENTER + subtitle
+           ENTER
         ---------------------------------- */
 
-        exitTimeline.to(
+        timeline.to(
           '.entry__enter',
           {
             opacity: 0,
+
             y: 18,
+
             scale: 0.96,
+
             letterSpacing: '0.05em',
+
             duration: 0.38,
           },
           0.08,
         )
 
-        exitTimeline.to(
+        /* ----------------------------------
+           Subtitle
+        ---------------------------------- */
+
+        timeline.to(
           '.entry__subtitle',
           {
             opacity: 0,
+
             y: 10,
+
             duration: 0.3,
           },
           0.12,
         )
 
         /* ----------------------------------
-           Technical system shuts down
+           Technical system
         ---------------------------------- */
 
-        exitTimeline.to(
+        timeline.to(
           '.entry__pattern',
           {
             opacity: 0,
+
             duration: 0.48,
           },
           0.18,
         )
 
-        exitTimeline.to(
+        timeline.to(
           '.entry__dot-field',
           {
-            opacity: 0.16,
-            scale: 1.075,
+            opacity: 0.12,
+
+            scale: 1.08,
+
             duration: 0.72,
+
             ease: 'power2.inOut',
           },
           0.16,
         )
 
         /* ----------------------------------
-           Medallion becomes protagonist
+           Medallion focus
         ---------------------------------- */
 
-        exitTimeline.to(
+        timeline.to(
           '.entry__emblem',
           {
             scale: 1.07,
+
             y: -4,
+
             duration: 0.42,
+
             ease: 'power2.out',
           },
           0.12,
         )
 
-        /*
-         * Segundo impulso.
-         * Parece que el medallón empieza
-         * a acercarse hacia la cámara.
-         */
-
-        exitTimeline.to(
+        timeline.to(
           '.entry__emblem',
           {
             scale: 1.2,
-            opacity: 0.72,
+
+            opacity: 0.7,
+
             filter: 'blur(1.5px)',
+
             duration: 0.58,
+
             ease: 'power3.in',
           },
           0.48,
         )
 
         /* ----------------------------------
-           Black transition cover
+           BLACKOUT
         ---------------------------------- */
 
-        exitTimeline.to(
+        timeline.to(
           '.entry__transition-cover',
           {
             opacity: 1,
-            duration: 0.48,
+
+            duration: 0.42,
+
             ease: 'power2.inOut',
           },
-          0.72,
+          0.7,
         )
+
+        /* ==================================
+           LIQUID ETHER APPEARS
+        ================================== */
+
+        timeline.to(
+          '.entry__liquid-transition',
+          {
+            opacity: 1,
+
+            duration: 0.5,
+
+            ease: 'power2.out',
+          },
+          0.9,
+        )
+
+        /* ----------------------------------
+           HERO MOUNTS UNDERNEATH
+        ---------------------------------- */
+
+        timeline.call(
+          () => {
+            setHeroVisible(true)
+          },
+          [],
+          1.2,
+        )
+
+        /* ----------------------------------
+           BLACK COVER LEAVES
+        ---------------------------------- */
+
+        timeline.to(
+          '.entry__transition-cover',
+          {
+            opacity: 0,
+
+            duration: 0.48,
+
+            ease: 'power2.inOut',
+          },
+          1.28,
+        )
+
+        /* ==================================
+           ETHER STAYS ALIVE
+        ================================== */
+
+        /*
+         * Antes lo llevábamos a opacity: 0.
+         *
+         * Ahora baja a 22% y permanece
+         * vivo permanentemente sobre el Hero.
+         */
+
+        timeline.to(
+          '.entry__liquid-transition',
+          {
+            opacity: 0.22,
+
+            duration: 0.9,
+
+            ease: 'power2.inOut',
+          },
+          1.65,
+        )
+
+        /*
+         * IMPORTANTE:
+         *
+         * Ya NO hacemos:
+         *
+         * setTransitioning(false)
+         *
+         * porque eso desmontaría LiquidEther.
+         */
       },
       root,
     )
 
-    /*
-     * Este context NO lo revertimos todavía,
-     * porque en el siguiente paso
-     * Liquid Ether continuará desde aquí.
-     */
+    return () => {
+      context.revert()
+    }
+  }, [transitioning])
 
-    void context
+  /* =========================================
+     ENTER CLICK
+  ========================================= */
+
+  const handleEnter = () => {
+    if (
+      transitioningRef.current
+    ) {
+      return
+    }
+
+    transitioningRef.current = true
+
+    setTransitioning(true)
   }
 
   return (
@@ -520,14 +646,16 @@ function App() {
       ===================================== */}
 
       <section className="entry__content">
-        {/* LEFT HUD */}
+        {/* LEFT MICRO HUD */}
 
         <div
           className="entry__hud entry__hud--left"
           aria-hidden="true"
         >
           <div className="entry__hud-status">
-            <span className="entry__hud-dot" />
+            <span
+              className="entry__hud-dot"
+            />
 
             <span>
               SYS / ONLINE
@@ -543,7 +671,7 @@ function App() {
           </span>
         </div>
 
-        {/* RIGHT HUD */}
+        {/* RIGHT MICRO HUD */}
 
         <div
           className="entry__hud entry__hud--right"
@@ -562,7 +690,7 @@ function App() {
           </span>
         </div>
 
-        {/* MEDALLION */}
+        {/* 3D MEDALLION */}
 
         <div
           className="entry__emblem entry__emblem--3d"
@@ -613,13 +741,64 @@ function App() {
       </footer>
 
       {/* =====================================
-          TRANSITION COVER
+          TEMPORARY HERO
+      ===================================== */}
+
+      {heroVisible && (
+        <section className="hero-preview">
+          <div className="hero-preview__eyebrow">
+            DROP / 001
+          </div>
+
+          <h1 className="hero-preview__title">
+            HELLSTAR
+          </h1>
+
+          <p className="hero-preview__copy">
+            NOT FROM HERE
+          </p>
+        </section>
+      )}
+
+      {/* =====================================
+          BLACK TRANSITION COVER
       ===================================== */}
 
       <div
         className="entry__transition-cover"
         aria-hidden="true"
       />
+
+      {/* =====================================
+          LIQUID ETHER
+      ===================================== */}
+
+      {transitioning && (
+        <div
+          className="entry__liquid-transition"
+          aria-hidden="true"
+        >
+          <LiquidEther
+            colors={[
+              '#ffffff',
+              '#bfc3c8',
+              '#ffffff',
+            ]}
+            mouseForce={24}
+            cursorSize={120}
+            resolution={0.45}
+            BFECC
+            isViscous={false}
+            autoDemo
+            autoSpeed={0.8}
+            autoIntensity={3.4}
+            autoResumeDelay={0}
+            autoRampDuration={0.35}
+            takeoverDuration={0.2}
+            lightMode={false}
+          />
+        </div>
+      )}
     </main>
   )
 }
