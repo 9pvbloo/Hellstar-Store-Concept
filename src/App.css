@@ -363,6 +363,96 @@
   height: 100% !important;
 }
 
+/* =========================================
+   MICRO HUD
+========================================= */
+
+.entry__hud {
+  position: absolute;
+
+  top: 45%;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 7px;
+
+  font-family:
+    'IBM Plex Mono',
+    monospace;
+
+  font-size: 8px;
+
+  line-height: 1;
+
+  letter-spacing: 0.18em;
+
+  color:
+    rgba(
+      184,
+      184,
+      184,
+      0.46
+    );
+
+  pointer-events: none;
+
+  user-select: none;
+}
+
+
+.entry__hud--left {
+  left: clamp(
+    36px,
+    10vw,
+    170px
+  );
+
+  align-items: flex-start;
+
+  text-align: left;
+}
+
+
+.entry__hud--right {
+  right: clamp(
+    36px,
+    10vw,
+    170px
+  );
+
+  align-items: flex-end;
+
+  text-align: right;
+}
+
+
+.entry__hud-status {
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+}
+
+
+.entry__hud-dot {
+  width: 4px;
+  height: 4px;
+
+  border-radius: 50%;
+
+  background: var(--ember);
+
+  box-shadow:
+    0 0 8px
+    rgba(
+      181,
+      31,
+      36,
+      0.55
+    );
+}
 
 /* =========================================
    ENTER
@@ -549,6 +639,22 @@
     );
 }
 
+/* =========================================
+   ENTRY TRANSITION COVER
+========================================= */
+
+.entry__transition-cover {
+  position: absolute;
+  inset: 0;
+
+  z-index: 50;
+
+  pointer-events: none;
+
+  background: #050505;
+
+  opacity: 0;
+}
 
 /* =========================================
    TABLET
@@ -589,6 +695,10 @@
 ========================================= */
 
 @media (max-width: 700px) {
+
+  .entry__hud {
+    display: none;
+  }
 
   .entry {
     padding:
