@@ -54,7 +54,15 @@ const products: HeroProduct[] = [
   },
 ]
 
-function Hero() {
+type HeroProps = {
+  cartCount: number
+  onOpenCart: () => void
+}
+
+function Hero({
+  cartCount,
+  onOpenCart,
+}: HeroProps) {
   const heroRef =
     useRef<HTMLElement>(null)
 
@@ -929,8 +937,17 @@ function Hero() {
             LOOKBOOK
           </button>
 
-          <button type="button">
-            CART / 00
+          <button
+            type="button"
+            onClick={onOpenCart}
+          >
+            CART /{' '}
+            {String(
+              cartCount,
+            ).padStart(
+              2,
+              '0',
+            )}
           </button>
         </nav>
       </header>

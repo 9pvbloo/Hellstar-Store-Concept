@@ -1,0 +1,3023 @@
+.product-detail {
+  --pd-black: #050505;
+  --pd-deep: #090909;
+
+  --pd-bone: #f2f0ea;
+  --pd-bone-soft: #e9e7e0;
+
+  --pd-silver: #b8b8b8;
+  --pd-ash: #747474;
+
+  --pd-red: #b51f24;
+  --pd-hot-red: #e23832;
+
+  position: fixed;
+  inset: 0;
+
+  z-index: 200;
+
+  width: 100%;
+  min-height: 100svh;
+
+  overflow: hidden;
+
+  isolation: isolate;
+
+  background:
+    var(--pd-black);
+
+  color:
+    var(--pd-bone);
+}
+
+
+/* =========================================
+   BLACK WORLD
+========================================= */
+
+.product-detail__backdrop {
+  position: absolute;
+  inset: 0;
+
+  z-index: 0;
+
+  background:
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(255, 255, 255, 0.025),
+      transparent 45%
+    ),
+    #050505;
+}
+
+
+.product-detail__backdrop::after {
+  content: '';
+
+  position: absolute;
+  inset: 0;
+
+  opacity: 0.18;
+
+  background-image:
+    linear-gradient(
+      rgba(255, 255, 255, 0.025) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.025) 1px,
+      transparent 1px
+    );
+
+  background-size:
+    84px
+    84px;
+
+  mask-image:
+    radial-gradient(
+      circle at center,
+      black,
+      transparent 86%
+    );
+
+  pointer-events: none;
+}
+
+
+/* =========================================
+   EDITORIAL BONE BAND
+========================================= */
+
+.product-detail__band {
+  position: absolute;
+
+  top: 50%;
+  right: 0;
+  left: 0;
+
+  z-index: 1;
+
+  height:
+    clamp(
+      370px,
+      46vh,
+      500px
+    );
+
+  overflow: hidden;
+
+  transform:
+    translateY(-50%);
+
+  background:
+    var(--pd-bone);
+
+  border-top:
+    1px solid
+    rgba(5, 5, 5, 0.12);
+
+  border-bottom:
+    1px solid
+    rgba(5, 5, 5, 0.12);
+
+  clip-path:
+    inset(
+      0
+      0
+      0
+      0
+    );
+
+  will-change:
+    clip-path;
+}
+
+
+.product-detail__band::before {
+  content: '';
+
+  position: absolute;
+  inset: 0;
+
+  opacity: 0.28;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.018),
+      transparent 22%,
+      transparent 78%,
+      rgba(0, 0, 0, 0.018)
+    );
+
+  pointer-events: none;
+}
+
+
+.product-detail__band::after {
+  content: '';
+
+  position: absolute;
+
+  top: 50%;
+  right: 0;
+  left: 0;
+
+  height: 1px;
+
+  background:
+    rgba(
+      5,
+      5,
+      5,
+      0.045
+    );
+
+  pointer-events: none;
+}
+
+
+/* =========================================
+   MASSIVE WORDMARK INSIDE BAND
+========================================= */
+
+.product-detail__wordmark {
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+
+  z-index: 1;
+
+  transform:
+    translate(
+      -50%,
+      -50%
+    );
+
+  font-family:
+    'Archivo Black',
+    sans-serif;
+
+  font-size:
+    clamp(
+      190px,
+      23vw,
+      410px
+    );
+
+  line-height: 0.72;
+
+  letter-spacing:
+    -0.082em;
+
+  white-space: nowrap;
+
+  color:
+    #070707;
+
+  pointer-events: none;
+
+  will-change:
+    opacity,
+    transform;
+}
+
+
+.product-detail__band-code {
+  position: absolute;
+
+  bottom: 14px;
+
+  z-index: 2;
+
+  font-family:
+    'IBM Plex Mono',
+    monospace;
+
+  font-size: 7px;
+
+  letter-spacing:
+    0.18em;
+
+  color:
+    rgba(
+      5,
+      5,
+      5,
+      0.3
+    );
+}
+
+
+.product-detail__band-code--left {
+  left: 34px;
+}
+
+
+.product-detail__band-code--right {
+  right: 34px;
+}
+
+
+/* =========================================
+   TECHNICAL RAILS
+========================================= */
+
+.product-detail__rail {
+  position: absolute;
+
+  top: 94px;
+  bottom: 74px;
+
+  z-index: 2;
+
+  width: 1px;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(
+        255,
+        255,
+        255,
+        0.055
+      )
+      0%,
+      rgba(
+        255,
+        255,
+        255,
+        0.055
+      )
+      26%,
+
+      rgba(
+        5,
+        5,
+        5,
+        0.12
+      )
+      26%,
+
+      rgba(
+        5,
+        5,
+        5,
+        0.12
+      )
+      74%,
+
+      rgba(
+        255,
+        255,
+        255,
+        0.055
+      )
+      74%,
+
+      rgba(
+        255,
+        255,
+        255,
+        0.055
+      )
+      100%
+    );
+
+  pointer-events: none;
+}
+
+
+.product-detail__rail--left {
+  left: 27.5%;
+}
+
+
+.product-detail__rail--right {
+  right: 26%;
+}
+
+
+/* =========================================
+   NAV
+========================================= */
+
+.product-detail__nav {
+  position: absolute;
+
+  top: 28px;
+  right: 34px;
+  left: 34px;
+
+  z-index: 30;
+
+  display: grid;
+
+  grid-template-columns:
+    1fr
+    auto
+    1fr;
+
+  align-items: center;
+
+  font-family:
+    'IBM Plex Mono',
+    monospace;
+
+  font-size: 8px;
+
+  letter-spacing:
+    0.16em;
+
+  color:
+    rgba(
+      184,
+      184,
+      184,
+      0.52
+    );
+}
+
+
+.product-detail__brand {
+  font-family:
+    'Archivo Black',
+    sans-serif;
+
+  font-size: 16px;
+
+  letter-spacing:
+    -0.045em;
+
+  color:
+    var(--pd-bone);
+}
+
+
+.product-detail__nav-center {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+}
+
+
+.product-detail__nav-center
+> span {
+  color:
+    var(--pd-hot-red);
+}
+
+
+.product-detail__close {
+  justify-self: end;
+
+  padding: 8px 0;
+
+  border: 0;
+
+  background:
+    transparent;
+
+  font-family:
+    inherit;
+
+  font-size:
+    inherit;
+
+  letter-spacing:
+    inherit;
+
+  color:
+    rgba(
+      242,
+      240,
+      234,
+      0.55
+    );
+
+  cursor: pointer;
+
+  transition:
+    color 220ms ease,
+    letter-spacing 300ms ease;
+}
+
+
+.product-detail__close:hover {
+  color:
+    var(--pd-bone);
+
+  letter-spacing:
+    0.2em;
+}
+
+
+/* =========================================
+   LEFT EDITORIAL
+========================================= */
+
+.product-detail__left {
+  position: absolute;
+
+  top: 50%;
+  left: 34px;
+
+  z-index: 12;
+
+  width:
+    min(
+      23vw,
+      370px
+    );
+
+  isolation: isolate;
+
+  transform:
+    translateY(-50%);
+}
+
+
+.product-detail__left::before {
+  content: '';
+
+  position: absolute;
+
+  top: -36px;
+  right: -55px;
+  bottom: -36px;
+  left: -18px;
+
+  z-index: -1;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(
+        242,
+        240,
+        234,
+        0.99
+      )
+      0%,
+
+      rgba(
+        242,
+        240,
+        234,
+        0.92
+      )
+      67%,
+
+      rgba(
+        242,
+        240,
+        234,
+        0
+      )
+      100%
+    );
+
+  pointer-events: none;
+}
+
+
+.product-detail__eyebrow,
+.product-detail__availability,
+.product-detail__label,
+.product-detail__selected-size,
+.product-detail__coordinate,
+.product-detail__technical,
+.product-detail__bottom,
+.product-detail__band-code {
+  font-family:
+    'IBM Plex Mono',
+    monospace;
+}
+
+
+.product-detail__eyebrow,
+.product-detail__availability,
+.product-detail__label,
+.product-detail__selected-size {
+  font-size: 8px;
+
+  letter-spacing:
+    0.16em;
+}
+
+
+.product-detail__eyebrow {
+  color:
+    rgba(
+      5,
+      5,
+      5,
+      0.44
+    );
+}
+
+
+.product-detail__title {
+  max-width:
+    370px;
+
+  margin:
+    17px
+    0
+    25px;
+
+  font-family:
+    'Archivo Black',
+    sans-serif;
+
+  font-size:
+    clamp(
+      46px,
+      4.5vw,
+      78px
+    );
+
+  line-height:
+    0.87;
+
+  letter-spacing:
+    -0.06em;
+
+  text-wrap:
+    balance;
+
+  color:
+    #050505;
+}
+
+
+.product-detail__availability {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  color:
+    rgba(
+      5,
+      5,
+      5,
+      0.48
+    );
+}
+
+
+.product-detail__status-dot {
+  display: block;
+
+  width: 5px;
+  height: 5px;
+
+  flex: 0 0 auto;
+
+  border-radius:
+    50%;
+
+  background:
+    var(--pd-hot-red);
+
+  box-shadow:
+    0
+    0
+    10px
+    rgba(
+      226,
+      56,
+      50,
+      0.45
+    );
+}
+
+
+/* =========================================
+   PRODUCT STAGE
+========================================= */
+
+.product-detail__stage {
+  position: absolute;
+
+  top: 48%;
+  left: 51%;
+
+  z-index: 15;
+
+  display: grid;
+
+  place-items: center;
+
+  width:
+    min(
+      52vw,
+      780px
+    );
+
+  height:
+    min(
+      82vh,
+      790px
+    );
+
+  transform:
+    translate(
+      -50%,
+      -50%
+    );
+}
+
+
+.product-detail__stage::before,
+.product-detail__stage::after {
+  content: '';
+
+  position: absolute;
+
+  z-index: 0;
+
+  background:
+    rgba(
+      5,
+      5,
+      5,
+      0.12
+    );
+
+  pointer-events: none;
+}
+
+
+.product-detail__stage::before {
+  width: 1px;
+  height: 80px;
+}
+
+
+.product-detail__stage::after {
+  width: 80px;
+  height: 1px;
+}
+
+
+.product-detail__halo {
+  position: absolute;
+
+  width: 68%;
+  aspect-ratio: 1;
+
+  border-radius:
+    50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(
+        255,
+        255,
+        255,
+        0.24
+      )
+      0%,
+
+      rgba(
+        0,
+        0,
+        0,
+        0.045
+      )
+      42%,
+
+      transparent
+      70%
+    );
+
+  filter:
+    blur(18px);
+
+  opacity:
+    0.72;
+
+  pointer-events: none;
+}
+
+
+.product-detail__image {
+  position: relative;
+
+  z-index: 5;
+
+  display: block;
+
+  width:
+    min(
+      43vw,
+      650px
+    );
+
+  max-height:
+    77vh;
+
+  object-fit: contain;
+
+  user-select: none;
+
+  -webkit-user-drag: none;
+
+  filter:
+    drop-shadow(
+      0
+      42px
+      55px
+      rgba(
+        0,
+        0,
+        0,
+        0.62
+      )
+    );
+
+  will-change:
+    transform,
+    opacity,
+    filter;
+
+  transition:
+    transform
+    900ms
+    cubic-bezier(
+      0.16,
+      1,
+      0.3,
+      1
+    );
+}
+
+
+.product-detail__stage:hover
+.product-detail__image {
+  transform:
+    translateY(-6px)
+    scale(1.015);
+}
+
+
+/* =========================================
+   PRODUCT COORDINATES
+========================================= */
+
+.product-detail__coordinate {
+  position: absolute;
+
+  z-index: 8;
+
+  padding:
+    4px
+    7px;
+
+  border:
+    1px solid
+    rgba(
+      5,
+      5,
+      5,
+      0.12
+    );
+
+  background:
+    var(--pd-bone);
+
+  font-size: 7px;
+
+  letter-spacing:
+    0.17em;
+
+  color:
+    rgba(
+      5,
+      5,
+      5,
+      0.68
+    );
+
+  pointer-events: none;
+}
+
+
+.product-detail__coordinate--top {
+  top: 7%;
+  left: 50%;
+
+  transform:
+    translateX(-50%);
+}
+
+
+.product-detail__coordinate--bottom {
+  right: 8%;
+  bottom: 7%;
+}
+
+
+/* =========================================
+   RIGHT COMMERCE PANEL
+========================================= */
+
+.product-detail__right {
+  position: absolute;
+
+  top: 50%;
+  right: 34px;
+
+  z-index: 20;
+
+  width:
+    min(
+      21vw,
+      320px
+    );
+
+  isolation: isolate;
+
+  transform:
+    translateY(-50%);
+}
+
+
+.product-detail__right::before {
+  content: '';
+
+  position: absolute;
+
+  top: -34px;
+  right: -18px;
+  bottom: -34px;
+  left: -58px;
+
+  z-index: -1;
+
+  background:
+    linear-gradient(
+      270deg,
+      rgba(
+        242,
+        240,
+        234,
+        0.99
+      )
+      0%,
+
+      rgba(
+        242,
+        240,
+        234,
+        0.92
+      )
+      69%,
+
+      rgba(
+        242,
+        240,
+        234,
+        0
+      )
+      100%
+    );
+
+  pointer-events: none;
+}
+
+
+/* =========================================
+   META
+========================================= */
+
+.product-detail__meta {
+  display: grid;
+
+  grid-template-columns:
+    1fr
+    1fr;
+
+  gap:
+    20px
+    18px;
+
+  padding-bottom:
+    22px;
+
+  border-bottom:
+    1px solid
+    rgba(
+      5,
+      5,
+      5,
+      0.16
+    );
+}
+
+
+.product-detail__meta
+> div {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 7px;
+}
+
+
+.product-detail__meta span {
+  font-family:
+    'IBM Plex Mono',
+    monospace;
+
+  font-size: 7px;
+
+  letter-spacing:
+    0.17em;
+
+  color:
+    rgba(
+      5,
+      5,
+      5,
+      0.38
+    );
+}
+
+
+.product-detail__meta strong {
+  font-family:
+    'IBM Plex Mono',
+    monospace;
+
+  font-size: 8px;
+
+  font-weight: 500;
+
+  letter-spacing:
+    0.11em;
+
+  color:
+    rgba(
+      5,
+      5,
+      5,
+      0.82
+    );
+}
+
+
+/* =========================================
+   PRICE
+========================================= */
+
+.product-detail__price {
+  padding:
+    22px
+    0
+    23px;
+
+  border-bottom:
+    1px solid
+    rgba(
+      5,
+      5,
+      5,
+      0.16
+    );
+}
+
+
+.product-detail__label {
+  display: block;
+
+  color:
+    rgba(
+      5,
+      5,
+      5,
+      0.44
+    );
+}
+
+
+.product-detail__price-old {
+  display: flex;
+
+  align-items: center;
+
+  gap: 11px;
+
+  margin-top:
+    14px;
+}
+
+
+.product-detail__price-old
+> span:first-child {
+  font-family:
+    'Space Grotesk',
+    sans-serif;
+
+  font-size: 14px;
+
+  letter-spacing:
+    0.03em;
+
+  color:
+    rgba(
+      5,
+      5,
+      5,
+      0.42
+    );
+
+  text-decoration:
+    line-through;
+
+  text-decoration-thickness:
+    1px;
+}
+
+
+.product-detail__sale {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-height: 22px;
+
+  padding:
+    0
+    10px;
+
+  border-radius:
+    999px;
+
+  background:
+    var(--pd-hot-red);
+
+  font-family:
+    'IBM Plex Mono',
+    monospace;
+
+  font-size: 7px;
+
+  letter-spacing:
+    0.12em;
+
+  color:
+    #fff;
+
+  box-shadow:
+    0
+    0
+    18px
+    rgba(
+      226,
+      56,
+      50,
+      0.2
+    );
+}
+
+
+.product-detail__price-current {
+  margin-top:
+    7px;
+
+  font-family:
+    'Space Grotesk',
+    sans-serif;
+
+  font-size:
+    clamp(
+      30px,
+      2.45vw,
+      42px
+    );
+
+  font-weight: 400;
+
+  line-height: 1;
+
+  letter-spacing:
+    0.025em;
+
+  color:
+    #050505;
+}
+
+
+.product-detail__price-usd {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  margin-top:
+    10px;
+
+  font-family:
+    'IBM Plex Mono',
+    monospace;
+
+  font-size: 8px;
+
+  letter-spacing:
+    0.13em;
+
+  color:
+    rgba(
+      5,
+      5,
+      5,
+      0.58
+    );
+}
+
+
+.product-detail__usd-old {
+  color:
+    rgba(
+      5,
+      5,
+      5,
+      0.3
+    );
+
+  text-decoration:
+    line-through;
+}
+
+
+/* =========================================
+   SIZE
+========================================= */
+
+.product-detail__sizes {
+  padding-top:
+    22px;
+}
+
+
+.product-detail__size-header {
+  display: flex;
+
+  align-items: center;
+
+  justify-content:
+    space-between;
+
+  gap: 14px;
+
+  margin-bottom:
+    14px;
+}
+
+
+.product-detail__selected-size {
+  color:
+    rgba(
+      5,
+      5,
+      5,
+      0.62
+    );
+}
+
+
+.product-detail__size-list {
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      4,
+      1fr
+    );
+
+  gap: 8px;
+}
+
+
+.product-detail__size-list button {
+  min-width: 0;
+  height: 45px;
+
+  padding:
+    0
+    10px;
+
+  border:
+    1px solid
+    rgba(
+      5,
+      5,
+      5,
+      0.2
+    );
+
+  background:
+    rgba(
+      5,
+      5,
+      5,
+      0.015
+    );
+
+  font-family:
+    'IBM Plex Mono',
+    monospace;
+
+  font-size: 8px;
+
+  letter-spacing:
+    0.12em;
+
+  color:
+    rgba(
+      5,
+      5,
+      5,
+      0.58
+    );
+
+  cursor: pointer;
+
+  transition:
+    color 220ms ease,
+    border-color 220ms ease,
+    background 220ms ease,
+    transform 300ms ease;
+}
+
+
+.product-detail__size-list
+button:hover {
+  border-color:
+    rgba(
+      5,
+      5,
+      5,
+      0.7
+    );
+
+  color:
+    #050505;
+
+  transform:
+    translateY(-2px);
+}
+
+
+.product-detail__size-list
+button.is-active {
+  border-color:
+    #050505;
+
+  background:
+    #050505;
+
+  color:
+    var(--pd-bone);
+
+  transform: none;
+}
+
+
+.product-detail__size-list
+button:only-child {
+  grid-column:
+    1 / -1;
+}
+
+
+/* =========================================
+   ADD TO BAG
+========================================= */
+
+.product-detail__bag {
+  display: flex;
+
+  align-items: center;
+
+  justify-content:
+    space-between;
+
+  width: 100%;
+
+  margin-top:
+    20px;
+
+  padding:
+    17px
+    1px;
+
+  border: 0;
+
+  border-top:
+    1px solid
+    rgba(
+      5,
+      5,
+      5,
+      0.36
+    );
+
+  border-bottom:
+    1px solid
+    rgba(
+      5,
+      5,
+      5,
+      0.36
+    );
+
+  background:
+    transparent;
+
+  font-family:
+    'IBM Plex Mono',
+    monospace;
+
+  font-size: 9px;
+
+  letter-spacing:
+    0.16em;
+
+  color:
+    #050505;
+
+  cursor: pointer;
+
+  transition:
+    padding
+    350ms
+    cubic-bezier(
+      0.16,
+      1,
+      0.3,
+      1
+    ),
+    border-color 300ms ease,
+    opacity 250ms ease;
+}
+
+
+.product-detail__bag-arrow {
+  font-size: 13px;
+
+  transition:
+    transform
+    350ms
+    cubic-bezier(
+      0.16,
+      1,
+      0.3,
+      1
+    );
+}
+
+
+.product-detail__bag:hover:not(:disabled) {
+  padding:
+    17px
+    7px;
+
+  border-color:
+    #050505;
+}
+
+
+.product-detail__bag:hover:not(:disabled)
+.product-detail__bag-arrow {
+  transform:
+    translate(
+      4px,
+      -4px
+    );
+}
+
+
+.product-detail__bag:disabled {
+  opacity: 0.3;
+
+  cursor:
+    not-allowed;
+}
+
+
+/* =========================================
+   MICRO TECH
+========================================= */
+
+.product-detail__technical {
+  position: absolute;
+
+  top: 50%;
+  left: 27px;
+
+  z-index: 25;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 9px;
+
+  font-size: 7px;
+
+  letter-spacing:
+    0.17em;
+
+  color:
+    rgba(
+      184,
+      184,
+      184,
+      0.28
+    );
+
+  transform:
+    translateY(-50%)
+    rotate(-90deg)
+    translateY(-155px);
+
+  transform-origin:
+    center;
+
+  pointer-events: none;
+}
+
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.product-detail__bottom {
+  position: absolute;
+
+  right: 34px;
+  bottom: 24px;
+  left: 34px;
+
+  z-index: 30;
+
+  display: grid;
+
+  grid-template-columns:
+    1fr
+    auto
+    1fr;
+
+  font-size: 8px;
+
+  letter-spacing:
+    0.16em;
+
+  color:
+    rgba(
+      116,
+      116,
+      116,
+      0.72
+    );
+}
+
+
+.product-detail__bottom
+> :nth-child(2) {
+  text-align: center;
+}
+
+
+.product-detail__bottom
+> :last-child {
+  text-align: right;
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (
+  max-width: 1100px
+) {
+
+  .product-detail__band {
+    height:
+      clamp(
+        400px,
+        55vh,
+        570px
+      );
+  }
+
+
+  .product-detail__wordmark {
+    font-size:
+      clamp(
+        160px,
+        27vw,
+        300px
+      );
+  }
+
+
+  .product-detail__rail {
+    display: none;
+  }
+
+
+  .product-detail__stage {
+    top: 38%;
+
+    width: 70vw;
+
+    height: 58vh;
+  }
+
+
+  .product-detail__image {
+    width:
+      min(
+        55vw,
+        530px
+      );
+
+    max-height:
+      55vh;
+  }
+
+
+  .product-detail__left {
+    top: auto;
+
+    bottom: 88px;
+
+    width: 40vw;
+
+    transform: none;
+  }
+
+
+  .product-detail__right {
+    top: auto;
+
+    right: 24px;
+    bottom: 82px;
+
+    width:
+      min(
+        36vw,
+        320px
+      );
+
+    transform: none;
+  }
+
+
+  .product-detail__title {
+    font-size:
+      clamp(
+        38px,
+        5.8vw,
+        64px
+      );
+  }
+
+
+  .product-detail__technical {
+    display: none;
+  }
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (
+  max-width: 700px
+) {
+
+  .product-detail {
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    background:
+      var(--pd-black);
+  }
+
+
+  .product-detail__backdrop {
+    position: fixed;
+  }
+
+
+  .product-detail__band {
+    top: 74px;
+
+    height: 72svh;
+
+    transform: none;
+  }
+
+
+  .product-detail__band-code {
+    display: none;
+  }
+
+
+  .product-detail__wordmark {
+    top: 42%;
+
+    font-size:
+      clamp(
+        120px,
+        44vw,
+        190px
+      );
+  }
+
+
+  .product-detail__nav {
+    position: fixed;
+
+    top: 0;
+
+    right: 0;
+    left: 0;
+
+    z-index: 50;
+
+    padding:
+      max(
+        20px,
+        env(
+          safe-area-inset-top
+        )
+      )
+      18px
+      16px;
+
+    grid-template-columns:
+      1fr
+      auto;
+
+    background:
+      linear-gradient(
+        #050505
+        0%,
+        rgba(
+          5,
+          5,
+          5,
+          0.9
+        )
+        72%,
+        transparent
+        100%
+      );
+  }
+
+
+  .product-detail__nav-center {
+    display: none;
+  }
+
+
+  .product-detail__brand {
+    font-size: 13px;
+  }
+
+
+  .product-detail__stage {
+    position: relative;
+
+    top: auto;
+    left: auto;
+
+    width: 100%;
+    height: 52svh;
+
+    margin-top: 68px;
+
+    transform: none;
+  }
+
+
+  .product-detail__image {
+    width:
+      min(
+        84vw,
+        390px
+      );
+
+    max-height:
+      47svh;
+  }
+
+
+  .product-detail__coordinate {
+    display: none;
+  }
+
+
+  .product-detail__left,
+  .product-detail__right {
+    position: relative;
+
+    top: auto;
+    right: auto;
+    bottom: auto;
+    left: auto;
+
+    width: auto;
+
+    margin:
+      0
+      18px;
+
+    transform: none;
+  }
+
+
+  .product-detail__left {
+    margin-top:
+      -10px;
+
+    padding-bottom:
+      28px;
+
+    border-bottom:
+      1px solid
+      rgba(
+        5,
+        5,
+        5,
+        0.14
+      );
+  }
+
+
+  .product-detail__left::before {
+    top: -28px;
+    right: -18px;
+    bottom: -28px;
+    left: -18px;
+
+    background:
+      rgba(
+        242,
+        240,
+        234,
+        0.9
+      );
+  }
+
+
+  .product-detail__title {
+    max-width: 94%;
+
+    margin:
+      11px
+      0
+      20px;
+
+    font-size:
+      clamp(
+        42px,
+        13vw,
+        62px
+      );
+  }
+
+
+  /* -----------------------------------------
+     MOBILE COMMERCE RETURNS TO BLACK WORLD
+  ----------------------------------------- */
+
+  .product-detail__right {
+    margin-top:
+      34px;
+
+    padding-top:
+      30px;
+
+    padding-bottom:
+      calc(
+        92px +
+        env(
+          safe-area-inset-bottom
+        )
+      );
+
+    color:
+      var(--pd-bone);
+  }
+
+
+  .product-detail__right::before {
+    display: none;
+  }
+
+
+  .product-detail__meta {
+    border-bottom-color:
+      rgba(
+        255,
+        255,
+        255,
+        0.11
+      );
+  }
+
+
+  .product-detail__meta span {
+    color:
+      rgba(
+        184,
+        184,
+        184,
+        0.4
+      );
+  }
+
+
+  .product-detail__meta strong {
+    color:
+      rgba(
+        242,
+        240,
+        234,
+        0.82
+      );
+  }
+
+
+  .product-detail__price {
+    border-bottom-color:
+      rgba(
+        255,
+        255,
+        255,
+        0.11
+      );
+  }
+
+
+  .product-detail__label {
+    color:
+      rgba(
+        184,
+        184,
+        184,
+        0.48
+      );
+  }
+
+
+  .product-detail__price-old
+  > span:first-child {
+    color:
+      rgba(
+        184,
+        184,
+        184,
+        0.44
+      );
+  }
+
+
+  .product-detail__price-current {
+    font-size: 36px;
+
+    color:
+      var(--pd-bone);
+  }
+
+
+  .product-detail__price-usd {
+    color:
+      rgba(
+        184,
+        184,
+        184,
+        0.62
+      );
+  }
+
+
+  .product-detail__usd-old {
+    color:
+      rgba(
+        184,
+        184,
+        184,
+        0.32
+      );
+  }
+
+
+  .product-detail__selected-size {
+    color:
+      rgba(
+        242,
+        240,
+        234,
+        0.62
+      );
+  }
+
+
+  .product-detail__sizes {
+    padding-top: 25px;
+  }
+
+
+  .product-detail__size-list {
+    gap: 7px;
+  }
+
+
+  .product-detail__size-list
+  button {
+    height: 48px;
+
+    border-color:
+      rgba(
+        255,
+        255,
+        255,
+        0.16
+      );
+
+    color:
+      rgba(
+        242,
+        240,
+        234,
+        0.55
+      );
+  }
+
+
+  .product-detail__size-list
+  button:hover {
+    border-color:
+      rgba(
+        255,
+        255,
+        255,
+        0.58
+      );
+
+    color:
+      var(--pd-bone);
+  }
+
+
+  .product-detail__size-list
+  button.is-active {
+    border-color:
+      var(--pd-bone);
+
+    background:
+      var(--pd-bone);
+
+    color:
+      var(--pd-black);
+  }
+
+
+  .product-detail__bag {
+    margin-top: 24px;
+
+    padding:
+      19px
+      1px;
+
+    border-top-color:
+      rgba(
+        255,
+        255,
+        255,
+        0.3
+      );
+
+    border-bottom-color:
+      rgba(
+        255,
+        255,
+        255,
+        0.3
+      );
+
+    color:
+      var(--pd-bone);
+  }
+
+
+  .product-detail__bag:hover:not(:disabled) {
+    border-color:
+      var(--pd-bone);
+  }
+
+
+  .product-detail__bottom,
+  .product-detail__technical,
+  .product-detail__rail {
+    display: none;
+  }
+}
+
+
+/* =========================================
+   TOUCH
+========================================= */
+
+@media (
+  hover: none
+) {
+
+  .product-detail__stage:hover
+  .product-detail__image {
+    transform: none;
+  }
+
+
+  .product-detail__size-list
+  button:hover {
+    transform: none;
+  }
+}
+
+
+/* =========================================
+   REDUCED MOTION
+========================================= */
+
+@media (
+  prefers-reduced-motion:
+  reduce
+) {
+
+  .product-detail *,
+  .product-detail *::before,
+  .product-detail *::after {
+    scroll-behavior:
+      auto !important;
+
+    transition-duration:
+      0.01ms !important;
+  }
+}
+
+/* =========================================
+   PRODUCT DETAIL V3 — HYBRID POLISH
+   V2 UI + ANIMATED BONE BAND
+========================================= */
+
+@media (min-width: 701px) {
+
+  /* -----------------------------------------
+     BAND
+     Keep only the editorial background strip
+  ----------------------------------------- */
+
+  .product-detail__band::before {
+    content: '';
+
+    position: absolute;
+    inset: 0;
+
+    z-index: 2;
+
+    background:
+      linear-gradient(
+        90deg,
+        rgba(5, 5, 5, 0.96) 0%,
+        rgba(5, 5, 5, 0.78) 10%,
+        rgba(5, 5, 5, 0.32) 21%,
+        transparent 32%,
+        transparent 68%,
+        rgba(5, 5, 5, 0.32) 79%,
+        rgba(5, 5, 5, 0.78) 90%,
+        rgba(5, 5, 5, 0.96) 100%
+      );
+
+    pointer-events: none;
+  }
+
+
+  .product-detail__band-code {
+    display: none;
+  }
+
+
+  /* -----------------------------------------
+     LEFT SIDE — RETURN TO V2
+  ----------------------------------------- */
+
+  .product-detail__left::before {
+    display: none;
+  }
+
+
+  .product-detail__eyebrow {
+    color:
+      rgba(
+        184,
+        184,
+        184,
+        0.48
+      );
+  }
+
+
+  .product-detail__title {
+    color:
+      var(--pd-bone);
+  }
+
+
+  .product-detail__availability {
+    color:
+      rgba(
+        184,
+        184,
+        184,
+        0.48
+      );
+  }
+
+
+  /* -----------------------------------------
+     RIGHT SIDE — RETURN TO V2
+  ----------------------------------------- */
+
+  .product-detail__right::before {
+    display: none;
+  }
+
+
+  .product-detail__meta {
+    border-bottom-color:
+      rgba(
+        255,
+        255,
+        255,
+        0.1
+      );
+  }
+
+
+  .product-detail__meta span {
+    color:
+      rgba(
+        184,
+        184,
+        184,
+        0.38
+      );
+  }
+
+
+  .product-detail__meta strong {
+    color:
+      rgba(
+        242,
+        240,
+        234,
+        0.78
+      );
+  }
+
+
+  /* -----------------------------------------
+     PRICE — V2 COLORS
+  ----------------------------------------- */
+
+  .product-detail__price {
+    border-bottom-color:
+      rgba(
+        255,
+        255,
+        255,
+        0.1
+      );
+  }
+
+
+  .product-detail__label {
+    color:
+      rgba(
+        184,
+        184,
+        184,
+        0.45
+      );
+  }
+
+
+  .product-detail__price-old
+  > span:first-child {
+    color:
+      rgba(
+        184,
+        184,
+        184,
+        0.42
+      );
+  }
+
+
+  .product-detail__price-current {
+    color:
+      var(--pd-bone);
+  }
+
+
+  .product-detail__price-usd {
+    color:
+      rgba(
+        184,
+        184,
+        184,
+        0.58
+      );
+  }
+
+
+  .product-detail__usd-old {
+    color:
+      rgba(
+        184,
+        184,
+        184,
+        0.28
+      );
+  }
+
+
+  /* -----------------------------------------
+     SIZE — RETURN TO V2
+  ----------------------------------------- */
+
+  .product-detail__selected-size {
+    color:
+      rgba(
+        242,
+        240,
+        234,
+        0.66
+      );
+  }
+
+
+  .product-detail__size-list button {
+    border-color:
+      rgba(
+        255,
+        255,
+        255,
+        0.14
+      );
+
+    background:
+      rgba(
+        255,
+        255,
+        255,
+        0.008
+      );
+
+    color:
+      rgba(
+        242,
+        240,
+        234,
+        0.47
+      );
+  }
+
+
+  .product-detail__size-list
+  button:hover {
+    border-color:
+      rgba(
+        255,
+        255,
+        255,
+        0.55
+      );
+
+    color:
+      var(--pd-bone);
+  }
+
+
+  .product-detail__size-list
+  button.is-active {
+    border-color:
+      var(--pd-bone);
+
+    background:
+      var(--pd-bone);
+
+    color:
+      var(--pd-black);
+  }
+
+
+  /* -----------------------------------------
+     ADD TO BAG — V2
+  ----------------------------------------- */
+
+  .product-detail__bag {
+    border-top-color:
+      rgba(
+        255,
+        255,
+        255,
+        0.3
+      );
+
+    border-bottom-color:
+      rgba(
+        255,
+        255,
+        255,
+        0.3
+      );
+
+    color:
+      var(--pd-bone);
+  }
+
+
+  .product-detail__bag:hover:not(:disabled) {
+    border-color:
+      rgba(
+        255,
+        255,
+        255,
+        0.82
+      );
+  }
+
+
+  /* -----------------------------------------
+     PRODUCT COORDINATES — V2 STYLE
+  ----------------------------------------- */
+
+  .product-detail__coordinate {
+    padding: 0;
+
+    border: 0;
+
+    background:
+      transparent;
+
+    color:
+      rgba(
+        184,
+        184,
+        184,
+        0.3
+      );
+  }
+}
+
+/* =========================================
+   PRODUCT DETAIL — CENTRAL EDITORIAL BAND
+   Final direction:
+   V2 interface + centered animated band
+========================================= */
+
+@media (min-width: 701px) {
+
+  /* -----------------------------------------
+     CENTRAL BONE BAND
+  ----------------------------------------- */
+
+  .product-detail__band {
+    top: 50%;
+
+    left: 23.5%;
+    right: 23.5%;
+
+    width: auto;
+
+    height:
+      clamp(
+        250px,
+        32vh,
+        335px
+      );
+
+    transform:
+      translateY(-50%);
+
+    border: 0;
+
+    background:
+      var(--pd-bone);
+
+    /*
+     * Soft disappearance at both edges.
+     * Keeps left/right interface on black.
+     */
+    -webkit-mask-image:
+      linear-gradient(
+        90deg,
+        transparent 0%,
+        black 8%,
+        black 92%,
+        transparent 100%
+      );
+
+    mask-image:
+      linear-gradient(
+        90deg,
+        transparent 0%,
+        black 8%,
+        black 92%,
+        transparent 100%
+      );
+  }
+
+
+  /* -----------------------------------------
+     REMOVE EXTRA BAND EFFECTS
+  ----------------------------------------- */
+
+  .product-detail__band::before {
+    display: none;
+  }
+
+
+  .product-detail__band::after {
+    background:
+      rgba(
+        5,
+        5,
+        5,
+        0.07
+      );
+  }
+
+
+  .product-detail__band-code {
+    display: none;
+  }
+
+
+  /* -----------------------------------------
+     BLACK HELLSTAR INSIDE BAND
+  ----------------------------------------- */
+
+  .product-detail__wordmark {
+    top: 50%;
+    left: 50%;
+
+    font-size:
+      clamp(
+        145px,
+        17vw,
+        300px
+      );
+
+    line-height:
+      0.72;
+
+    letter-spacing:
+      -0.085em;
+
+    color:
+      #050505;
+
+    transform:
+      translate(
+        -50%,
+        -50%
+      );
+  }
+
+
+  /* -----------------------------------------
+     PRODUCT MUST ALWAYS BE ABOVE BAND
+  ----------------------------------------- */
+
+  .product-detail__stage {
+    z-index: 15;
+  }
+
+
+  .product-detail__image {
+    z-index: 6;
+
+    width:
+      min(
+        43vw,
+        650px
+      );
+
+    max-height:
+      77vh;
+  }
+
+
+  /* -----------------------------------------
+     LEFT INFO STAYS IN BLACK WORLD
+  ----------------------------------------- */
+
+  .product-detail__left {
+    z-index: 20;
+  }
+
+
+  .product-detail__left::before {
+    display: none;
+  }
+
+
+  .product-detail__title {
+    color:
+      var(--pd-bone);
+  }
+
+
+  .product-detail__eyebrow {
+    color:
+      rgba(
+        184,
+        184,
+        184,
+        0.48
+      );
+  }
+
+
+  .product-detail__availability {
+    color:
+      rgba(
+        184,
+        184,
+        184,
+        0.48
+      );
+  }
+
+
+  /* -----------------------------------------
+     RIGHT COMMERCE STAYS IN BLACK WORLD
+  ----------------------------------------- */
+
+  .product-detail__right {
+    z-index: 20;
+  }
+
+
+  .product-detail__right::before {
+    display: none;
+  }
+
+
+  .product-detail__meta {
+    border-bottom-color:
+      rgba(
+        255,
+        255,
+        255,
+        0.1
+      );
+  }
+
+
+  .product-detail__meta span {
+    color:
+      rgba(
+        184,
+        184,
+        184,
+        0.38
+      );
+  }
+
+
+  .product-detail__meta strong {
+    color:
+      rgba(
+        242,
+        240,
+        234,
+        0.78
+      );
+  }
+
+
+  /* -----------------------------------------
+     PRICE
+  ----------------------------------------- */
+
+  .product-detail__price {
+    border-bottom-color:
+      rgba(
+        255,
+        255,
+        255,
+        0.1
+      );
+  }
+
+
+  .product-detail__label {
+    color:
+      rgba(
+        184,
+        184,
+        184,
+        0.45
+      );
+  }
+
+
+  .product-detail__price-old
+  > span:first-child {
+    color:
+      rgba(
+        184,
+        184,
+        184,
+        0.42
+      );
+  }
+
+
+  .product-detail__price-current {
+    color:
+      var(--pd-bone);
+  }
+
+
+  .product-detail__price-usd {
+    color:
+      rgba(
+        184,
+        184,
+        184,
+        0.58
+      );
+  }
+
+
+  .product-detail__usd-old {
+    color:
+      rgba(
+        184,
+        184,
+        184,
+        0.28
+      );
+  }
+
+
+  /* -----------------------------------------
+     SIZE
+  ----------------------------------------- */
+
+  .product-detail__selected-size {
+    color:
+      rgba(
+        242,
+        240,
+        234,
+        0.66
+      );
+  }
+
+
+  .product-detail__size-list button {
+    border-color:
+      rgba(
+        255,
+        255,
+        255,
+        0.14
+      );
+
+    background:
+      transparent;
+
+    color:
+      rgba(
+        242,
+        240,
+        234,
+        0.5
+      );
+  }
+
+
+  .product-detail__size-list
+  button:hover {
+    border-color:
+      rgba(
+        255,
+        255,
+        255,
+        0.6
+      );
+
+    color:
+      var(--pd-bone);
+  }
+
+
+  .product-detail__size-list
+  button.is-active {
+    border-color:
+      var(--pd-bone);
+
+    background:
+      var(--pd-bone);
+
+    color:
+      var(--pd-black);
+  }
+
+
+  /* -----------------------------------------
+     ADD TO BAG
+  ----------------------------------------- */
+
+  .product-detail__bag {
+    border-top-color:
+      rgba(
+        255,
+        255,
+        255,
+        0.3
+      );
+
+    border-bottom-color:
+      rgba(
+        255,
+        255,
+        255,
+        0.3
+      );
+
+    color:
+      var(--pd-bone);
+  }
+
+
+  .product-detail__bag:hover:not(:disabled) {
+    border-color:
+      rgba(
+        255,
+        255,
+        255,
+        0.82
+      );
+  }
+
+
+  /* -----------------------------------------
+     TECH COORDINATES
+  ----------------------------------------- */
+
+  .product-detail__coordinate {
+    padding: 0;
+
+    border: 0;
+
+    background:
+      transparent;
+
+    color:
+      rgba(
+        184,
+        184,
+        184,
+        0.3
+      );
+  }
+}
+
+/* =========================================
+   PRODUCT DETAIL — MOBILE FINAL POLISH
+========================================= */
+
+@media (max-width: 700px) {
+
+  /* -----------------------------------------
+     SMALLER EDITORIAL BAND
+  ----------------------------------------- */
+
+  .product-detail__band {
+    top: 96px;
+
+    right: 0;
+    left: 0;
+
+    width: 100%;
+    height: 40svh;
+
+    transform: none;
+  }
+
+
+  .product-detail__wordmark {
+    top: 50%;
+
+    font-size:
+      clamp(
+        110px,
+        39vw,
+        170px
+      );
+  }
+
+
+  /* -----------------------------------------
+     PRODUCT STAGE
+  ----------------------------------------- */
+
+  .product-detail__stage {
+    margin-top: 76px;
+
+    height: 50svh;
+  }
+
+
+  /* -----------------------------------------
+     TITLE GETS MORE AIR
+  ----------------------------------------- */
+
+  .product-detail__left {
+    margin-top: 12px;
+  }
+
+
+  .product-detail__title {
+    margin-top: 14px;
+  }
+
+
+  /* =========================================
+     CATEGORY SCALE
+  ========================================= */
+
+  /* HOODIES */
+
+  .product-detail[data-category='HOODIE']
+  .product-detail__stage {
+    height: 52svh;
+  }
+
+
+  .product-detail[data-category='HOODIE']
+  .product-detail__image {
+    width:
+      min(
+        82vw,
+        390px
+      );
+
+    max-height: 47svh;
+  }
+
+
+  /* T-SHIRTS */
+
+  .product-detail[data-category='T-SHIRT']
+  .product-detail__stage {
+    height: 49svh;
+  }
+
+
+  .product-detail[data-category='T-SHIRT']
+  .product-detail__image {
+    width:
+      min(
+        78vw,
+        365px
+      );
+
+    max-height: 43svh;
+  }
+
+
+  /* SHORTS */
+
+  .product-detail[data-category='SHORTS']
+  .product-detail__stage {
+    height: 43svh;
+  }
+
+
+  .product-detail[data-category='SHORTS']
+  .product-detail__image {
+    width:
+      min(
+        64vw,
+        300px
+      );
+
+    max-height: 32svh;
+  }
+
+
+  /* CAPS */
+
+  .product-detail[data-category='CAP']
+  .product-detail__stage {
+    height: 39svh;
+  }
+
+
+  .product-detail[data-category='CAP']
+  .product-detail__image {
+    width:
+      min(
+        56vw,
+        255px
+      );
+
+    max-height: 27svh;
+  }
+}
+
+.product-detail__bag.is-added {
+  border-color:
+    rgba(
+      242,
+      240,
+      234,
+      0.82
+    );
+
+  opacity: 1;
+}
+
+
+.product-detail__bag.is-added
+.product-detail__bag-arrow {
+  transform: none;
+}
