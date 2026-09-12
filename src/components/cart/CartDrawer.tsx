@@ -15,7 +15,9 @@ import type {
 
 type CartDrawerProps = {
   items: CartItem[]
+
   onClose: () => void
+  onCheckout: () => void
 
   onIncrease: (
     productId: string,
@@ -36,6 +38,7 @@ type CartDrawerProps = {
 function CartDrawer({
   items,
   onClose,
+  onCheckout,
   onIncrease,
   onDecrease,
   onRemove,
@@ -67,7 +70,8 @@ function CartDrawer({
   const totalQuantity =
     items.reduce(
       (total, item) =>
-        total + item.quantity,
+        total +
+        item.quantity,
       0,
     )
 
@@ -77,7 +81,9 @@ function CartDrawer({
 
   const handleClose =
     useCallback(() => {
-      if (closingRef.current) {
+      if (
+        closingRef.current
+      ) {
         return
       }
 
@@ -99,19 +105,24 @@ function CartDrawer({
         return
       }
 
-      closingRef.current = true
+      closingRef.current =
+        true
 
       const timeline =
         gsap.timeline({
-          onComplete: onClose,
+          onComplete:
+            onClose,
         })
 
       timeline.to(
         '.cart-drawer__panel',
         {
           xPercent: 105,
+
           duration: 0.62,
-          ease: 'power4.inOut',
+
+          ease:
+            'power4.inOut',
         },
         0,
       )
@@ -120,12 +131,81 @@ function CartDrawer({
         '.cart-drawer__backdrop',
         {
           opacity: 0,
+
           duration: 0.4,
-          ease: 'power2.inOut',
+
+          ease:
+            'power2.inOut',
         },
         0.1,
       )
     }, [onClose])
+
+  /* =========================================
+     CHECKOUT
+  ========================================= */
+
+  const handleCheckout =
+    useCallback(() => {
+      if (
+        closingRef.current
+      ) {
+        return
+      }
+
+      const root =
+        rootRef.current
+
+      if (!root) {
+        onCheckout()
+        return
+      }
+
+      const reducedMotion =
+        window.matchMedia(
+          '(prefers-reduced-motion: reduce)',
+        ).matches
+
+      if (reducedMotion) {
+        onCheckout()
+        return
+      }
+
+      closingRef.current =
+        true
+
+      const timeline =
+        gsap.timeline({
+          onComplete:
+            onCheckout,
+        })
+
+      timeline.to(
+        '.cart-drawer__panel',
+        {
+          xPercent: 105,
+
+          duration: 0.62,
+
+          ease:
+            'power4.inOut',
+        },
+        0,
+      )
+
+      timeline.to(
+        '.cart-drawer__backdrop',
+        {
+          opacity: 0,
+
+          duration: 0.4,
+
+          ease:
+            'power2.inOut',
+        },
+        0.1,
+      )
+    }, [onCheckout])
 
   /* =========================================
      ESC + BODY LOCK
@@ -141,7 +221,10 @@ function CartDrawer({
     const handleKeyDown = (
       event: KeyboardEvent,
     ) => {
-      if (event.key === 'Escape') {
+      if (
+        event.key ===
+        'Escape'
+      ) {
         handleClose()
       }
     }
@@ -177,7 +260,9 @@ function CartDrawer({
         '(prefers-reduced-motion: reduce)',
       ).matches
 
-    if (reducedMotion) return
+    if (reducedMotion) {
+      return
+    }
 
     const context =
       gsap.context(
@@ -215,8 +300,11 @@ function CartDrawer({
             '.cart-drawer__backdrop',
             {
               opacity: 1,
+
               duration: 0.45,
-              ease: 'power2.out',
+
+              ease:
+                'power2.out',
             },
             0,
           )
@@ -225,8 +313,11 @@ function CartDrawer({
             '.cart-drawer__panel',
             {
               xPercent: 0,
+
               duration: 0.82,
-              ease: 'power4.out',
+
+              ease:
+                'power4.out',
             },
             0.04,
           )
@@ -236,8 +327,11 @@ function CartDrawer({
             {
               opacity: 1,
               x: 0,
+
               duration: 0.45,
-              ease: 'power3.out',
+
+              ease:
+                'power3.out',
             },
             0.38,
           )
@@ -247,9 +341,13 @@ function CartDrawer({
             {
               opacity: 1,
               x: 0,
+
               duration: 0.5,
+
               stagger: 0.06,
-              ease: 'power3.out',
+
+              ease:
+                'power3.out',
             },
             0.46,
           )
@@ -259,8 +357,11 @@ function CartDrawer({
             {
               opacity: 1,
               x: 0,
+
               duration: 0.5,
-              ease: 'power3.out',
+
+              ease:
+                'power3.out',
             },
             0.56,
           )
@@ -281,6 +382,10 @@ function CartDrawer({
       aria-modal="true"
       aria-label="Shopping bag"
     >
+      {/* =====================================
+          BACKDROP
+      ===================================== */}
+
       <button
         className="cart-drawer__backdrop"
         type="button"
@@ -289,7 +394,9 @@ function CartDrawer({
       />
 
       <aside className="cart-drawer__panel">
-        {/* HEADER */}
+        {/* =====================================
+            HEADER
+        ===================================== */}
 
         <header className="cart-drawer__header">
           <div>
@@ -311,29 +418,36 @@ function CartDrawer({
           <button
             className="cart-drawer__close"
             type="button"
-            onClick={handleClose}
+            onClick={
+              handleClose
+            }
           >
             CLOSE / ESC
           </button>
         </header>
 
-        {/* ITEMS */}
+        {/* =====================================
+            ITEMS
+        ===================================== */}
 
         <div className="cart-drawer__body">
-          {items.length === 0 ? (
+          {items.length ===
+          0 ? (
             <div className="cart-drawer__empty">
               <span>
                 BAG / EMPTY
               </span>
 
               <p>
-                NO OBJECTS ADDED TO THIS
-                REALITY.
+                NO OBJECTS ADDED TO
+                THIS REALITY.
               </p>
 
               <button
                 type="button"
-                onClick={handleClose}
+                onClick={
+                  handleClose
+                }
               >
                 RETURN TO DROP ↗
               </button>
@@ -350,36 +464,47 @@ function CartDrawer({
                       key={key}
                       className="cart-drawer__item"
                     >
+                      {/* PRODUCT VISUAL */}
+
                       <div className="cart-drawer__visual">
                         <span className="cart-drawer__object-code">
                           OBJECT /{' '}
-                          {item.product.id}
+                          {
+                            item.product
+                              .id
+                          }
                         </span>
 
                         <img
                           src={
-                            item.product.image
+                            item.product
+                              .image
                           }
                           alt={
-                            item.product.name
+                            item.product
+                              .name
                           }
                           draggable="false"
                         />
                       </div>
+
+                      {/* PRODUCT INFO */}
 
                       <div className="cart-drawer__item-info">
                         <div className="cart-drawer__item-head">
                           <div>
                             <span className="cart-drawer__category">
                               {
-                                item.product
+                                item
+                                  .product
                                   .category
                               }
                             </span>
 
                             <h3>
                               {
-                                item.product
+                                item
+                                  .product
                                   .name
                               }
                             </h3>
@@ -390,7 +515,9 @@ function CartDrawer({
                             type="button"
                             onClick={() =>
                               onRemove(
-                                item.product.id,
+                                item
+                                  .product
+                                  .id,
                                 item.size,
                               )
                             }
@@ -399,10 +526,14 @@ function CartDrawer({
                           </button>
                         </div>
 
+                        {/* PRODUCT META */}
+
                         <div className="cart-drawer__meta">
                           <span>
                             SIZE /{' '}
-                            {item.size}
+                            {
+                              item.size
+                            }
                           </span>
 
                           <span>
@@ -413,14 +544,19 @@ function CartDrawer({
                           </span>
                         </div>
 
+                        {/* BOTTOM */}
+
                         <div className="cart-drawer__item-bottom">
+                          {/* QUANTITY */}
+
                           <div className="cart-drawer__quantity">
                             <button
                               type="button"
                               aria-label="Decrease quantity"
                               onClick={() =>
                                 onDecrease(
-                                  item.product
+                                  item
+                                    .product
                                     .id,
                                   item.size,
                                 )
@@ -443,7 +579,8 @@ function CartDrawer({
                               aria-label="Increase quantity"
                               onClick={() =>
                                 onIncrease(
-                                  item.product
+                                  item
+                                    .product
                                     .id,
                                   item.size,
                                 )
@@ -453,11 +590,14 @@ function CartDrawer({
                             </button>
                           </div>
 
+                          {/* PRICE */}
+
                           <div className="cart-drawer__item-price">
                             <strong>
                               S/.{' '}
                               {(
-                                item.product
+                                item
+                                  .product
                                   .pricePen *
                                 item.quantity
                               ).toFixed(
@@ -468,7 +608,8 @@ function CartDrawer({
                             <span>
                               USD $
                               {(
-                                item.product
+                                item
+                                  .product
                                   .priceUsd *
                                 item.quantity
                               ).toFixed(
@@ -486,7 +627,9 @@ function CartDrawer({
           )}
         </div>
 
-        {/* SUMMARY */}
+        {/* =====================================
+            SUMMARY
+        ===================================== */}
 
         {items.length > 0 && (
           <footer className="cart-drawer__summary">
@@ -513,13 +656,18 @@ function CartDrawer({
             </div>
 
             <p className="cart-drawer__note">
-              SHIPPING AND TAXES CALCULATED
-              AT CHECKOUT.
+              SHIPPING AND TAXES
+              CALCULATED AT CHECKOUT.
             </p>
+
+            {/* CHECKOUT */}
 
             <button
               className="cart-drawer__checkout"
               type="button"
+              onClick={
+                handleCheckout
+              }
             >
               <span>
                 PROCEED TO CHECKOUT

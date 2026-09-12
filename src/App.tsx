@@ -15,6 +15,7 @@ import DropGrid from './components/drop/DropGrid'
 import ProductDetail from './components/product/ProductDetail'
 import CartDrawer from './components/cart/CartDrawer'
 import Lookbook from './components/lookbook/Lookbook'
+import CheckoutConcept from './components/checkout/CheckoutConcept'
 
 import type {
   StoreProduct,
@@ -58,6 +59,12 @@ function App() {
   const [
     cartOpen,
     setCartOpen,
+  ] =
+    useState(false)
+
+  const [
+    checkoutOpen,
+    setCheckoutOpen,
   ] =
     useState(false)
 
@@ -649,6 +656,16 @@ function App() {
   }
 
   /* =========================================
+     OPEN CHECKOUT
+  ========================================= */
+
+  const handleOpenCheckout =
+    () => {
+      setCartOpen(false)
+      setCheckoutOpen(true)
+    }
+
+  /* =========================================
      CART COUNT
   ========================================= */
 
@@ -901,6 +918,9 @@ function App() {
           onClose={() =>
             setCartOpen(false)
           }
+          onCheckout={
+            handleOpenCheckout
+          }
           onIncrease={
             handleIncreaseCartItem
           }
@@ -909,6 +929,21 @@ function App() {
           }
           onRemove={
             handleRemoveCartItem
+          }
+        />
+      )}
+
+      {/* =====================================
+          CHECKOUT CONCEPT
+      ===================================== */}
+
+      {checkoutOpen && (
+        <CheckoutConcept
+          items={cartItems}
+          onClose={() =>
+            setCheckoutOpen(
+              false,
+            )
           }
         />
       )}
