@@ -45,6 +45,11 @@ function App() {
   ] = useState(false)
 
   const [
+    entryEffectsActive,
+    setEntryEffectsActive,
+  ] = useState(true)
+
+  const [
     heroInView,
     setHeroInView,
   ] = useState(true)
@@ -489,6 +494,14 @@ function App() {
             },
             1.02,
           )
+
+          timeline.call(
+            () => {
+              setEntryEffectsActive(false)
+            },
+            [],
+            1.6,
+          )
         },
         root,
       )
@@ -552,6 +565,7 @@ function App() {
 
     if (reducedMotion) {
       setHeroVisible(true)
+      setEntryEffectsActive(false)
       return
     }
 
@@ -775,17 +789,19 @@ function App() {
           className="entry__dot-field"
           aria-hidden="true"
         >
-          <Plasma
-            color="#ffffff"
-            speed={0.55}
-            direction="forward"
-            scale={1.2}
-            opacity={0.38}
-            mouseInteractive={false}
-            renderScale={0.55}
-            maxDpr={1.5}
-            targetFps={45}
-          />
+          {entryEffectsActive && (
+            <Plasma
+              color="#ffffff"
+              speed={0.55}
+              direction="forward"
+              scale={1.2}
+              opacity={0.38}
+              mouseInteractive={false}
+              renderScale={0.55}
+              maxDpr={1.5}
+              targetFps={45}
+            />
+          )}
         </div>
 
         {/* =====================================
@@ -875,7 +891,9 @@ function App() {
             className="entry__emblem entry__emblem--3d"
             aria-hidden="true"
           >
-            <EntryLogo3D />
+            {entryEffectsActive && (
+              <EntryLogo3D />
+            )}
           </div>
 
           <button
