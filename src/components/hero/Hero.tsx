@@ -881,6 +881,33 @@ function Hero({
     })
   }
 
+  /* =========================================
+    EXPLORE LOOKBOOK
+  ========================================= */
+
+  const handleExploreLookbook = () => {
+    const lookbook =
+      document.getElementById(
+        'lookbook',
+      )
+
+    if (!lookbook) return
+
+    const reducedMotion =
+      window.matchMedia(
+        '(prefers-reduced-motion: reduce)',
+      ).matches
+
+    lookbook.scrollIntoView({
+      behavior:
+        reducedMotion
+          ? 'auto'
+          : 'smooth',
+
+      block: 'start',
+    })
+  }
+
   return (
     <section
       ref={heroRef}
@@ -933,7 +960,12 @@ function Hero({
             SHOP
           </button>
 
-          <button type="button">
+          <button
+            type="button"
+            onClick={
+              handleExploreLookbook
+            }
+          >
             LOOKBOOK
           </button>
 

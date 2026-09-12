@@ -14,6 +14,7 @@ import Hero from './components/hero/Hero'
 import DropGrid from './components/drop/DropGrid'
 import ProductDetail from './components/product/ProductDetail'
 import CartDrawer from './components/cart/CartDrawer'
+import Lookbook from './components/lookbook/Lookbook'
 
 import type {
   StoreProduct,
@@ -852,6 +853,18 @@ function App() {
 
       {heroVisible && (
         <DropGrid
+          onSelectProduct={
+            setSelectedProduct
+          }
+        />
+      )}
+
+      {/* =====================================
+          LOOKBOOK
+      ===================================== */}
+
+      {heroVisible && (
+        <Lookbook
           onSelectProduct={
             setSelectedProduct
           }
