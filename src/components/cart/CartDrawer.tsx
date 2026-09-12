@@ -9,6 +9,8 @@ import gsap from 'gsap'
 
 import './CartDrawer.css'
 
+import useDialogFocus from '../../hooks/useDialogFocus'
+
 import type {
   CartItem,
 } from '../../data/cart'
@@ -48,6 +50,14 @@ function CartDrawer({
 
   const closingRef =
     useRef(false)
+
+  const closeButtonRef =
+    useRef<HTMLButtonElement>(null)
+
+  useDialogFocus({
+    rootRef,
+    initialFocusRef: closeButtonRef,
+  })
 
   const subtotalPen =
     items.reduce(
@@ -380,6 +390,7 @@ function CartDrawer({
       className="cart-drawer"
       role="dialog"
       aria-modal="true"
+      tabIndex={-1}
       aria-label="Shopping bag"
     >
       {/* =====================================
@@ -418,6 +429,7 @@ function CartDrawer({
           <button
             className="cart-drawer__close"
             type="button"
+            ref={closeButtonRef}
             onClick={
               handleClose
             }

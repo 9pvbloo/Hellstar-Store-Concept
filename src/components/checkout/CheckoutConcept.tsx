@@ -14,6 +14,8 @@ import gsap from 'gsap'
 
 import './CheckoutConcept.css'
 
+import useDialogFocus from '../../hooks/useDialogFocus'
+
 import type {
   CartItem,
 } from '../../data/cart'
@@ -37,6 +39,29 @@ function CheckoutConcept({
 
   const closingRef =
     useRef(false)
+
+  const closeButtonRef =
+    useRef<HTMLButtonElement>(null)
+
+  const informationHeadingRef =
+    useRef<HTMLHeadingElement>(null)
+
+  const reviewHeadingRef =
+    useRef<HTMLHeadingElement>(null)
+
+  const completeHeadingRef =
+    useRef<HTMLHeadingElement>(null)
+
+  const pendingStepFocusRef =
+    useRef<CheckoutStep | null>(null)
+
+  const isStepTransitioningRef =
+    useRef(false)
+
+  useDialogFocus({
+    rootRef,
+    initialFocusRef: closeButtonRef,
+  })
 
   const [
     step,
@@ -133,6 +158,39 @@ function CheckoutConcept({
     country.trim() !== '' &&
     city.trim() !== '' &&
     address.trim() !== ''
+
+  const focusStepHeading =
+    useCallback((
+      nextStep: CheckoutStep,
+    ) => {
+      const heading =
+        nextStep === 'information'
+          ? informationHeadingRef.current
+          : nextStep === 'review'
+            ? reviewHeadingRef.current
+            : completeHeadingRef.current
+
+      if (heading) {
+        heading.focus({
+          preventScroll: true,
+        })
+      }
+    }, [])
+
+  useLayoutEffect(() => {
+    if (
+      pendingStepFocusRef.current !== step ||
+      isStepTransitioningRef.current
+    ) {
+      return
+    }
+
+    focusStepHeading(step)
+    pendingStepFocusRef.current = null
+  }, [
+    focusStepHeading,
+    step,
+  ])
 
   /* =========================================
      CLOSE
@@ -323,6 +381,9 @@ function CheckoutConcept({
   const changeStep = (
     nextStep: CheckoutStep,
   ) => {
+    pendingStepFocusRef.current =
+      nextStep
+
     const root =
       rootRef.current
 
@@ -350,6 +411,9 @@ function CheckoutConcept({
       setStep(nextStep)
       return
     }
+
+    isStepTransitioningRef.current =
+      true
 
     gsap.to(
       panel,
@@ -381,6 +445,20 @@ function CheckoutConcept({
 
               ease:
                 'power3.out',
+
+              onComplete: () => {
+                isStepTransitioningRef.current =
+                  false
+
+                if (
+                  pendingStepFocusRef.current ===
+                  nextStep
+                ) {
+                  focusStepHeading(nextStep)
+                  pendingStepFocusRef.current =
+                    null
+                }
+              },
             },
           )
         },
@@ -423,7 +501,10 @@ function CheckoutConcept({
     <section
       ref={rootRef}
       className="checkout-concept"
-      aria-labelledby="checkout-title"
+      role="dialog"
+      aria-modal="true"
+      tabIndex={-1}
+      aria-label="Checkout concept"
     >
       <div
         className="checkout-concept__cover"
@@ -455,6 +536,7 @@ function CheckoutConcept({
           <button
             className="checkout-concept__close"
             type="button"
+            ref={closeButtonRef}
             onClick={
               handleClose
             }
@@ -546,7 +628,8 @@ function CheckoutConcept({
                   </span>
 
                   <h1
-                    id="checkout-title"
+                    ref={informationHeadingRef}
+                    tabIndex={-1}
                     className="checkout-concept__information-title"
                   >
                     YOUR
@@ -703,6 +786,9 @@ function CheckoutConcept({
 
                   <button
                     type="button"
+                    aria-pressed={
+                      shipping === 'standard'
+                    }
                     className={
                       shipping ===
                       'standard'
@@ -733,6 +819,9 @@ function CheckoutConcept({
 
                   <button
                     type="button"
+                    aria-pressed={
+                      shipping === 'express'
+                    }
                     className={
                       shipping ===
                       'express'
@@ -788,7 +877,10 @@ function CheckoutConcept({
                     02 / REVIEW
                   </span>
 
-                  <h1>
+                  <h1
+                    ref={reviewHeadingRef}
+                    tabIndex={-1}
+                  >
                     FINAL
                     <br />
                     CHECK
@@ -924,7 +1016,10 @@ function CheckoutConcept({
                   ✓
                 </div>
 
-                <h1>
+                <h1
+                  ref={completeHeadingRef}
+                  tabIndex={-1}
+                >
                   SIGNAL
                   <br />
                   RECEIVED

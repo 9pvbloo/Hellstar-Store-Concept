@@ -10,6 +10,8 @@ import gsap from 'gsap'
 
 import './ProductDetail.css'
 
+import useDialogFocus from '../../hooks/useDialogFocus'
+
 import type {
   StoreProduct,
 } from '../../data/products'
@@ -34,6 +36,14 @@ function ProductDetail({
 
   const closingRef =
     useRef(false)
+
+  const closeButtonRef =
+    useRef<HTMLButtonElement>(null)
+
+  useDialogFocus({
+    rootRef,
+    initialFocusRef: closeButtonRef,
+  })
 
   const [
     selectedSize,
@@ -409,6 +419,9 @@ function ProductDetail({
       ref={rootRef}
       className="product-detail"
       data-category={product.category}
+      role="dialog"
+      aria-modal="true"
+      tabIndex={-1}
       aria-labelledby="product-detail-title"
     >
       {/* =====================================
@@ -477,6 +490,7 @@ function ProductDetail({
         <button
           className="product-detail__close"
           type="button"
+          ref={closeButtonRef}
           onClick={handleClose}
         >
           CLOSE / ESC
