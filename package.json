@@ -13,7 +13,6 @@
     "@fontsource/archivo-black": "^5.3.0",
     "@fontsource/ibm-plex-mono": "^5.3.0",
     "@fontsource/space-grotesk": "^5.3.0",
-    "@react-three/drei": "^10.7.8",
     "@react-three/fiber": "^9.7.0",
     "gsap": "^3.15.0",
     "ogl": "^1.0.11",
