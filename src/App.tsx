@@ -1,4 +1,6 @@
 import {
+  lazy,
+  Suspense,
   useEffect,
   useLayoutEffect,
   useRef,
@@ -14,10 +16,19 @@ import Plasma from './components/backgrounds/Plasma/Plasma'
 import StickyNav from './components/navigation/StickyNav'
 import Hero from './components/hero/Hero'
 import DropGrid from './components/drop/DropGrid'
-import ProductDetail from './components/product/ProductDetail'
-import CartDrawer from './components/cart/CartDrawer'
 import Lookbook from './components/lookbook/Lookbook'
-import CheckoutConcept from './components/checkout/CheckoutConcept'
+
+const ProductDetail = lazy(
+  () => import('./components/product/ProductDetail'),
+)
+
+const CartDrawer = lazy(
+  () => import('./components/cart/CartDrawer'),
+)
+
+const CheckoutConcept = lazy(
+  () => import('./components/checkout/CheckoutConcept'),
+)
 
 import type {
   StoreProduct,
@@ -987,20 +998,22 @@ function App() {
       ===================================== */}
 
       {selectedProduct && (
-        <ProductDetail
-          key={selectedProduct.id}
-          product={
-            selectedProduct
-          }
-          onAddToCart={
-            handleAddToCart
-          }
-          onClose={() =>
-            setSelectedProduct(
-              null,
-            )
-          }
-        />
+        <Suspense fallback={null}>
+          <ProductDetail
+            key={selectedProduct.id}
+            product={
+              selectedProduct
+            }
+            onAddToCart={
+              handleAddToCart
+            }
+            onClose={() =>
+              setSelectedProduct(
+                null,
+              )
+            }
+          />
+        </Suspense>
       )}
 
       {/* =====================================
@@ -1008,24 +1021,26 @@ function App() {
       ===================================== */}
 
       {cartOpen && (
-        <CartDrawer
-          items={cartItems}
-          onClose={() =>
-            setCartOpen(false)
-          }
-          onCheckout={
-            handleOpenCheckout
-          }
-          onIncrease={
-            handleIncreaseCartItem
-          }
-          onDecrease={
-            handleDecreaseCartItem
-          }
-          onRemove={
-            handleRemoveCartItem
-          }
-        />
+        <Suspense fallback={null}>
+          <CartDrawer
+            items={cartItems}
+            onClose={() =>
+              setCartOpen(false)
+            }
+            onCheckout={
+              handleOpenCheckout
+            }
+            onIncrease={
+              handleIncreaseCartItem
+            }
+            onDecrease={
+              handleDecreaseCartItem
+            }
+            onRemove={
+              handleRemoveCartItem
+            }
+          />
+        </Suspense>
       )}
 
       {/* =====================================
@@ -1033,14 +1048,16 @@ function App() {
       ===================================== */}
 
       {checkoutOpen && (
-        <CheckoutConcept
-          items={cartItems}
-          onClose={() =>
-            setCheckoutOpen(
-              false,
-            )
-          }
-        />
+        <Suspense fallback={null}>
+          <CheckoutConcept
+            items={cartItems}
+            onClose={() =>
+              setCheckoutOpen(
+                false,
+              )
+            }
+          />
+        </Suspense>
       )}
     </>
   )
