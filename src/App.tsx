@@ -13,10 +13,6 @@ import './App.css'
 
 import EntryLogo3D from './components/entry/EntryLogo3D'
 import Plasma from './components/backgrounds/Plasma/Plasma'
-import StickyNav from './components/navigation/StickyNav'
-import Hero from './components/hero/Hero'
-import DropGrid from './components/drop/DropGrid'
-import Lookbook from './components/lookbook/Lookbook'
 
 const ProductDetail = lazy(
   () => import('./components/product/ProductDetail'),
@@ -29,6 +25,26 @@ const CartDrawer = lazy(
 const CheckoutConcept = lazy(
   () => import('./components/checkout/CheckoutConcept'),
 )
+
+const loadHero = () =>
+  import('./components/hero/Hero')
+
+const loadDropGrid = () =>
+  import('./components/drop/DropGrid')
+
+const loadLookbook = () =>
+  import('./components/lookbook/Lookbook')
+
+const loadStickyNav = () =>
+  import('./components/navigation/StickyNav')
+
+const Hero = lazy(loadHero)
+
+const DropGrid = lazy(loadDropGrid)
+
+const Lookbook = lazy(loadLookbook)
+
+const StickyNav = lazy(loadStickyNav)
 
 import type {
   StoreProduct,
@@ -45,6 +61,11 @@ function App() {
   const transitioningRef =
     useRef(false)
 
+  const heroPreloadRef =
+    useRef<
+      ReturnType<typeof loadHero> | null
+    >(null)
+
   const [
     transitioning,
     setTransitioning,
@@ -53,6 +74,11 @@ function App() {
   const [
     heroVisible,
     setHeroVisible,
+  ] = useState(false)
+
+  const [
+    coverReleaseRequested,
+    setCoverReleaseRequested,
   ] = useState(false)
 
   const [
@@ -90,6 +116,64 @@ function App() {
     setCheckoutOpen,
   ] =
     useState(false)
+
+  const preloadHero = () => {
+    if (!heroPreloadRef.current) {
+      heroPreloadRef.current =
+        loadHero()
+    }
+
+    return heroPreloadRef.current
+  }
+
+  const preloadPostEntryContent = () => {
+    void preloadHero().catch(
+      () => undefined,
+    )
+
+    void loadDropGrid().catch(
+      () => undefined,
+    )
+
+    void loadLookbook().catch(
+      () => undefined,
+    )
+
+    void loadStickyNav().catch(
+      () => undefined,
+    )
+  }
+
+  useLayoutEffect(() => {
+    if (
+      !heroVisible ||
+      !coverReleaseRequested
+    ) {
+      return
+    }
+
+    const cover =
+      entryRef.current?.querySelector(
+        '.entry__transition-cover',
+      )
+
+    if (!cover) return
+
+    gsap.to(
+      cover,
+      {
+        opacity: 0,
+
+        duration: 0.58,
+
+        ease:
+          'power2.inOut',
+      },
+    )
+  }, [
+    coverReleaseRequested,
+    heroVisible,
+  ])
 
   /* =========================================
      INTRO CINEMATIC
@@ -487,22 +571,25 @@ function App() {
 
           timeline.call(
             () => {
-              setHeroVisible(true)
+              void preloadHero()
+                .then(
+                  () => {
+                    setHeroVisible(true)
+                  },
+                )
+                .catch(
+                  () => undefined,
+                )
             },
             [],
             0.96,
           )
 
-          timeline.to(
-            '.entry__transition-cover',
-            {
-              opacity: 0,
-
-              duration: 0.58,
-
-              ease:
-                'power2.inOut',
+          timeline.call(
+            () => {
+              setCoverReleaseRequested(true)
             },
+            [],
             1.02,
           )
 
@@ -569,14 +656,27 @@ function App() {
     transitioningRef.current =
       true
 
+    setCoverReleaseRequested(false)
+
+    preloadPostEntryContent()
+
     const reducedMotion =
       window.matchMedia(
         '(prefers-reduced-motion: reduce)',
       ).matches
 
     if (reducedMotion) {
-      setHeroVisible(true)
-      setEntryEffectsActive(false)
+      void preloadHero()
+        .then(
+          () => {
+            setHeroVisible(true)
+            setEntryEffectsActive(false)
+          },
+        )
+        .catch(
+          () => undefined,
+        )
+
       return
     }
 
@@ -765,19 +865,23 @@ function App() {
 
   return (
     <>
-      <StickyNav
-        visible={
-          heroVisible && !heroInView
-        }
-        cartCount={cartCount}
-        onOpenCart={() => setCartOpen(true)}
-        onShop={() =>
-          scrollToSection('drop-001')
-        }
-        onLookbook={() =>
-          scrollToSection('lookbook')
-        }
-      />
+      {heroVisible && (
+        <Suspense fallback={null}>
+          <StickyNav
+            visible={
+              heroVisible && !heroInView
+            }
+            cartCount={cartCount}
+            onOpenCart={() => setCartOpen(true)}
+            onShop={() =>
+              scrollToSection('drop-001')
+            }
+            onLookbook={() =>
+              scrollToSection('lookbook')
+            }
+          />
+        </Suspense>
+      )}
 
       <main
         ref={entryRef}
@@ -949,14 +1053,16 @@ function App() {
         ===================================== */}
 
         {heroVisible && (
-          <Hero
-            cartCount={
-              cartCount
-            }
-            onOpenCart={() =>
-              setCartOpen(true)
-            }
-          />
+          <Suspense fallback={null}>
+            <Hero
+              cartCount={
+                cartCount
+              }
+              onOpenCart={() =>
+                setCartOpen(true)
+              }
+            />
+          </Suspense>
         )}
 
         {/* =====================================
@@ -974,11 +1080,13 @@ function App() {
       ===================================== */}
 
       {heroVisible && (
-        <DropGrid
-          onSelectProduct={
-            setSelectedProduct
-          }
-        />
+        <Suspense fallback={null}>
+          <DropGrid
+            onSelectProduct={
+              setSelectedProduct
+            }
+          />
+        </Suspense>
       )}
 
       {/* =====================================
@@ -986,11 +1094,13 @@ function App() {
       ===================================== */}
 
       {heroVisible && (
-        <Lookbook
-          onSelectProduct={
-            setSelectedProduct
-          }
-        />
+        <Suspense fallback={null}>
+          <Lookbook
+            onSelectProduct={
+              setSelectedProduct
+            }
+          />
+        </Suspense>
       )}
 
       {/* =====================================
