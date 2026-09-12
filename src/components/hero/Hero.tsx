@@ -911,6 +911,7 @@ function Hero({
   return (
     <section
       ref={heroRef}
+      id="hero"
       className="hero"
       aria-labelledby="hero-product-title"
     >

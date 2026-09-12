@@ -1,4 +1,5 @@
 import {
+  useEffect,
   useLayoutEffect,
   useRef,
   useState,
@@ -10,6 +11,7 @@ import './App.css'
 
 import EntryLogo3D from './components/entry/EntryLogo3D'
 import Plasma from './components/backgrounds/Plasma/Plasma'
+import StickyNav from './components/navigation/StickyNav'
 import Hero from './components/hero/Hero'
 import DropGrid from './components/drop/DropGrid'
 import ProductDetail from './components/product/ProductDetail'
@@ -41,6 +43,11 @@ function App() {
     heroVisible,
     setHeroVisible,
   ] = useState(false)
+
+  const [
+    heroInView,
+    setHeroInView,
+  ] = useState(true)
 
   const [
     selectedProduct,
@@ -492,6 +499,39 @@ function App() {
   }, [transitioning])
 
   /* =========================================
+     HERO VISIBILITY / STICKY NAV
+  ========================================= */
+
+  useEffect(() => {
+    if (!heroVisible) {
+      return
+    }
+
+    const hero =
+      document.getElementById('hero')
+
+    if (!hero) return
+
+    const observer =
+      new IntersectionObserver(
+        ([entry]) => {
+          setHeroInView(
+            entry.isIntersecting,
+          )
+        },
+        {
+          threshold: 0,
+        },
+      )
+
+    observer.observe(hero)
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [heroVisible])
+
+  /* =========================================
      ENTER CLICK
   ========================================= */
 
@@ -677,8 +717,43 @@ function App() {
       0,
     )
 
+  const scrollToSection = (
+    id: string,
+  ) => {
+    const section =
+      document.getElementById(id)
+
+    if (!section) return
+
+    const reducedMotion =
+      window.matchMedia(
+        '(prefers-reduced-motion: reduce)',
+      ).matches
+
+    section.scrollIntoView({
+      behavior: reducedMotion
+        ? 'auto'
+        : 'smooth',
+      block: 'start',
+    })
+  }
+
   return (
     <>
+      <StickyNav
+        visible={
+          heroVisible && !heroInView
+        }
+        cartCount={cartCount}
+        onOpenCart={() => setCartOpen(true)}
+        onShop={() =>
+          scrollToSection('drop-001')
+        }
+        onLookbook={() =>
+          scrollToSection('lookbook')
+        }
+      />
+
       <main
         ref={entryRef}
         className="entry"
