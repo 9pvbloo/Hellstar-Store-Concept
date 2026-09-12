@@ -13,6 +13,7 @@ import DotField from './components/backgrounds/DotField/DotField'
 import Hero from './components/hero/Hero'
 import DropGrid from './components/drop/DropGrid'
 import ProductDetail from './components/product/ProductDetail'
+import CartDrawer from './components/cart/CartDrawer'
 
 import type {
   StoreProduct,
@@ -32,14 +33,12 @@ function App() {
   const [
     transitioning,
     setTransitioning,
-  ] =
-    useState(false)
+  ] = useState(false)
 
   const [
     heroVisible,
     setHeroVisible,
-  ] =
-    useState(false)
+  ] = useState(false)
 
   const [
     selectedProduct,
@@ -54,6 +53,12 @@ function App() {
     setCartItems,
   ] =
     useState<CartItem[]>([])
+
+  const [
+    cartOpen,
+    setCartOpen,
+  ] =
+    useState(false)
 
   /* =========================================
      INTRO CINEMATIC
@@ -77,10 +82,6 @@ function App() {
     const context =
       gsap.context(
         () => {
-          /* -------------------------------------
-             INITIAL STATE
-          ------------------------------------- */
-
           gsap.set(
             [
               '.entry__brand',
@@ -145,10 +146,6 @@ function App() {
             },
           )
 
-          /* -------------------------------------
-             INTRO TIMELINE
-          ------------------------------------- */
-
           const timeline =
             gsap.timeline({
               defaults: {
@@ -156,8 +153,6 @@ function App() {
                   'power3.out',
               },
             })
-
-          /* Header */
 
           timeline.to(
             '.entry__brand',
@@ -179,8 +174,6 @@ function App() {
             0.28,
           )
 
-          /* Dot Field */
-
           timeline.to(
             '.entry__dot-field',
             {
@@ -195,8 +188,6 @@ function App() {
             0.32,
           )
 
-          /* Technical Crosshair */
-
           timeline.to(
             '.entry__pattern',
             {
@@ -209,8 +200,6 @@ function App() {
             },
             0.6,
           )
-
-          /* Medallion */
 
           timeline.to(
             '.entry__emblem',
@@ -232,8 +221,6 @@ function App() {
             0.72,
           )
 
-          /* Micro HUD */
-
           timeline.to(
             '.entry__hud',
             {
@@ -250,8 +237,6 @@ function App() {
             },
             1.18,
           )
-
-          /* ENTER */
 
           timeline.to(
             '.entry__enter',
@@ -271,8 +256,6 @@ function App() {
             1.48,
           )
 
-          /* Subtitle */
-
           timeline.to(
             '.entry__subtitle',
             {
@@ -285,8 +268,6 @@ function App() {
             1.72,
           )
 
-          /* Footer */
-
           timeline.to(
             '.entry__footer',
             {
@@ -298,11 +279,6 @@ function App() {
             },
             1.92,
           )
-
-          /*
-           * Return ENTER control to CSS
-           * so hover / active work normally.
-           */
 
           timeline.set(
             '.entry__enter',
@@ -340,11 +316,6 @@ function App() {
         '(prefers-reduced-motion: reduce)',
       ).matches
 
-    /*
-     * Reduced motion:
-     * skip cinematic transition.
-     */
-
     if (reducedMotion) {
       setHeroVisible(true)
       return
@@ -353,11 +324,6 @@ function App() {
     const context =
       gsap.context(
         () => {
-          /*
-           * Prevent ENTER hover animation
-           * from fighting the exit timeline.
-           */
-
           gsap.killTweensOf(
             '.entry__enter',
           )
@@ -370,10 +336,6 @@ function App() {
               },
             })
 
-          /* ----------------------------------
-             HUD RETRACTS
-          ---------------------------------- */
-
           timeline.to(
             '.entry__hud',
             {
@@ -385,10 +347,6 @@ function App() {
             },
             0,
           )
-
-          /* ----------------------------------
-             HEADER + FOOTER
-          ---------------------------------- */
 
           timeline.to(
             [
@@ -405,10 +363,6 @@ function App() {
             },
             0.06,
           )
-
-          /* ----------------------------------
-             ENTER
-          ---------------------------------- */
 
           timeline.to(
             '.entry__enter',
@@ -427,10 +381,6 @@ function App() {
             0.08,
           )
 
-          /* ----------------------------------
-             SUBTITLE
-          ---------------------------------- */
-
           timeline.to(
             '.entry__subtitle',
             {
@@ -442,10 +392,6 @@ function App() {
             },
             0.12,
           )
-
-          /* ----------------------------------
-             TECHNICAL SYSTEM
-          ---------------------------------- */
 
           timeline.to(
             '.entry__pattern',
@@ -471,10 +417,6 @@ function App() {
             },
             0.16,
           )
-
-          /* ----------------------------------
-             MEDALLION FOCUS
-          ---------------------------------- */
 
           timeline.to(
             '.entry__emblem',
@@ -509,10 +451,6 @@ function App() {
             0.48,
           )
 
-          /* ----------------------------------
-             BLACKOUT
-          ---------------------------------- */
-
           timeline.to(
             '.entry__transition-cover',
             {
@@ -526,10 +464,6 @@ function App() {
             0.7,
           )
 
-          /* ----------------------------------
-             HERO MOUNTS
-          ---------------------------------- */
-
           timeline.call(
             () => {
               setHeroVisible(true)
@@ -537,10 +471,6 @@ function App() {
             [],
             0.96,
           )
-
-          /* ----------------------------------
-             BLACK COVER LEAVES
-          ---------------------------------- */
 
           timeline.to(
             '.entry__transition-cover',
@@ -581,7 +511,7 @@ function App() {
   }
 
   /* =========================================
-     CART
+     ADD TO CART
   ========================================= */
 
   const handleAddToCart = (
@@ -627,6 +557,99 @@ function App() {
       },
     )
   }
+
+  /* =========================================
+     CART QUANTITY +
+  ========================================= */
+
+  const handleIncreaseCartItem = (
+    productId: string,
+    size: string,
+  ) => {
+    setCartItems(
+      (currentItems) =>
+        currentItems.map(
+          (item) =>
+            item.product.id ===
+                productId &&
+            item.size === size
+              ? {
+                  ...item,
+
+                  quantity:
+                    item.quantity +
+                    1,
+                }
+              : item,
+        ),
+    )
+  }
+
+  /* =========================================
+     CART QUANTITY -
+  ========================================= */
+
+  const handleDecreaseCartItem = (
+    productId: string,
+    size: string,
+  ) => {
+    setCartItems(
+      (currentItems) =>
+        currentItems.flatMap(
+          (item) => {
+            const matches =
+              item.product.id ===
+                productId &&
+              item.size === size
+
+            if (!matches) {
+              return [item]
+            }
+
+            if (
+              item.quantity <= 1
+            ) {
+              return []
+            }
+
+            return [
+              {
+                ...item,
+
+                quantity:
+                  item.quantity -
+                  1,
+              },
+            ]
+          },
+        ),
+    )
+  }
+
+  /* =========================================
+     REMOVE CART ITEM
+  ========================================= */
+
+  const handleRemoveCartItem = (
+    productId: string,
+    size: string,
+  ) => {
+    setCartItems(
+      (currentItems) =>
+        currentItems.filter(
+          (item) =>
+            !(
+              item.product.id ===
+                productId &&
+              item.size === size
+            ),
+        ),
+    )
+  }
+
+  /* =========================================
+     CART COUNT
+  ========================================= */
 
   const cartCount =
     cartItems.reduce(
@@ -714,8 +737,6 @@ function App() {
         ===================================== */}
 
         <section className="entry__content">
-          {/* LEFT MICRO HUD */}
-
           <div
             className="entry__hud entry__hud--left"
             aria-hidden="true"
@@ -739,8 +760,6 @@ function App() {
             </span>
           </div>
 
-          {/* RIGHT MICRO HUD */}
-
           <div
             className="entry__hud entry__hud--right"
             aria-hidden="true"
@@ -758,20 +777,12 @@ function App() {
             </span>
           </div>
 
-          {/* =====================================
-              3D MEDALLION
-          ===================================== */}
-
           <div
             className="entry__emblem entry__emblem--3d"
             aria-hidden="true"
           >
             <EntryLogo3D />
           </div>
-
-          {/* =====================================
-              ENTER
-          ===================================== */}
 
           <button
             className="entry__enter"
@@ -780,10 +791,6 @@ function App() {
           >
             ENTER
           </button>
-
-          {/* =====================================
-              SUBTITLE
-          ===================================== */}
 
           <p className="entry__subtitle">
             ANOTHER REALITY AWAITS
@@ -822,6 +829,9 @@ function App() {
           <Hero
             cartCount={
               cartCount
+            }
+            onOpenCart={() =>
+              setCartOpen(true)
             }
           />
         )}
@@ -864,6 +874,28 @@ function App() {
             setSelectedProduct(
               null,
             )
+          }
+        />
+      )}
+
+      {/* =====================================
+          CART DRAWER
+      ===================================== */}
+
+      {cartOpen && (
+        <CartDrawer
+          items={cartItems}
+          onClose={() =>
+            setCartOpen(false)
+          }
+          onIncrease={
+            handleIncreaseCartItem
+          }
+          onDecrease={
+            handleDecreaseCartItem
+          }
+          onRemove={
+            handleRemoveCartItem
           }
         />
       )}
