@@ -319,16 +319,6 @@ function App() {
 
     if (!root) return
 
-    const reducedMotion =
-      window.matchMedia(
-        '(prefers-reduced-motion: reduce)',
-      ).matches
-
-    if (reducedMotion) {
-      setHeroVisible(true)
-      return
-    }
-
     const context =
       gsap.context(
         () => {
@@ -514,6 +504,16 @@ function App() {
 
     transitioningRef.current =
       true
+
+    const reducedMotion =
+      window.matchMedia(
+        '(prefers-reduced-motion: reduce)',
+      ).matches
+
+    if (reducedMotion) {
+      setHeroVisible(true)
+      return
+    }
 
     setTransitioning(true)
   }
@@ -894,6 +894,7 @@ function App() {
 
       {selectedProduct && (
         <ProductDetail
+          key={selectedProduct.id}
           product={
             selectedProduct
           }

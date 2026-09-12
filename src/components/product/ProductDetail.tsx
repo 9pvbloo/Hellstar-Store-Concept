@@ -54,20 +54,6 @@ function ProductDetail({
     undefined
 
   /* =========================================
-     RESET SIZE
-  ========================================= */
-
-  useEffect(() => {
-    setSelectedSize(
-      product.sizes.length === 1
-        ? product.sizes[0]
-        : '',
-    )
-
-    setAddedToCart(false)
-  }, [product])
-
-  /* =========================================
      CLOSE CINEMATIC
   ========================================= */
 

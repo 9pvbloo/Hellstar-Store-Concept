@@ -3,13 +3,13 @@ import {
   useEffect,
   useMemo,
   useRef,
+  useState,
 } from 'react'
 
 import {
   Canvas,
   useFrame,
   useLoader,
-  useThree,
 } from '@react-three/fiber'
 
 import { SVGLoader } from 'three/examples/jsm/loaders/SVGLoader.js'
@@ -26,6 +26,10 @@ type EmblemPart = {
   shape: THREE.Shape
   key: string
 }
+
+type CanvasCursor =
+  | 'grab'
+  | 'grabbing'
 
 /* =========================================
    GEOMETRY
@@ -98,7 +102,17 @@ function ChromeMaterial() {
    MEDALLION
 ========================================= */
 
-function ChromeMedallion() {
+type ChromeMedallionProps = {
+  canvas: HTMLCanvasElement | null
+  onCursorChange: (
+    cursor: CanvasCursor,
+  ) => void
+}
+
+function ChromeMedallion({
+  canvas,
+  onCursorChange,
+}: ChromeMedallionProps) {
   const group = useRef<THREE.Group>(null)
 
   /*
@@ -124,8 +138,6 @@ function ChromeMedallion() {
     x: 0,
     y: 0,
   })
-
-  const { gl } = useThree()
 
   const svg = useLoader(
     SVGLoader,
@@ -164,10 +176,7 @@ function ChromeMedallion() {
   ======================================= */
 
   useEffect(() => {
-    const canvas = gl.domElement
-
-    canvas.style.cursor = 'grab'
-    canvas.style.touchAction = 'none'
+    if (!canvas) return
 
     const pointerDown = (
       event: PointerEvent,
@@ -182,8 +191,7 @@ function ChromeMedallion() {
 
       velocityY.current = 0
 
-      canvas.style.cursor =
-        'grabbing'
+      onCursorChange('grabbing')
 
       canvas.setPointerCapture?.(
         event.pointerId,
@@ -238,8 +246,7 @@ function ChromeMedallion() {
     ) => {
       dragging.current = false
 
-      canvas.style.cursor =
-        'grab'
+      onCursorChange('grab')
 
       if (
         canvas.hasPointerCapture?.(
@@ -303,7 +310,7 @@ function ChromeMedallion() {
         pointerUp,
       )
     }
-  }, [gl])
+  }, [canvas, onCursorChange])
 
   /* =======================================
      MOTION + INERTIA + IDLE
@@ -466,6 +473,18 @@ function ChromeMedallion() {
 ========================================= */
 
 function EntryLogo3D() {
+  const [
+    canvas,
+    setCanvas,
+  ] = useState<HTMLCanvasElement | null>(
+    null,
+  )
+
+  const [
+    cursor,
+    setCursor,
+  ] = useState<CanvasCursor>('grab')
+
   return (
     <Canvas
       dpr={[1.25, 2]}
@@ -480,6 +499,13 @@ function EntryLogo3D() {
         alpha: true,
         powerPreference:
           'high-performance',
+      }}
+      onCreated={({ gl }) => {
+        setCanvas(gl.domElement)
+      }}
+      style={{
+        cursor,
+        touchAction: 'none',
       }}
     >
       <Suspense fallback={null}>
@@ -570,7 +596,10 @@ function EntryLogo3D() {
          * líneas blancas/reflejos duros.
          */}
 
-        <ChromeMedallion />
+        <ChromeMedallion
+          canvas={canvas}
+          onCursorChange={setCursor}
+        />
       </Suspense>
     </Canvas>
   )
