@@ -1208,17 +1208,22 @@ span:first-child {
   }
 
 
-  .lookbook__intro-title {
+    .lookbook__intro-title {
+    width: 100%;
+
     font-size:
-      clamp(
-        68px,
-        25vw,
-        110px
-      );
+        clamp(
+        52px,
+        17vw,
+        76px
+        );
 
     line-height:
-      0.78;
-  }
+        0.82;
+
+    letter-spacing:
+        -0.07em;
+    }
 
 
   .lookbook__intro-side {
