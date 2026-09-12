@@ -5,10 +5,10 @@ import {
 
 import gsap from 'gsap'
 
-import stickerWide from '../../assets/stickers/sticker-hellstar-wide.png'
-import stickerRacing from '../../assets/stickers/sticker-hellstar-racing.png'
-import stickerEmblem from '../../assets/stickers/sticker-hellstar-emblem-circle.png'
-import stickerFlameRed from '../../assets/stickers/sticker-hellstar-flame-red.png'
+import stickerWide from '../../assets/stickers/sticker-hellstar-wide.webp'
+import stickerRacing from '../../assets/stickers/sticker-hellstar-racing.webp'
+import stickerEmblem from '../../assets/stickers/sticker-hellstar-emblem-circle.webp'
+import stickerFlameRed from '../../assets/stickers/sticker-hellstar-flame-red.webp'
 
 function HeroStickers() {
   const stickersRef =
