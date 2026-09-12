@@ -9,7 +9,7 @@ import gsap from 'gsap'
 import './App.css'
 
 import EntryLogo3D from './components/entry/EntryLogo3D'
-import DotField from './components/backgrounds/DotField/DotField'
+import Plasma from './components/backgrounds/Plasma/Plasma'
 import Hero from './components/hero/Hero'
 import DropGrid from './components/drop/DropGrid'
 import ProductDetail from './components/product/ProductDetail'
@@ -700,15 +700,16 @@ function App() {
           className="entry__dot-field"
           aria-hidden="true"
         >
-          <DotField
-            dotRadius={0.85}
-            dotSpacing={14}
-            cursorRadius={500}
-            bulgeStrength={67}
-            glowRadius={260}
-            baseColor="rgba(255, 255, 255, 0.22)"
-            accentColor="rgba(255, 255, 255, 0.92)"
-            glowColor="rgba(255, 255, 255, 0)"
+          <Plasma
+            color="#ffffff"
+            speed={0.55}
+            direction="forward"
+            scale={1.2}
+            opacity={0.38}
+            mouseInteractive={false}
+            renderScale={0.55}
+            maxDpr={1.5}
+            targetFps={45}
           />
         </div>
 
