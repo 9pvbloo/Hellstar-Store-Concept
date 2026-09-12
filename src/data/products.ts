@@ -1,17 +1,17 @@
-import hoodie01 from '../assets/products/hoodie-01-black-path-to-paradise.png'
-import hoodie02 from '../assets/products/hoodie-02-grey-pink-flame.png'
-import hoodie03 from '../assets/products/hoodie-03-red-records.png'
+import hoodie01 from '../assets/products/hoodie-01-black-path-to-paradise.webp'
+import hoodie02 from '../assets/products/hoodie-02-grey-pink-flame.webp'
+import hoodie03 from '../assets/products/hoodie-03-red-records.webp'
 
-import tee01 from '../assets/products/tee-01-black-boxing.png'
-import tee02 from '../assets/products/tee-02-cream-enlightenment.png'
-import tee03 from '../assets/products/tee-03-black-skull-football.png'
+import tee01 from '../assets/products/tee-01-black-boxing.webp'
+import tee02 from '../assets/products/tee-02-cream-enlightenment.webp'
+import tee03 from '../assets/products/tee-03-black-skull-football.webp'
 
-import shorts01 from '../assets/products/shorts-01-black-burning-face.png'
-import shorts02 from '../assets/products/shorts-02-black-path-to-paradise.png'
-import shorts03 from '../assets/products/shorts-03-black-records.png'
+import shorts01 from '../assets/products/shorts-01-black-burning-face.webp'
+import shorts02 from '../assets/products/shorts-02-black-path-to-paradise.webp'
+import shorts03 from '../assets/products/shorts-03-black-records.webp'
 
-import cap01 from '../assets/products/cap-01-red-flame.png'
-import cap02 from '../assets/products/cap-02-black-grey-flame.png'
+import cap01 from '../assets/products/cap-01-red-flame.webp'
+import cap02 from '../assets/products/cap-02-black-grey-flame.webp'
 
 export type StoreProduct = {
   id: string

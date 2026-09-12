@@ -620,6 +620,8 @@ function Lookbook({
                     scene.primary
                       .name
                   }
+                  loading="lazy"
+                  decoding="async"
                   draggable="false"
                 />
 
@@ -672,6 +674,8 @@ function Lookbook({
                       scene.secondary
                         .name
                     }
+                    loading="lazy"
+                    decoding="async"
                     draggable="false"
                   />
 

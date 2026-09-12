@@ -184,6 +184,8 @@ function DropGrid({
                 <img
                   src={product.image}
                   alt={product.name}
+                  loading="lazy"
+                  decoding="async"
                   draggable="false"
                 />
 

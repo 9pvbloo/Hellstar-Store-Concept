@@ -10,9 +10,9 @@ import gsap from 'gsap'
 import './Hero.css'
 import HeroStickers from './HeroStickers'
 
-import hoodiePathToParadise from '../../assets/products/hoodie-01-black-path-to-paradise.png'
-import hoodieGreyPinkFlame from '../../assets/products/hoodie-02-grey-pink-flame.png'
-import hoodieRedRecords from '../../assets/products/hoodie-03-red-records.png'
+import hoodiePathToParadise from '../../assets/products/hoodie-01-black-path-to-paradise.webp'
+import hoodieGreyPinkFlame from '../../assets/products/hoodie-02-grey-pink-flame.webp'
+import hoodieRedRecords from '../../assets/products/hoodie-03-red-records.webp'
 
 type HeroProduct = {
   id: string
