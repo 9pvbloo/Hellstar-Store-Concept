@@ -1,7 +1,6 @@
 import {
   lazy,
   Suspense,
-  useEffect,
   useLayoutEffect,
   useRef,
   useState,
@@ -610,39 +609,6 @@ function App() {
   }, [transitioning])
 
   /* =========================================
-     HERO VISIBILITY / STICKY NAV
-  ========================================= */
-
-  useEffect(() => {
-    if (!heroVisible) {
-      return
-    }
-
-    const hero =
-      document.getElementById('hero')
-
-    if (!hero) return
-
-    const observer =
-      new IntersectionObserver(
-        ([entry]) => {
-          setHeroInView(
-            entry.isIntersecting,
-          )
-        },
-        {
-          threshold: 0,
-        },
-      )
-
-    observer.observe(hero)
-
-    return () => {
-      observer.disconnect()
-    }
-  }, [heroVisible])
-
-  /* =========================================
      ENTER CLICK
   ========================================= */
 
@@ -1060,6 +1026,9 @@ function App() {
               }
               onOpenCart={() =>
                 setCartOpen(true)
+              }
+              onInViewChange={
+                setHeroInView
               }
             />
           </Suspense>

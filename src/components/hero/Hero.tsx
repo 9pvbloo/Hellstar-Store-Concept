@@ -57,14 +57,40 @@ const products: HeroProduct[] = [
 type HeroProps = {
   cartCount: number
   onOpenCart: () => void
+  onInViewChange: (inView: boolean) => void
 }
 
 function Hero({
   cartCount,
   onOpenCart,
+  onInViewChange,
 }: HeroProps) {
   const heroRef =
     useRef<HTMLElement>(null)
+
+  useEffect(() => {
+    const hero = heroRef.current
+
+    if (!hero) return
+
+    const observer =
+      new IntersectionObserver(
+        ([entry]) => {
+          onInViewChange(
+            entry.isIntersecting,
+          )
+        },
+        {
+          threshold: 0,
+        },
+      )
+
+    observer.observe(hero)
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [onInViewChange])
 
   const productStageRef =
     useRef<HTMLDivElement>(null)
