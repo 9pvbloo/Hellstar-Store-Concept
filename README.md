@@ -6,9 +6,13 @@ A cinematic streetwear e-commerce design study built with React, Three.js, GSAP 
 
 > Independent portfolio concept. Not affiliated with, endorsed by, or operated by Hellstar. No real transactions are processed.
 
+![HELLSTAR Store Entry](src/assets/hellstar-store-entry.webp)
+
 ## About
 
 HELLSTAR is a visual-first reinterpretation of a high-end streetwear store. It explores a cinematic, editorial shopping experience through a dark technical aesthetic, where interaction and motion are part of the journey. This is an independent portfolio design study, not a commercial storefront.
+
+![HELLSTAR Storefront](src/assets/hellstar-store-hero.webp)
 
 ## Experience
 
